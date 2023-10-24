@@ -1,0 +1,22 @@
+do kraja tjedna opis projekta i UC razrada
+ostalo:
+ UC : prikaz stranice (naslovnice)
+ UC : registriranje
+ UC : pretraživanje (recepta po značajkama)
+ UC : pregledavanje (stisnuti na receptu)
+ UC : ažurirnje recepta s obzirom na broj ljudi (bolje formulirati)
+ UC : objaviti recept, preduvjet : registriran
+ UC : urediti recept, preduvjet : postoji recept
+ UC : pregled javnog profila od drugih
+	- kada si registriran
+	- kada nisi registriran
+ UC : pregled svojeg privatnog profila
+ UC : kontaktiranje drugog korisnika (autora recepta)
+	-preduvjet: registriran
+UC : pristupiti povijesti razgovora
+UC : uređivati privatni profil
+UC : termin za komunikaciju
+UC : admin, novi tab
+UC : 
+......
+---- mail/poruka/....
