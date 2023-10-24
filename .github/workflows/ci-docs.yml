@@ -3,9 +3,11 @@ on:
   pull_request:
     paths:
       - 'Dokumentacija/**'
+      - '.github/workflows/ci-docs.yml'
   push:
     paths:
       - 'Dokumentacija/**'
+      - '.github/workflows/ci-docs.yml'
 jobs:
   build-latex:
     runs-on: ubuntu-latest
