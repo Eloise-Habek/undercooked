@@ -18,9 +18,9 @@ jobs:
       - name: Compile LaTeX documentation
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: 'Dokumentacija/PROGI_ProjektnaDokumentacija.tex'
+          root_file: 'Dokumentacija/PROGI_2023_Undercooked.tex'
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
           name: PDF
-          path: 'Dokumentacija/PROGI_ProjektnaDokumentacija.pdf'
+          path: 'Dokumentacija/PROGI_2023_Undercooked.pdf'
