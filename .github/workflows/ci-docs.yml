@@ -1,0 +1,24 @@
+name: Continuous Integration (Docs)
+on:
+  pull_request:
+    paths:
+      - 'Dokumentacija/**'
+  push:
+    paths:
+      - 'Dokumentacija/**'
+jobs:
+  build-latex:
+    runs-on: ubuntu-latest
+    name: Build PDF
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+      - name: Compile LaTeX documentation
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: 'Dokumentacija\PROGI_ProjektnaDokumentacija.tex'
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF
+          path: 'Dokumentacija\PROGI_ProjektnaDokumentacija.pdf'
