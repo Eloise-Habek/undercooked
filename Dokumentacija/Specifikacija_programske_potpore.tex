@@ -13,9 +13,10 @@
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Naručitelj 
+				\item Razvojni tim
+				\item Korisnici (kuhari i amaterski kuhari)
+				\item Administrator
 				
 			\end{packed_enum}
 			
@@ -23,28 +24,55 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Neregistrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
+					\item otvoriti novi korisnički račun za koji je potrebno unjeti korisničko ime koje nije već zauzeto, adresu elektroničke pošte i lozinku računa
+					\item pretražiti recept po značajkama ili imenu
+					\item pregledati recept
+					\item osvježiti broj porcija, time će se s obzirom da broj unesem mjerice sastojaka ažurirati
+					\item otvoriti profile registriranih korisnika koji su postavili recept
 					
 				\end{packed_enum}
-			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+
+				\item  \underbar{Registrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item ažurirati profil, podaci koje je moguće ažurirati su email, broj telefona i vremenski period u kojima je korisnik dostupan
+					\item objaviti recept s obaveznim navođenjem naziva recepta, sastojaka, postupka pripreme i ukupnog trajanja pripreme, mogućnost navođenja dodatnih karakteristika poput oznaka tipa jela i dodavanja slika i videozapisa
+					\item ažuriranje već objavljenjih recepata
+					\item spremanje recepata kako bi im mogli lakše pristupiti kasnije
+					\item zapratiti drugog autora (registriranog korisnika), korisnik će dobiti obavijest kada autor objavi novi recept
+					\item pregled vlastitog profila
+					\item brisanje recepata sa svojeg profila
+					\item pisanje komentara na recepte drugih korisnika
+					\item slanje poruka u privatnom chatu s drugim korisnikom
+					\item pregled poruka privatnih chatova
+					\item ispisati recept
+					
+				\end{packed_enum}
+
+				\item  \underbar{Administrator (inicijator) može:}
+				\begin{packed_enum}
+
+					\item brisanje, uređivanje i kreiranje korisničkog profila
+					\item brisanje, uređivanje i mijenjanje oznaka recepata
+					\item vidjeti popis svih registriranih korisnika, njihovih podataka i recepata
+					\item pregled komentara na receptima
+					\item pristupiti statistikama (npr. najpopularniji recept po broju profila koji su ga spremili, najaktivniji profil s najviše recepata, najpopularniji profil s najčešće spremljenim receptima)
+					\item brisanje komentara koji nisu u skladu s pravilima ophođenja na platformi
+
+				\end{packed_enum}
+			
+				\item  \underbar{Baza podataka (sudionik) može:}
+				
+				\begin{packed_enum}
+					
+					\item pohranjuje sve podatke o korisnicima i njihovim ovlastima
+					\item pohranjuje sve podatke o receptima
+					\item pohranjuje informacije o odnosima među korisnika i recepata
 					
 				\end{packed_enum}
 			\end{packed_enum}
