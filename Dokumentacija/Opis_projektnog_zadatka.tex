@@ -115,37 +115,52 @@
 		\eject
 		
 		\section{Uvod}
-		\raggedright Cilj ovog projekta je razvoj web aplikacije za razmjenu recepata za pripremu kolača i diskusiju između korisnika i autora recepata.
-		\linebreak
-		\linebreak
-		Osim samih uputa za pripremu, recepti sadrže brojne druge informacije koje olakšavaju pripremu i traženje sličnih recepata kao što su:
+		\raggedright Cilj ovog projekta je razvoj web aplikacije za razmjenu recepata za pripremu kolača i diskusiju između korisnika i autora recepata koja bi ljudima omogućila jednostavno isprobavanje novih jela i poboljšanje svojih kulinarskih sposobnosti.
+		\section{Postojeća rješenja i njihovi problemi}
+		Postoje brojna popularna slična rješenja, no uglavnom pate od loše preglednosti zbog previše prevelikih slika, puno praznog prostora i velike količine popratnog teksta koji nema veze sa sastojcima ili pripremom kao što je prikazano na slikama \ref{fig:primjer1} i \ref{fig:primjer2} u nastavku. 
+		\begin{figure}[H]
+			\includegraphics[scale=0.24]{slike/primjer_coolinarika.png}
+			\centering
+			\caption{Coolinarika - Prevelika slova, puno neiskorištenog prostora}
+			\label{fig:primjer1}
+		\end{figure}
+		\begin{figure}[H]
+			\includegraphics[scale=0.24]{slike/primjer_foodnetwork.png}
+			\centering
+			\caption{Foodnetwork - Preglednije, ali i dalje puno praznog prostora}
+			\label{fig:primjer2}
+		\end{figure}
+		Recepti bi trebali sadržavati samo informacije važne za pripremu i možda jednu ili dvije uvodne rečenice. Većina recepata trebala bi stati na jednu stranicu kako bi bili pregledniji, ali i kako bi ih se lako moglo ispisati na papir. Ovakav izgled stranice nije uvijek jednostavno ostvariti, ali bi trebao uvelike poboljšati iskustvo korištenja.
+		\section{Osnovne mogućnosti stranice}
+		Glavna mogućnost stranice je naravno, prikazivanje sastojaka i uputa za pripremu, ali osim njih, recepti sadrže i brojne druge informacije koje olakšavaju pripremu i traženje sličnih recepata kao što su:
 		\begin{packed_item}
 			\item Kategorija jela
 			\item Vrsta kuhinje
-			\item Sastojci
+			\item Neuobičajeni sastojci
 			\item Alergeni
 			\item Vrijeme pripreme
 			\item Broj porcija
 			\item Ostale oznake
 		\end{packed_item}
-		Stranica razlikuje dvije vrste korisnika: goste, odnosno neregistrirane korisnike, i registrirane korisnike. Neregistrirani korisnici mogu pretraživati recepte po prije navedenim oznakama ili naslovu, ali ne mogu pristupiti naprednijim mogućnostima koje aplikacija nudi.
+		Stranica razlikuje dvije vrste korisnika: goste, odnosno neregistrirane korisnike, i registrirane korisnike. Neregistrirani korisnici mogu pristupiti samo osnovnim funkcionalnostima stranice. Imaju potpuni pristup svim receptima te mogu pretraživati recepte po prije navedenim oznakama ili po njihovom nazivu. Isto tako mogu uz neka ograničenja pregledavati profile registriranih korisnika. Ovo će većini korisnika koji samo povremeno traže nove recepte ili inspiraciju vjerojatno biti dovoljno, a oni koji žele pristupiti naprednijim pogodnostima koje stranica nudi moraju se registrirati.
 		\linebreak
-		Za registraciju je potrebno navesti sljedeće podatke:
+		Postupak registracije vrlo je jednostavan. Potrebno je samo navesti sljedeće podatke kako bi korisnik stvorio novi profil:
 		\begin{packed_item}
 			\item Korisnično ime
 			\item Adresu elektroničke pošte
 			\item Lozinku
 		\end{packed_item}
+		\pagebreak
 		\section{Napredne mogućnosti stranice}
 		Nakon što se korisnik registrira i prijavi, otvaraju mu se brojne dodatne mogućnosti stranice. Najvažnija i najzanimljivija je naravno mogućnost objave vlastitih recepata. Kako bi korisnik objavio recept, mora navesti naziv recepta, sastojke, postupak pripreme i ukupno trajanje pripreme. Ostali podatci nisu neophodni, ali ih je korisno navesti kako bi zainteresirani korisnici mogli brže i jednostavnije naći recepte koji odgovaraju njihovim željama i potrebama.
 		\linebreak
 		\linebreak
 		Svaki registrirani korisnik također može označavati i spremati recepte na svoj osobni profil kako bi mu u budućnosti bili lako dostupni, a isto tako mogu zapratiti druge autore kako bi bili automatski obaviješteni kada netko od njihovih najdražih autora objavi novi recept.
-		Objavljeni recepti, pratitelji i osobe koje prate javno su vidljivi na profilu svakog korisnika.
+		Objavljeni recepti, pratitelji i osobe koje prate korisnika javno su vidljivi na profilu svakog korisnika.
 		\section{Komunikacija među korisnicima}
-		Osim što mogu ostavljati komentare na receptima i tako komunicirati s autorom i drugim korisnicima, registrirani korisnici također imaju mogućnost izravnog kontaktiranja autora recepata ukoliko trebaju dodatna pojašnjenja ili žele uputiti svoje pohvale (ili kritike) autoru. Aplikacija omogućava jednostavnu razmjenu poruka između korisnika, ali isto tako, autor može navesti i druge načine na koje ga se može kontaktirati, kao što su elektronička pošta ili broj telefona. Također može navesti i vremenske periode u kojima je dostupan.
+		Osim što mogu ostavljati komentare na receptima i tako komunicirati s autorom i drugim korisnicima, registrirani korisnici također imaju mogućnost izravnog kontaktiranja autora recepata ako trebaju dodatna pojašnjenja ili žele uputiti svoje pohvale (ili kritike) autoru. Aplikacija omogućava jednostavnu razmjenu poruka između korisnika, ali isto tako, autor može navesti i druge načine na koje ga se može kontaktirati, kao što su elektronička pošta ili broj telefona. Također može navesti i vremenske periode u kojima je dostupan.
 		\section{Administracija}
-		Osim gostiju i registriranih korisnika, važan čimbenik u radu stranice su i administratori. Administratori imaju vlastite korsiničke profile, kao i obični registrirani korisnici, ali imaju dodatne ovlasti koje im omogućavaju upravljanje stranicom.
+		Osim gostiju i registriranih korisnika, važan čimbenik u radu stranice su i administratori. Administratori imaju vlastite korisničke profile, kao i obični registrirani korisnici, ali imaju dodatne ovlasti koje im omogućavaju upravljanje stranicom.
 		\linebreak
 		Ovlasti administratora uključuju:
 		\begin{packed_item}
