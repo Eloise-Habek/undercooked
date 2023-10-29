@@ -1,1 +1,339 @@
-proba
+    1. Pregled recepata na naslovnoj stranici 
+       (trebamo razmisliti hoće li guest useri vidjeti samo neki login screen ili će vidjeti naslovnu stranicu s nekim trending objavama pošto guest useri ne mogu nikoga još pratiti pa ni ne vide njihove objave na naslovnoj stranici)
+	Glavni sudionik: reg. korisnik, nereg. korisnik, admin
+	Cilj: Pregledati objavljene recepte na naslovnoj stranici
+	Sudionici: Back-end
+	Preduvjet: -
+	Opis osnovnog tijeka:
+	1. Naslovna stranica je prikazana prilikom učitavanja aplikacije
+	
+       
+    2. Pretraživanje recepata po kategorijama
+	Glavni sudionik: reg. korisnik, nereg. korisnik, admin
+	Cilj: Prikazati objave temeljem unosa u tražilicu
+	Sudionici: Back-end
+	Preduvjet: -
+	Opis osnovnog tijeka:
+	1. Korisnik odabire tražilicu
+	2. Upisuje ključnu riječ
+	3. Back-end traži kategoriju koja najbolje odgovara unosu
+	4. Prikazuje rezultate pretraživanja
+	Opis mogućih odstupanja:
+	3.a Back-end ne može naći kategoriju koja odgovara unosu
+		1. Korisniku prikazuje poruku da ne možemo naći rezultate temeljem njegovog unosa
+
+    3. Registriraj novog korisnika
+	Glavni sudionik: nereg. korisnik
+	Cilj: Registracija novog korisnika
+	Sudionici: Back-end
+	Preduvjet: -
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za registraciju
+	2. Korisnik unosi potrebne podatke (e-mail, lozinka)
+	3. Back-end traži je li e-mail već zauzet
+	4. Ako e-mail nije upisan u bazu, korisnik se upisuje u bazu
+	5. Učitava se naslovna stranica
+	6. Back-end šalje mail potvrde registracije
+	7. Korisnik potvrđuje registraciju
+	8. Korisnik dobiva mail o uspješnoj registraciji 
+	Opis mogućih odstupanja:
+	3.a Back-end vidi da je mail već zauzet
+		1. Korisnik dobiva poruku da je mail već iskorišten
+		2. Korisnika se traži ponovni upis podataka
+	7.a Korisnik ne potvrđuje mail
+		1. back-end briše korisnikov profil iz baze nakon određenog vremena
+
+
+    4. Prijavi se
+	Glavni sudionik: reg. korisnik
+	Cilj: Prijava korisnika
+	Sudionici: Back-end
+	Preduvjet: UC3 (registracija)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za prijavu
+	2. Korisnik unosi potrebne podatke (e-mail, lozinka)
+	3. Back-end traži je li korisnik registriran
+	4. Ako je, učitava se naslovna stranica
+	Opis mogućih odstupanja:
+	3.a Back-end vidi da korisnik nije registriran
+		1. Korisnik dobiva poruku da nije registriran
+		2. Korisnika se preusmjeruje na obrazac za registraciju
+	
+
+
+
+    5. Objavi recept
+	Glavni sudionik: reg. korisnik
+	Cilj: Objava novog recepta
+	Sudionici: Back-end
+	Preduvjet: UC4(Prijava)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za novu objavu
+	2. Korisnik unosi naslov, sastojke, kako pripremiti, vrijeme pripreme, oznaku kategorije, opcionalno: sliku, video
+	3. Back-end ubacuje objavu u bazu
+
+
+
+    6. Uredi svoju objavu (recept)
+	Glavni sudionik: reg. korisnik
+	Cilj: Uredi svoju objavu
+	Sudionici: Back-end
+	Preduvjet: UC5(objavi recept)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire svoj profil
+	2. Korisnik odabire objavu koju želi urediti
+	3. Odabire opciju za uređivanje
+	4. Korisnik uređuje podatke (naslov, sastojci, kako pripremiti...)
+	5. Kada je gotov korisnik odabire opciju za završetak uređivanja
+	6. Back-end traži objavu u bazi podataka i ažurira podatke
+	
+
+
+
+    7. Obriši svoju objavu (recept)
+	Glavni sudionik: reg. korisnik
+	Cilj: Obriši svoju objavu
+	Sudionici: Back-end
+	Preduvjet: UC5(objavi recept)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire svoj profil
+	2. Korisnik odabire objavu koju želi obrisati
+	3. Odabire opciju za brisanje
+	4. Back-end traži objavu u bazi podataka i briše ju
+
+    8. Prikaži tuđi profil
+	Glavni sudionik: reg. korisnik
+	Cilj: Prikaži profil drugog korisnika
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire ikonu autora neke objave
+	2. Korisniku se prikazuje profil
+	Opis mogućih odstupanja:
+	1.a Korisnik pretražuje korisnika pomoću tražilice
+	1. odabire jedan od profila kojeg mu sustav sugerira
+	2. Korisniku se prikazuje profil
+
+	2.a Korisnik odabire ikonu profila kojeg prati
+	1. Korisnik otvara vlastiti profil
+	2. Odabire opciju za prikaz profila koje prati
+	3.  Odabire jedan od profila
+	4. Korisniku se prikazuje profil
+
+
+    9. Pošalji poruku autoru recepta
+	Glavni sudionik: reg. korisnik
+	Cilj: Komunikacija korisnika putem poruka
+	Sudionici: Back-end
+	Preduvjet: UC8 (prikaži tuđi profil)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za slanje poruke
+	2. Korisniku se prikazuje prozor za pisanje poruke
+	3. Kada je korisnik gotov, odabire opciju za slanje
+	4. back-end ubacuje tu poruku u inbox primatelja
+	
+
+
+       
+    10. Prati korisnika
+	Glavni sudionik: reg. korisnik
+	Cilj: Prati korisnika
+	Sudionici: Back-end
+	Preduvjet: UC8 (prikaži tuđi profil)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za praćenje
+	2. back-end ažurira listu praćenih korisnika
+
+
+    (11. Pozovi korisnika na video poziv) --realno samo ako stignemo
+    
+    12. Pregledaj poslane/dobivene poruke i ostale obavijesti (inbox)
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregled svih poruka
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za pregled obavijesti
+	
+
+
+    13. Odgovori na dobivenu poruku
+	Glavni sudionik: reg. korisnik
+	Cilj: Odgovori na poruku
+	Sudionici: Back-end
+	Preduvjet: UC12 (otvori inbox)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za pregled obavijesti
+	2. Odabire opciju za odgovor na poruku
+	3. Korisniku se otvara prozor za sastavljanje poruke
+	4. Korisnik odabire opciju za slanje
+	5. Back-end stavlja poruku u inbox primatelju
+
+
+    14. Označi objavu (recept) sa „sviđa mi se” ili ocijeni zvjezdicom
+	Glavni sudionik: reg. korisnik
+	Cilj: Ocijeni objavu
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire broj zvjezdica na objavi
+	2. back-end ažurira u bazi podataka ocjenu recepta
+
+    15. Spremi objavu (recept) u pdf obliku
+	Glavni sudionik: reg. korisnik
+	Cilj: Spremi objavu
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire opciju za spremiti recept
+	2. back-end šalje korisniku pdf recepta na mail
+
+    16. Komentiraj na objavljeni recept
+	Glavni sudionik: reg. korisnik
+	Cilj: Komentiraj objavu
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Korisnik otvara komentare na objavi
+	2. Korisnik odabire opciju za pisanje vlastitog komentara
+	3. Korisniku se otvara prozor za pisanje
+	4. Korisnik odabire opciju za objavu komentara
+	5. back-end ažurira komentare objave
+
+
+    17. Pregled vlastitog profila
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregledaj vlastiti profil
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Korisnik odabire svoju ikonu
+	2. Korisniku se prikazuje vlastiti profil sa svojim objavama
+
+       
+       
+    18.  Pregled najdražih recepata
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregledaj najdraže recepte
+	Sudionici: Back-end
+	Preduvjet: UC17(pregled vlastitog profila)
+	Opis osnovnog tijeka:
+	1. Korisnik opciju za pregled recepata koje je označio s 5 zvjezdica
+	2. Korisniku se prikazuje lista najdražih recepata
+
+    19. Pregled korisnika koje prati
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregled korisnika koje prati
+	Sudionici: Back-end
+	Preduvjet: UC17 (pregled vlastitog profila)
+	Opis osnovnog tijeka:
+	1. Korisnik opciju za pregled korisnika koje prati
+	2. Korisniku se prikazuje lista korisnika koje prati
+
+       
+       
+    20.  Pregled osobnih postavaka
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregled korisnika koje prati
+	Sudionici: Back-end
+	Preduvjet: UC17 (pregled vlastitog profila)
+	Opis osnovnog tijeka:
+	1. Korisnik opciju za pregled osobnih postavaka
+	2. Korisniku se prikazuju osobne postavke
+
+    21.  Brisanje vlastitog profila
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregled korisnika koje prati
+	Sudionici: Back-end
+	Preduvjet: UC20 (pregled osobnih postavaka)
+	Opis osnovnog tijeka:
+	1. Korisnik opciju za brisanje računa
+	2. back-end šalje mail za potvrđivanje brisanja
+	3. korisnik potvrđuje
+	4. back-end briše profil iz baze
+	5. back-end šalje mail o obrisanom računu
+	Opis mogućih odstupanja:
+	3.a Korisnik ne potvrđuje brisanje
+ 
+
+    22.  Uredi osobne postavke
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregled korisnika koje prati
+	Sudionici: Back-end
+	Preduvjet: UC20 (pregled osobnih postavaka)
+	Opis osnovnog tijeka:
+	1. Korisnik opciju za uređivanje osobnih postavaka
+	2. Korisnik mijenja postavke
+	3. back-end ažurira u bazi podataka postavke profila
+
+----------UC23 i UC24 mogu biti uključeni u 22)----------------------------------------------
+    23.  Pregled postavka komunikacije
+    24.  Uredi postavke komunikacije (dostupnost na komunikaciju, tko može slati poruke...)
+---------------------------------------------------------------------------------------------
+
+    25.  Pregled povijesti aktivnosti (označeno sa sviđa mi se, prati profil...)
+	Glavni sudionik: reg. korisnik
+	Cilj: Pregled korisnika koje prati
+	Sudionici: Back-end
+	Preduvjet: UC17 (pregled vlastitog profila)
+	Opis osnovnog tijeka:
+	1. Korisnik opciju za pregled povijesti aktivnosti
+
+    26.  Uredi korisnikovu objavu
+	Glavni sudionik: admin
+	Cilj: uređivanje objava
+	Sudionici: Back-end
+	Preduvjet: UC4 (prijavi se)
+	Opis osnovnog tijeka:
+	1. Admin odabire objavu koju želi urediti
+	2. Odabire opciju za uređivanje
+	3. Admin uređuje podatke (naslov, sastojci, kako pripremiti...)
+	4. Kada je gotov admin odabire opciju za završetak uređivanja
+	5. Back-end traži objavu u bazi podataka i ažurira podatke
+
+
+
+    27.  Obriši korisnikovu objavu
+	Glavni sudionik: admin
+	Cilj: Obriši svoju objavu
+	Sudionici: Back-end
+	Preduvjet: UC4(prijavi se)
+	Opis osnovnog tijeka:
+	1. Admin odabire objavu koju želi obrisati
+	2. Odabire opciju za brisanje
+	3. Back-end traži objavu u bazi podataka i briše ju
+
+
+    28.  Obriši korisnika
+	Glavni sudionik: admin
+	Cilj: Obriši korisnika
+	Sudionici: Back-end
+	Preduvjet: UC4(prijavi se)
+	Opis osnovnog tijeka:
+	1. Admin odabire profil kojeg želi obrisati
+	2. Odabire opciju za brisanje
+	3. Back-end traži progil u bazi podataka i briše ga
+	4. Šalje mail obrisanom korisniku o obrisanom profilu
+
+    29. Pregled mogućnosti administratora
+	Glavni sudionik: admin
+	Cilj: Pristupi svim mogućnostima administratora
+	Sudionici: Back-end
+	Preduvjet: UC4(prijavi se)
+	Opis osnovnog tijeka:
+	1. Admin odabire opciju za pregled mogućnosti administratora
+	2. Dobiva pregled i mogućnosti za upravljanjem baze podataka
+	
+
+
+    30.  Dodaj novu kategoriju koju korisnici mogu dodavati na objave i pretraživati
+	Glavni sudionik: admin
+	Cilj: Pristupi svim mogućnostima administratora
+	Sudionici: Back-end
+	Preduvjet: UC29(Pregled mogućnosti administratora)
+	Opis osnovnog tijeka:
+	1. Admin odabire opciju za dodavanje nove kategorije
+
+       -- samo ako stignemo a i nije potrebno
+    (31.  Pregled statistike vezane za svaku kategoriju)
+	(32. Pregled statistike vezane za svakog korisnika)
