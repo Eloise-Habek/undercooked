@@ -250,7 +250,7 @@
 	1. Korisnik opciju za brisanje računa
 	2. back-end šalje mail za potvrđivanje brisanja
 	3. korisnik potvrđuje
-	4. back-end briše profil iz baze
+	4. back-end briše profil iz baze, objavljeni recepti i komentari ostaju
 	5. back-end šalje mail o obrisanom računu
 	Opis mogućih odstupanja:
 	3.a Korisnik ne potvrđuje brisanje
@@ -279,29 +279,29 @@
 	Opis osnovnog tijeka:
 	1. Korisnik opciju za pregled povijesti aktivnosti
 
-    26.  Uredi korisnikovu objavu
+    26.  Uredi kategoriju/tagove recepta
 	Glavni sudionik: admin
 	Cilj: uređivanje objava
 	Sudionici: Back-end
 	Preduvjet: UC4 (prijavi se)
 	Opis osnovnog tijeka:
-	1. Admin odabire objavu koju želi urediti
+	1. Admin odabire recept koju želi urediti
 	2. Odabire opciju za uređivanje
-	3. Admin uređuje podatke (naslov, sastojci, kako pripremiti...)
+	3. Admin uređuje tagove
 	4. Kada je gotov admin odabire opciju za završetak uređivanja
-	5. Back-end traži objavu u bazi podataka i ažurira podatke
+	5. Back-end traži recept u bazi podataka i ažurira podatke
 
 
 
-    27.  Obriši korisnikovu objavu
+    27.  Brisanje recepta
 	Glavni sudionik: admin
-	Cilj: Obriši svoju objavu
+	Cilj: Obriši recept koji nije prikladan, itd.
 	Sudionici: Back-end
 	Preduvjet: UC4(prijavi se)
 	Opis osnovnog tijeka:
-	1. Admin odabire objavu koju želi obrisati
+	1. Admin odabire recept koju želi obrisati
 	2. Odabire opciju za brisanje
-	3. Back-end traži objavu u bazi podataka i briše ju
+	3. Back-end traži recept u bazi podataka i briše ga
 
 
     28.  Obriši korisnika
