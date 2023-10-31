@@ -71,6 +71,7 @@
 	1. Korisnik odabire opciju za novu objavu
 	2. Korisnik unosi naslov, sastojke, kako pripremiti, vrijeme pripreme, oznaku kategorije, opcionalno: sliku, video
 	3. Back-end ubacuje objavu u bazu
+	4. Svi pratitelji dobivaju obavijesti o novom receptu
 
 
 
