@@ -30,7 +30,7 @@
 				
 				\begin{packed_enum}
 					
-					\item pretražiti recept po značajkama ili imenu
+					\item pretražiti recept po značajkama
 					\item pregledati recept
 					\item osvježiti broj porcija, time će se s obzirom da broj unesem mjerice sastojaka ažurirati
 					\item otvoriti profile registriranih korisnika koji su postavili recept
@@ -54,14 +54,14 @@
 					\item ažurirati profil, podaci koje je moguće ažurirati su email, broj telefona i vremenski period u kojima je korisnik dostupan
 					\item objaviti recept s obaveznim navođenjem naziva recepta, sastojaka, postupka pripreme i ukupnog trajanja pripreme, mogućnost navođenja dodatnih karakteristika poput oznaka tipa jela i dodavanja slika i videozapisa
 					\item ažuriranje već objavljenjih recepata
-					\item spremanje recepata kako bi im mogli lakše pristupiti kasnije
+					\item ocijeniti objavu
+					\item spremiti recept kako bi im mogli lakše pristupiti kasnije
 					\item zapratiti drugog autora (registriranog korisnika), korisnik će dobiti obavijest kada autor objavi novi recept
-					\item pregled vlastitog profila
-					\item brisanje recepata sa svojeg profila
+					\item pregledati vlastiti profil
+					\item brisati recepte sa svojeg profila
 					\item pisanje komentara na recepte drugih korisnika
-					\item slanje poruka u privatnom chatu s drugim korisnikom
+					\item slanje poruka u privatnom chatu
 					\item pregled poruka privatnih chatova
-					\item ispisati recept
 					
 				\end{packed_enum}
 
@@ -69,10 +69,10 @@
 				\begin{packed_enum}
 
 					\item sve što i reg. korisnik (specijalizacija registriranog korisnika)
-					\item brisanje, uređivanje i kreiranje korisničkog profila
+					\item brisanje, uređivanje korisničkog profila
 					\item brisanje, uređivanje i mijenjanje oznaka recepata
-					\item vidjeti popis svih registriranih korisnika, njihovih podataka i recepata
-					\item pregled komentara na receptima
+					\item dodavanje nove oznake poput kategorije ili vrste kuhinje
+					\item pregled mogućnosti administratora
 					\item pristupiti statistikama (npr. najpopularniji recept po broju profila koji su ga spremili, najaktivniji profil s najviše recepata, najpopularniji profil s najčešće spremljenim receptima)
 					\item brisanje komentara koji nisu u skladu s pravilima ophođenja na platformi
 
@@ -97,21 +97,21 @@
 					
 					%Općenita napomena za UC - u .txt skici se kao sudionik često navodi back-end
 					%Budući da nije naveden u aktorima, umjesto toga piše baza podataka
-					\noindent \underbar{\textbf{UC1 - Pregled recepata na naslovnoj stranici}}
+					\noindent \underbar{\textbf{UC1 - Pregled recepta}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Korisnik
-						\item \textbf{Cilj: }Pregledati objavljene recepte prikazane na naslovnoj stranici aplikacije
+						\item \textbf{Cilj: }Pregledati objavljene recepte
 						\item \textbf{Sudionici: }Baza podataka
 						\item \textbf{Preduvjet: }-
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-								\item Pri učitavanju aplikacije prikazuje se naslovna stranica
+								\item Korisnik odabire recept koji se prikaže
 								\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC2 - Pretraživanje recepata po kategorijama}}
+					\noindent \underbar{\textbf{UC2 - Pretraživanje recepata}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Korisnik
@@ -122,7 +122,7 @@
 						
 						\item[] \begin{packed_enum}
 							\item Korisnik odabire pretraživanje recepata
-							\item Upisuje ključnu riječ ili oznaku
+							\item Upisuje ključnu riječ (kategorija, vrsta kuhinje, specifični sastojci)
 							\item Baza podataka vraća recepte koji odgovaraju parametrima pretrage
 							\item Dobiveni recepti prikazuju se u aplikaciji
 						\end{packed_enum}
@@ -168,7 +168,53 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC4 - Prijava}}
+					\noindent \underbar{\textbf{UC4 - Prikazivanje tuđeg korisničkog profila}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item \textbf{Cilj: }Pregled profila drugog registriranog korisnika
+						\item \textbf{Sudionici: }Baza podataka
+						\item \textbf{Preduvjet: }-
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							\item Korisnik odabire ikonu autora neke objave
+							\item Korisniku se prikazuje profil autora
+						\end{packed_enum}
+						\item \textbf{Opis mogućih odstupanja:}
+						\item[] \begin{packed_enum}
+							\item[1.a] Korisnik koristi tražilicu kako bi našao profil koji želi pregledati
+							%Što ako koristi tražilicu i nema ničega? Je li to odstupanje na odstupanje? Pitati demosa/asistenta?
+							\item[] \begin{packed_enum}
+								\item[1.] Korisnik odabire jedan od profila dobivenih pretragom
+								\item[2.] Korisniku se prikazuje odabrani profil
+							\end{packed_enum}
+							\item[2.a] Korisnik pregledava profil koji prati
+							\item[] \begin{packed_enum}
+								\item[1.] Korisnik otvara vlastiti profil
+								\item[2.] Odabire opciju za prikaz profila koje prati
+								\item[3.] Korisnik odabire jedan od navedenih profila
+								\item[4.] Prikazuje se odabrani profil
+							\end{packed_enum}
+						\end{packed_enum}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC5 - Ažuriranje broj porcija}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item \textbf{Cilj: }Prikazati potrebne sastojke recepta u skladu sa potrebnim porcijama jela
+						\item \textbf{Sudionici: }Baza podataka
+						\item \textbf{Preduvjet: }UC1 (Pregled recepta)
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							\item Korisnik na prikazanom receptu stiskanjem gumbova (+/-) ažurira broj porcija
+							\item Prikaz recepta se ažurira s obzirom na broj porcija
+						\end{packed_enum}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC6 - Prijava}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -198,13 +244,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC5 - Objavljivanje recepta}}
+					\noindent \underbar{\textbf{UC7 - Objavljivanje recepta}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Objava novog recepta
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -215,13 +261,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6 - Uređivanje objave}}
+					\noindent \underbar{\textbf{UC8 - Uređivanje objave}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Urediti prethodno objavljeni recept
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC5 (Objava recepta)
+						\item \textbf{Preduvjet: }UC7 (Objava recepta)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -234,13 +280,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC7 - Brisanje objave}}
+					\noindent \underbar{\textbf{UC9 - Brisanje objave}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Brisanje prethodno objavljenog recepta
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC5 (Objava recepta)
+						\item \textbf{Preduvjet: }UC7 (Objava recepta)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -251,44 +297,15 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC8 - Prikazivanje tuđeg korisničkog profila}}
-					\begin{packed_item}
-						
-						\item \textbf{Glavni sudionik: }Korisnik
-						\item \textbf{Cilj: }Pregled profila drugog registriranog korisnika
-						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
-						\item \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-							\item Korisnik odabire ikonu autora neke objave
-							\item Korisniku se prikazuje profil autora
-						\end{packed_enum}
-						\item \textbf{Opis mogućih odstupanja:}
-						\item[] \begin{packed_enum}
-							\item[1.a] Korisnik koristi tražilicu kako bi našao profil koji želi pregledati
-							%Što ako koristi tražilicu i nema ničega? Je li to odstupanje na odstupanje? Pitati demosa/asistenta?
-							\item[] \begin{packed_enum}
-								\item[1.] Korisnik odabire jedan od profila dobivenih pretragom
-								\item[2.] Korisniku se prikazuje odabrani profil
-							\end{packed_enum}
-							\item[2.a] Korisnik pregledava profil koji prati
-							\item[] \begin{packed_enum}
-								\item[1.] Korisnik otvara vlastiti profil
-								\item[2.] Odabire opciju za prikaz profila koje prati
-								\item[3.] Korisnik odabire jedan od navedenih profila
-								\item[4.] Prikazuje se odabrani profil
-							\end{packed_enum}
-						\end{packed_enum}
-					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC9 - Slanje poruke drugom registriranom korisniku}}
+					
+					\noindent \underbar{\textbf{UC10 - Slanje poruke drugom registriranom korisniku}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Komunikacija među korisnicima putem poruka
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: } UC8 (Prikazivanje tuđeg profila)
+						\item \textbf{Preduvjet: } UC4 (Prikazivanje tuđeg profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -299,13 +316,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC10 - Zaprati korisnika}}
+					\noindent \underbar{\textbf{UC11 - Zaprati korisnika}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Praćenje drugog korisnika kako bi dobio obavijesti o novim objavama
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC8 (Prikazivanje tuđeg profila)
+						\item \textbf{Preduvjet: }UC4 (Prikazivanje tuđeg profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -314,7 +331,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC11 - Pozovi korisnika na video poziv}}
+					\noindent \underbar{\textbf{UC12 - Pozovi korisnika na video poziv}}
 					\begin{packed_item}
 						%Možda ne bi bilo loše ovo razraditi čak i ako nećemo implementirati
 						%Imati ćemo nešto za napisati u poglavlju 6 - Zaključak i budući rad
@@ -322,7 +339,7 @@
 						\item \textbf{Glavni sudionik: }Registrirani korisnik (Pozivatelj)
 						\item \textbf{Cilj: }Uspostava komunikacije između dva korisnika putem videopoziva
 						\item \textbf{Sudionici: }Registrirani korisnik (Korisnik kojeg se zove)
-						\item \textbf{Preduvjet: }UC8 (Prikazivanje tuđeg profila)
+						\item \textbf{Preduvjet: }UC4 (Prikazivanje tuđeg profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -341,13 +358,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC12 - Pregled inboxa}}
+					\noindent \underbar{\textbf{UC13 - Pregled inboxa}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Pregled svih poruka i obavijesti
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -356,13 +373,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC13 - Odgovaranje na poruku}}
+					\noindent \underbar{\textbf{UC14 - Odgovaranje na poruku}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Poslati odgovor na dobivenu poruku
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC12 (Otvaranje inboxa)
+						\item \textbf{Preduvjet: }UC13 (Otvaranje inboxa)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -378,13 +395,13 @@
 					
 					%Ovo možda razdvojiti na dva UC-a ili ostaviti samo jednu od opcija
 					%Pričali smo o ovome ali ne sijećam se koji je na kraju bio zaključak
-					\noindent \underbar{\textbf{UC14 - Ocijeni objavu ili označi sa "sviđa mi se"}}
+					\noindent \underbar{\textbf{UC15 - Ocijeni objavu}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
-						\item \textbf{Cilj: }Ocijeniti recept ili ga označiti kako bi ga se kasnije moglo lakše opet pronaći
+						\item \textbf{Cilj: }Ocijeniti recept s ocjenom od 1 do 5
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -394,30 +411,29 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC15 - Spremi recept kao .pdf datoteku}}
+					\noindent \underbar{\textbf{UC16 - Spremi recept}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
-						\item \textbf{Cilj: }Lokalno spremiti recept za ispis ili pregledavanje neovisno o aplikaciji
+						\item \textbf{Cilj: }Spremiti recept kako bi ga se kasnije moglo lakše opet pronaći
 						\item \textbf{Sudionici: } Baza podataka
-						\item \textbf{Preduvjet: } UC4 (Prijava)
+						\item \textbf{Preduvjet: } UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							\item Korisnik otvara recept koji želi spremiti
 							\item Odabire opciju za spremanje recepta
-							\item Recept se čita iz baze podataka, pretvara u .pdf datoteku i šalje korisniku elektroničkom poštom
-							%Možda je lakše napraviti http download nego slati mailom?
+							\item U bazi podataka se ažurira relacija spremanja u odnosu na korisnika i recepta
 						\end{packed_enum}
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UCx16 - Komentiraj objavljeni recept}}
+					\noindent \underbar{\textbf{UC17 - Komentiraj objavljeni recept}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: } Registrirani korisnik
 						\item \textbf{Cilj: }Ostaviti komentar na nekoj objavi
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -433,13 +449,13 @@
 							%To bi onda vjerojatno bilo odstupanje, ali vjerojatno cijela ideja predstavlja previše nepotrebnog filozofiranja
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC17 - Pregled vlastitog profila}}
+					\noindent \underbar{\textbf{UC18 - Pregledavanje vlastitog profila}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Pregledati stanje vlastitog korisničkog profila
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -448,28 +464,28 @@
 						\end{packed_enum}
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC18 - Pregled najdražih recepata}}
+					\noindent \underbar{\textbf{UC19 - Pregledavanje spremljenih recepata}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Prikazati korisnikove najdraže recepte
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC17 (Pregledavanje vlastitiog profila)
+						\item \textbf{Preduvjet: }UC18 (Pregledavanje vlastitiog profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-							\item Korisnik odabire opciju za pregled recepata koje je označio s 5 zvjezdica
+							\item Korisnik odabire opciju za pregled spremljenih recepata
 							\item Odgovarajući recepti dohvaćaju se iz baze i prikazuju korisniku
 						\end{packed_enum}
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC19 - Pregled profila koje korisnik prati}}
+					\noindent \underbar{\textbf{UC20 - Pregled profila koje korisnik prati}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Pregled popisa profila koje korisnik prati
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC17 (Pregledavanje vlastitog profila)
+						\item \textbf{Preduvjet: }UC18 (Pregledavanje vlastitog profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -479,13 +495,13 @@
 						%Možda odstupanje ako ne prati nikog?
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC20 - Pregled osobnih postavki}}
+					\noindent \underbar{\textbf{UC21 - Pregled osobnih postavki}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Pregledavanje postavki korisničkog profila
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC17 (Pregledavanje vlastitog profila)
+						\item \textbf{Preduvjet: }UC18 (Pregledavanje vlastitog profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -494,13 +510,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC21 - Brisanje vlastitog profila}}
+					\noindent \underbar{\textbf{UC22 - Brisanje vlastitog profila}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Brisanje vlastitog korisničkog profila
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC20 (Pregled osobnih postavki)
+						\item \textbf{Preduvjet: }UC21 (Pregled osobnih postavki)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -520,13 +536,13 @@
 						\end{packed_enum}
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC22 - Uređivanje osobnih postavik}}
+					\noindent \underbar{\textbf{UC23 - Uređivanje osobnih postavki}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Promjena postavki profila
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC20 (Pregled osobnih postavki)
+						\item \textbf{Preduvjet: }UC21 (Pregled osobnih postavki)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -536,34 +552,20 @@
 						\end{packed_enum}
 					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC23 - Pregled povijesti aktivnosti}}
-					\begin{packed_item}
-						
-						\item \textbf{Glavni sudionik: }Registrirani korisnik
-						\item \textbf{Cilj: }Pregledavanje povijesti aktivnosti na profilu (objava recepata, komentiranje, praćenje drugih korisnika, slanje poruka...)
-						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC17 (Pregledavanje vlastitog profila)
-						\item \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-							\item Korisnik odabire opciju za pregled povijesti aktivnosti
-							\item Povijest se dohvaća iz baze podataka i prikazuje korisniku
-						\end{packed_enum}
-					\end{packed_item}
 										
-					\noindent \underbar{\textbf{UC24 - Uređivanje oznaka recepta}}
+					\noindent \underbar{\textbf{UC24 - Uređivanje recepta}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Administrator
-						\item \textbf{Cilj: }Dodavanje ili brisanje oznaka objavljenog recepta
+						\item \textbf{Cilj: }Uređivanje objava
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 							\item Administrator odabire recept koji želi urediti
 							\item Odabire opciju za uređivanje
-							\item Dodaje nove ili briše postojeće oznake
+							\item Admin uređuje recept (tagovi, sastojci, vrijeme kuhanjam, koraci pripreme, naslov)
 							\item Kada je gotov odabire opciju za spremanje promjena
 							\item Novo stanje ažurira se u bazi podataka
 						\end{packed_enum}
@@ -579,7 +581,7 @@
 						\item \textbf{Glavni sudionik: }Administartor
 						\item \textbf{Cilj: }Brisanje recepta koji nije prikladan ili slično
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -595,7 +597,7 @@
 						\item \textbf{Glavni sudionik: }Administrator
 						\item \textbf{Cilj: }Brisanje korisničkog profila
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -612,7 +614,7 @@
 						\item \textbf{Glavni sudionik: }Administrator
 						\item \textbf{Cilj: }Pristup svim administratorskim mogućnostima
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC4 (Prijava)
+						\item \textbf{Preduvjet: }UC6 (Prijava)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -627,7 +629,7 @@
 						\item \textbf{Glavni sudionik: }Administrator
 						\item \textbf{Cilj: }Dodavanje nove oznake koju korisnici mogu koristiti za označavanje recepata i pretraživanje
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC29 (Pregled mogućnosti administratora)
+						\item \textbf{Preduvjet: }UC27 (Pregled mogućnosti administratora)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -637,6 +639,38 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
+
+					\noindent \underbar{\textbf{UC29 - Brisanje komentara s recepata}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Administrator
+						\item \textbf{Cilj: }Obrisati neprimjerene komentare s objava
+						\item \textbf{Sudionici: }Baza podataka
+						\item \textbf{Preduvjet: }UC6 (Prijava)
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							\item Administrator odabire komentar koji želi obrisati
+							\item Odabire opciju za brisanje
+							\item Korisniku se elektroničkom poštom šalje obavijest o brisanju njegovog napisanog komentara
+							\item Komentar se briše iz baze podataka
+						\end{packed_enum}
+					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC30 - Pregled statistike platforme}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Administrator
+						\item \textbf{Cilj: }Dobiti uvid u najbolji recept (po ocjeni), najaktivnije korisnike (po broju objava) i najpopularniji recept (po broju spremanja)
+						\item \textbf{Sudionici: }Baza podataka
+						\item \textbf{Preduvjet: }UC27 (Pregled mogućnosti administratora)
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							\item Administrator odabire opciju za pregled statistika
+							\item Prikazuje se pregled
+						\end{packed_enum}
+					\end{packed_item}
 					%Nisam siguran na što se točno misli pod UC 31 i 32 (u obrasci_uporabe.txt), ali bilo bi ih dobro imati iz istog razloga kao i UC11 (videopoziv)
 				
 					
