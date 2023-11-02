@@ -1,0 +1,11 @@
+- pogledati ako negdje mislite da treba staviti sinkronu poruku umjesto asinkrone ili obrnuto.
+
+- ako mislite da životna linija/aktivnost objekta treba prestati ili slično možemo popraviti iako je to u programu dosta teško i vecinu stvari program sam napravi
+
+- pogledati ako treba na nekim mjestima treba dodati argumente na nekim porukama, npr. ako želimo otvoriti recept jel potrebno da webapp bazi podataka šalje IDrecept ili slično?
+
+-(UC Objavi recept) na kraju kada korisnik objavi recept svi pratitelji trebaju dobiti obavijest, ne znam kako je najbolje označiti taj skup korisnika, jel je dobro da je čovječuljak kao aktor ili nešto drugo
+		
+	-zadnji dio dijagrama nez jel je dobar, mozda treba biti loop pa kao dok ne pošalje svima obavijesti...
+
+
