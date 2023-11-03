@@ -29,19 +29,15 @@
 	Preduvjet: -
 	Opis osnovnog tijeka:
 	1. Korisnik odabire opciju za registraciju
-	2. Korisnik unosi potrebne podatke (e-mail, lozinka)
+	2. Korisnik unosi potrebne podatke (username, e-mail, lozinka)
 	3. Back-end traži je li e-mail već zauzet
 	4. Ako e-mail nije upisan u bazu, korisnik se upisuje u bazu
 	5. Učitava se naslovna stranica
-	6. Back-end šalje mail potvrde registracije
-	7. Korisnik potvrđuje registraciju
-	8. Korisnik dobiva mail o uspješnoj registraciji 
+
 	Opis mogućih odstupanja:
 	3.a Back-end vidi da je mail već zauzet
 		1. Korisnik dobiva poruku da je mail već iskorišten
 		2. Korisnika se traži ponovni upis podataka
-	7.a Korisnik ne potvrđuje mail
-		1. back-end briše korisnikov profil iz baze nakon određenog vremena
 
 
     4. Prijavi se
@@ -244,17 +240,12 @@
 
     21.  Brisanje vlastitog profila
 	Glavni sudionik: reg. korisnik
-	Cilj: Pregled korisnika koje prati
+	Cilj: Brisanje profila
 	Sudionici: Back-end
 	Preduvjet: UC20 (pregled osobnih postavaka)
 	Opis osnovnog tijeka:
-	1. Korisnik opciju za brisanje računa
-	2. back-end šalje mail za potvrđivanje brisanja
-	3. korisnik potvrđuje
-	4. back-end briše profil iz baze, objavljeni recepti i komentari ostaju
-	5. back-end šalje mail o obrisanom računu
-	Opis mogućih odstupanja:
-	3.a Korisnik ne potvrđuje brisanje
+	1. Korisnik odabere opciju za brisanje računa
+	2. back-end briše profil iz baze, objavljeni recepti i komentari ostaju
  
 
     22.  Uredi osobne postavke
@@ -314,7 +305,6 @@
 	1. Admin odabire profil kojeg želi obrisati
 	2. Odabire opciju za brisanje
 	3. Back-end traži progil u bazi podataka i briše ga
-	4. Šalje mail obrisanom korisniku o obrisanom profilu
 
     29. Pregled mogućnosti administratora
 	Glavni sudionik: admin
