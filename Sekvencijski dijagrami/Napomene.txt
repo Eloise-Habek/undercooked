@@ -1,3 +1,7 @@
+- UC Brisanje profila je pre jednostavan (to ne cemo u dokumentaciju)
+
+-stavljena su dodatna 2 sekv. dijag., svaki u sebi ima 3 UC, vald je tak dobro
+
 - pogledati ako negdje mislite da treba staviti sinkronu poruku umjesto asinkrone ili obrnuto.
 
 - ako mislite da životna linija/aktivnost objekta treba prestati ili slično možemo popraviti iako je to u programu dosta teško i vecinu stvari program sam napravi
