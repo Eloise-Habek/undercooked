@@ -7,5 +7,7 @@ import hr.fer.progi.UndercookedDemo.domain.Person;
 public interface PersonService {
 	List<Person> listAll();
 	
-	Person createPerson(Person person);
+	void createPerson(Person person);
+	
+	void deletePerson(Person person);
 }

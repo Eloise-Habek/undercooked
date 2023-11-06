@@ -1,25 +1,17 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-
 @Entity
 public class Person {
 	
 	@Id
-	@GeneratedValue
-	private long id;
-	
+	@Column(unique=true)
 	private String userName;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	
+	@Column(unique=true)
+	private String email;
 
 	public String getUserName() {
 		return userName;
@@ -27,6 +19,14 @@ public class Person {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
