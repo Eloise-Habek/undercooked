@@ -8,13 +8,32 @@
 		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
 		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
 	\end{itemize}
-
-	
 		
-
-		
-
+		\section{Organizacija sustava}
+			\subsection{Uvod}
+				Arhitekturu sustava čine tri glavna dijela:
+				\begin{packed_item}
+					\item Baza podataka
+					\item Internetski poslužitelj
+					\item Aplikacija
+				\end{packed_item}
+			
+				Internetski poslužitelj ključan je dio u uspostavljanju komunikacije između korisnika i aplikacije. Korisnik aplikaciji pristupa pomoću internetskog preglednika na svom računalu, mobitelu ili nekom drugom uređaju. Preglednik komunicira s poslužiteljem preko HTTP protokola slanjem odgovarajućih zahtjeva. Poslužitelj je onaj koji pokreće aplikaciju te joj prosljeđuje korisnikove HTTP zahtjeve.
+				\linebreak
+				Aplikacija preuzima zahtjev te ga obrađuje sukladno njegovoj vrsti i parametrima. Obrada zahtjeva uključuje i pristupanje bazi podataka kako bi se dohvatili podatci potrebni za rad. Po završetku obrade zahtjeva, aplikacija preko poslužitelja korisniku vraća odgovor.
+				\linebreak
+				Baza podataka može se nalaziti na istom računalu kao i poslužitelj i aplikacija ili različitom, no komunikacija se uvijeko odvija na isti način, preko preddefiniranih vrata na transportnom sloju i korištenjem odgovarajućeg protokola.
+				%Slike cu dodati kad budem doma, sad nemam mis pa ne mogu crtati
+			\subsection{Sklopovski zahtjevi}
+				Ukoliko se poslužitelj i baza podataka nalaze na različitim računalima, za optimalan rad ona bi trebala imati odgovarajuće karakteristike. Računalo na kojem će raditi poslužitelj treba imati dovoljnu veliku procesorsku moć kako bi moglo što brže odgovarati na zahtjeve i kako bi više korisnika moglo koristiti aplikaciju bez značajnog usporavanja sustava. Računalo na kojem će se nalaziti baza podataka treba imati dovoljno velike i brze diskove za pohranu podataka, idealno uz neku vrstu zaštite od gubitka podataka u slučaju kvara (na primjer, korištenje RAID sustava ili automatskog redovitog stvaranja sigurnosne kopije). Ako se pak poslužitelj i baza podataka pokreću na istom računalu, ono treba kombinirati prethodno navedene karakteristike.
+			\subsection{Organizacija aplikacije}
+				Za izradu aplikacije odabrani su programski jezik Java uz razvojni okvir Spring te Javascript i razvojni okvir React. Dva glavna sloja aplikacije su frontend, koji komunicira s korisnikom (Javascript + React) i backend, koji obrađuje HTTP zahtjeve i komunicira s bazom podataka (Java + Spring).
+				%U primjeru dokumentacije oni ovdje jos pisu da se arhitektura temelji na MVCu i to dodatno opisuju
+				%Ovaj dio bi onda trebali dovrsit kada vidimo sto cemo s time
 				
+				
+		
+
 		\section{Baza podataka}
 			
 			\textbf{\textit{dio 1. revizije}}\\
