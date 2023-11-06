@@ -209,7 +209,7 @@
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-							\item Korisnik na prikazanom receptu stiskanjem gumbova (+/-) ažurira broj porcija
+							\item Korisnik na prikazanom receptu stiskanjem tipki (+/-) ažurira broj porcija
 							\item Prikaz recepta se ažurira s obzirom na broj porcija
 						\end{packed_enum}
 					\end{packed_item}
@@ -570,9 +570,6 @@
 							\item Novo stanje ažurira se u bazi podataka
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
-						\item[] \begin{packed_enum}
-							\item
-						\end{packed_enum}
 					\end{packed_item}
 										
 					\noindent \underbar{\textbf{UC25 - Brisanje recepta}}
@@ -707,10 +704,22 @@
 				\eject
 	
 		\section{Ostali zahtjevi}
-		
-			\textbf{\textit{dio 1. revizije}}\\
-		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+			 
+			 \begin{packed_item}
+			 	\item Aplikaciji se pristupa pomoću internetskog preglednika korištenjem HTTPS protokola
+			 	\item Aplikaciji treba moći pristupiti više korisnika istovremeno
+			 	\item Korisničko sučelje mora biti intuitivno i jednostavno za korištenje
+			 	\item Dizajn korisničkog sučelja mora piti responzivan kako bi se aplikaciji moglo pristupiti i s mobilnih uređaja
+			 	\item Sustav mora biti otporan na greške uzrokovane neispravnim korištenjem korisničkog sučelja
+			 	\item Postupak prijave korisnika mora biti siguran, a lozinke ne smiju biti pohranjene kao otvoreni tekst
+			 	\item Baza podataka mora sadržavati odgovarajuće indekse kako bi pristup podatcima bio brz
+			 	\item Baza podataka mora biti odvojena od ostatka sustava, ne smije joj se moći pristupiti izravno, već samo preko back-enda aplikacije
+			 	\item Korisničko sučelje i baza podataka moraju podržavati dijakritičke znakove
+			 	\item Pri implementaciji moraju biti korištena načela objektno-otijentiranog programiranja
+			 	\item Razvojna verzija aplikacije mora biti u potpunosti odvojena od produkcijske kako rad na nadogradnjama ne bi utjecao na postojeće funkcionalnosti
+			 	
+			 \end{packed_item}
+			 \eject
 			 
 			 
 			 
