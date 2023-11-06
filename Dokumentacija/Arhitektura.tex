@@ -23,7 +23,12 @@
 				Aplikacija preuzima zahtjev te ga obrađuje sukladno njegovoj vrsti i parametrima. Obrada zahtjeva uključuje i pristupanje bazi podataka kako bi se dohvatili podatci potrebni za rad. Po završetku obrade zahtjeva, aplikacija preko poslužitelja korisniku vraća odgovor.
 				\linebreak
 				Baza podataka može se nalaziti na istom računalu kao i poslužitelj i aplikacija ili različitom, no komunikacija se uvijeko odvija na isti način, preko preddefiniranih vrata na transportnom sloju i korištenjem odgovarajućeg protokola.
-				%Slike cu dodati kad budem doma, sad nemam mis pa ne mogu crtati
+				\begin{figure}[H]
+					\includegraphics[scale=1]{slike/skica_arhitekture.png}
+					\centering
+					\caption{Arhitektura sustava}
+					\label{fig:arhitektura_sustava}
+				\end{figure}
 			\subsection{Sklopovski zahtjevi}
 				Ukoliko se poslužitelj i baza podataka nalaze na različitim računalima, za optimalan rad ona bi trebala imati odgovarajuće karakteristike. Računalo na kojem će raditi poslužitelj treba imati dovoljnu veliku procesorsku moć kako bi moglo što brže odgovarati na zahtjeve i kako bi više korisnika moglo koristiti aplikaciju bez značajnog usporavanja sustava. Računalo na kojem će se nalaziti baza podataka treba imati dovoljno velike i brze diskove za pohranu podataka, idealno uz neku vrstu zaštite od gubitka podataka u slučaju kvara (na primjer, korištenje RAID sustava ili automatskog redovitog stvaranja sigurnosne kopije). Ako se pak poslužitelj i baza podataka pokreću na istom računalu, ono treba kombinirati prethodno navedene karakteristike.
 			\subsection{Organizacija aplikacije}
