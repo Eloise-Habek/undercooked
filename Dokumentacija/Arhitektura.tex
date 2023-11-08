@@ -130,7 +130,7 @@
 					\SetCell{LightBlue}Tekst komentara	& VARCHAR &  tekst komentara 	\\ \hline 
                         \SetCell{LightBlue}ID komentatora	& INT &  ID korisnika komentatora	\\ \hline
                         \SetCell{LightBlue}ID recepta	& INT &  ID recepta na kojem je komentar postavljen	\\ \hline
-                        \SetCell{LightBlue}Datum komentara	& DATETIME &  datum i vrijeme komentara	\\ \hline 
+                        \SetCell{LightBlue}Datum i vrijeme komentara	& DATETIME &  datum i vrijeme komentara	\\ \hline 
 				\end{longtblr}
 
                 \textbf{Ocjena} Ovaj entitet sadržava sve važne informacije o pojedinoj ocjeni recepta. Sadrži atribute: ID ocjenitelja, ID recepta i datum i vrijeme ocjene. Entitet je u vezi \textit{Many-to-One} s ocjeniteljem preko ID-a korisnika koji je ocijenio recept i \textit{Many-to-One} s receptom preko ID-a recepta.
@@ -189,7 +189,7 @@
 			
 			\subsection{Dijagram baze podataka}
 			\begin{figure}[H]
-				\includegraphics[scale=0.15]{slike/ER diagram baze podataka.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\includegraphics[scale=0.15]{slike/ER dijagram baze podataka.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				\centering
 				\caption{ER dijagram baze podataka}
 				\label{fig:ER_diagram}
@@ -199,17 +199,18 @@
 			
 			
 		\section{Dijagram razreda}
-		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
-			
-			\textbf{\textit{dio 2. revizije}}\\			
-			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
+		\begin{figure}[H]
+			\includegraphics[scale=1.3]{slike/dijagram_razreda1.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{dijagram s controller-ima}
+			\label{fig:Dijagram_razreda1}
+		\end{figure}
+		\begin{figure}[H]
+			\includegraphics[scale=1.3]{slike/dijagram_razreda2.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{dijagram baze podataka}
+			\label{fig:Dijagram_razreda2}
+		\end{figure}
 			
 			
 			\eject
