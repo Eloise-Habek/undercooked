@@ -150,9 +150,6 @@
 							\item Baza podataka provjerava jesu li korisničko ime ili e-mail adresa već zauzeti
 							\item Ako su korisničko ime i e-mail adresa slobodni, novog registriranog korisnika se upisuje u bazu
 							\item Učitava se naslovna stranica
-							\item Korisniku se šalje e-mail za potvrdu registracije
-							\item Korisnik potvrđuje registraciju
-							\item Korisniku se šalje e-mail o uspješnoj registraciju
 						\end{packed_enum}
 						\item \textbf{Opis mogućih odstupanja:}
 						\item[] \begin{packed_enum}
@@ -160,10 +157,6 @@
 							\begin{packed_enum}
 								\item[1.] Korisnik dobiva poruku da su korisničko ime ili e-mail adresa već korišteni
 								\item[2.] Korisnika se traži ponovni upis podataka
-							\end{packed_enum}
-							\item[7.a] Korisnik ne potvrđuje registraciju u zadanom roku
-							\begin{packed_enum}
-								\item[1.] Baza podataka briše novonastali profil
 							\end{packed_enum}
 						\end{packed_enum}
 					\end{packed_item}
@@ -521,18 +514,7 @@
 						
 						\item[] \begin{packed_enum}
 							\item Korisnik odabire opciju za brisanje računa
-							\item Korisniku se šalje e-mail za potvrdu
-							\item Korisnik potvrđuje brisanje
 							\item Profil se briše iz baze podataka, recepti i komentari ostaju, ali piše da ih je objavio obrisani korisnik
-							\item Korisniku se elektroničkom poštom šalje potvrda o brisanju profila
-						\end{packed_enum}
-						\item \textbf{Opis mogućih odstupanja:}
-						\item[] \begin{packed_enum}
-							\item[3.a] Korisnik ne potvrđuje brisanje u zadanom roku
-							\begin{packed_enum}
-								\item[1.] Korisniku se elektroničkom poštom šalje obavijest da profil nije obrisan
-								\item[2.] Profil i svi podatci vezani uz njega ostaju zapisani u bazi
-							\end{packed_enum}
 						\end{packed_enum}
 					\end{packed_item}
 										
@@ -623,16 +605,15 @@
 					\noindent \underbar{\textbf{UC28 - Dodavanje nove oznake}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Administrator
-						\item \textbf{Cilj: }Dodavanje nove oznake koju korisnici mogu koristiti za označavanje recepata i pretraživanje
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item \textbf{Cilj: }Dodavanje nove oznake koju ostali korisnici mogu koristiti za označavanje recepata i pretraživanje
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC27 (Pregled mogućnosti administratora)
+						\item \textbf{Preduvjet: }UC
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-							\item Administrator odabire opciju za dodavanje nove oznake
-							\item Administrator dodaje oznaku
-							\item Nova oznaka zapisuje se u bazu podataka i spremna je za korištenje
+							\item Korisnik pri objavi ili uređivanju recepta upisuje oznaku koja se ne nalazi u bazi podataka
+							\item Nova oznaka se zapisuje u bazu podataka i spremna je za korištenje
 						\end{packed_enum}
 					\end{packed_item}
 					
