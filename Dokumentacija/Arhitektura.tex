@@ -55,7 +55,7 @@
 			\subsection{Opis tablica}
 			
 
-				\textbf{Korisnik} Ovaj entitet sadrzava sve važne informacije o korisniku aplikacije. Sadrzi atribute: Korisnicko ime, lozinku, ime, prezime, broj mobitela korisnika, razinu ovlasti korisnika i e-mail korisnika. Ovaj entitet u vezi je \textit{One-to-Many} sa entitetima Recept, Komentar i Ocjena te je sa entitetom poruka u ulozi primatelj i pošiljatelj isto u \textit{One-to-Many} vezi.
+				\textbf{Korisnik} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: Korisničko ime, lozinku, ime, prezime, broj mobitela korisnika, razinu ovlasti korisnika i e-mail korisnika. Ovaj entitet u vezi je \textit{One-to-Many} sa entitetima Recept, Komentar i Ocjena te je sa entitetom poruka u ulozi primatelj i pošiljatelj isto u \textit{One-to-Many} vezi, sve preko ID-a korisnika.
 				
 				
 				\begin{longtblr}[
@@ -77,7 +77,7 @@
 					Email & VARCHAR & e-mail adresa korisnika 	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Recept} Ovaj entitet sadrzava sve važne informacije o receptu. Sadrzi atribute: ID recepta, naziv recepta, vrijeme pripreme, postupak pripreme, opis recepta, sliku recepta, datum recepta  i vrijeme objave recepta i prosječnu ocjenu recepta. Recept je u vezi \textit{Many-to-One} sa korisnikom koji ga je objavio, u vezi \textit{One-to-Many} sa ocjenom, sastojkom u receptu i komentarom te u \textit{Many-to-Many} sa oznakom recepta.
+				\textbf{Recept} Ovaj entitet sadržava sve važne informacije o receptu. Sadrži atribute: ID recepta, naziv recepta, vrijeme pripreme, postupak pripreme, opis recepta, sliku recepta, datum recepta  i vrijeme objave recepta i prosječnu ocjenu recepta. Recept je u vezi \textit{Many-to-One} sa korisnikom koji ga je objavio, u vezi \textit{One-to-Many} sa ocjenom, sastojkom u receptu i komentarom preko ID-a recepta te u \textit{Many-to-Many} sa oznakom recepta preko ID-a oznake.
 				
 				\begin{longtblr}[
 					label=none,
@@ -98,10 +98,10 @@
                         Prosječna ocjena recepta	& INT &   prosječna ocjena recepta	\\ 
                         \hline
                         \SetCell{LightBlue} ID Korisnika	& INT &  ID korisnika koji je objavio recept\\ \hline 
-                        \SetCell{LightBlue} ID Oznake	& INT &  ID oznake recepta\\ \hline 
+                        \SetCell{LightBlue} ID oznake	& INT &  ID oznake recepta\\ \hline 
 				\end{longtblr}
 
-                \textbf{Oznaka} Ovaj entitet sadrzava sve važne informacije o oznaci recepta. Sadrzi atribute: ID oznake i naziv oznake. Oznaka je u \textit{Many-to-Many} vezi s receptom.
+                \textbf{Oznaka} Ovaj entitet sadržava sve važne informacije o oznaci recepta. Sadrži atribute: ID oznake i naziv oznake. Oznaka je u \textit{Many-to-Many} vezi s receptom preko ID-a oznake.
     
                 \begin{longtblr}[
 					label=none,
@@ -116,7 +116,7 @@
 					Naziv oznake & VARCHAR & naziv oznake  	\\ \hline 
 				\end{longtblr}
 
-                \textbf{Komentar} Ovaj entitet sadrzava sve važne informacije o komentaru recepta. Sadrzi atribute: ID komentatora, ID recepta, tekst komentara i datum i vrijeme komentara. Komentar je u \textit{Many-to-One} vezi s korisnikom koji ga objavi i receptom. 
+                \textbf{Komentar} Ovaj entitet sadržava sve važne informacije o komentaru recepta. Sadrži atribute: ID komentatora, ID recepta, tekst komentara i datum i vrijeme komentara. Komentar je u \textit{Many-to-One} vezi s korisnikom preko ID-a korisnika koji ga objavi i receptom preko ID-a recepta. 
 
                 \begin{longtblr}[
 					label=none,
@@ -133,7 +133,7 @@
                         \SetCell{LightBlue}Datum komentara	& DATETIME &  datum i vrijeme komentara	\\ \hline 
 				\end{longtblr}
 
-                \textbf{Ocjena} Ovaj entitet sadrzava sve važne informacije o pojedinoj ocjeni recepta. Sadrzi atribute: ID ocjenitelja, ID recepta i datum i vrijeme ocjene. Entitet je u vezi \textit{Many-to-One} s ocjeniteljem i \textit{Many-to-One} s receptom.
+                \textbf{Ocjena} Ovaj entitet sadržava sve važne informacije o pojedinoj ocjeni recepta. Sadrži atribute: ID ocjenitelja, ID recepta i datum i vrijeme ocjene. Entitet je u vezi \textit{Many-to-One} s ocjeniteljem preko ID-a korisnika koji je ocijenio recept i \textit{Many-to-One} s receptom preko ID-a recepta.
 
                 \begin{longtblr}[
 					label=none,
@@ -150,7 +150,7 @@
                         Datum i vrijeme ocjene	& DATETIME &  datum i vrijeme ocjene	\\ \hline 
 				\end{longtblr}
 
-                \textbf{Poruka} Ovaj entitet sadrzava sve važne informacije o poruci između dva korisnika. Sadrzi atribute: ID pošiljatelja, ID primatelja, tekst poruke i datum i vrijeme poruke. Poruka je u vezi \textit{Many-to-One} s primateljem i pošiljateljem.
+                \textbf{Poruka} Ovaj entitet sadržava sve važne informacije o poruci između dva korisnika. Sadrži atribute: ID pošiljatelja, ID primatelja, tekst poruke i datum i vrijeme poruke. Poruka je u vezi \textit{Many-to-One} s primateljem i pošiljateljem preko ID-a korisnika koji palje i prima poruku.
 
                 \begin{longtblr}[
 					label=none,
@@ -167,7 +167,7 @@
                         \SetCell{LightBlue}Datum i vrijeme poruke & TIMESTAMP &  datum i vrijeme poruke	\\ \hline 
 				\end{longtblr}
 
-                \textbf{Sastojak u receptu} Ovaj entitet sadrzava sve važne informacije o sastojku navedenom u nekom receptu. Sadrzi atribute: ID recepta, naziv sastojka, količinu. Entitet je u vezi \textit{Many-to-One} sa receptom.
+                \textbf{Sastojak u receptu} Ovaj entitet sadržava sve važne informacije o sastojku navedenom u nekom receptu. Sadrži atribute: ID recepta, naziv sastojka, količinu. Entitet je u vezi \textit{Many-to-One} s receptom preko ID-a recepta.
                 
                 \begin{longtblr}[
 					label=none,
