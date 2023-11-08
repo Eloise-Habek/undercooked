@@ -1,56 +1,84 @@
 package hr.fer.progi.UndercookedDemo.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import hr.fer.progi.UndercookedDemo.dao.PersonRepository;
 import hr.fer.progi.UndercookedDemo.domain.Person;
+import hr.fer.progi.UndercookedDemo.service.EntityMissingException;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
+import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class PersonServiceJpa implements PersonService{
-	
+public class PersonServiceJpa implements PersonService {
+
 	@Autowired
-	private PersonRepository personRepo;
-	
+	private PersonRepository PersonRepo;
+
 	@Override
 	public List<Person> listAll() {
-		return personRepo.findAll();
+		return PersonRepo.findAll();
 	}
-	
-	/**
-	 * Funkcija koja kreira korisnike koji imaju jedinstven userName i email.
-	 * @throws RuntimeException ako vec postoji takav userName ili email.
-	 */
 
 	@Override
-	public void createPerson(Person person) {
-		Assert.notNull(person, "Osoba mora postojati!");
-		Assert.notNull(person.getUserName(), "Osoba mora imat userName!");
-		Assert.notNull(person.getEmail(), "Osoba mora imati email!");
-		if(personRepo.findByUserName(person.getUserName()).size() != 0 || personRepo.findByEmail(person.getEmail()).size() != 0) {
-			throw new RuntimeException();
-		}
-		 personRepo.save(person);
+	public Optional<Person> findById(long PersonId) {
+		return PersonRepo.findById(PersonId);
 	}
-	
-	/**
-	 * Funkcija koja briše korisnike, ako takvi postoje.
-	 * @throws RuntimeException ako korisnik ne postoji.
-	 */
 
 	@Override
-	public void deletePerson(Person person) {
-		Assert.notNull(person, "Osoba mora postojati!");
-		Assert.notNull(person.getUserName(), "Osoba mora imat userName!");
-		Assert.notNull(person.getEmail(), "Osoba mora imati email!");
-		if(personRepo.findByEmail(person.getEmail()).size() == 0 || personRepo.findByUserName(person.getUserName()).size() == 0) {
-			throw new RuntimeException();
-		}
-		personRepo.delete(person);
+	public Optional<Person> findByUsername(String username) {
+		Assert.notNull(username, "Username must be given");
+		return PersonRepo.findByUsername(username);
 	}
-	
+
+	@Override
+	public Optional<Person> findByEmail(String email) {
+		Assert.notNull(email, "Username must be given");
+		return PersonRepo.findByEmail(email);
+	}
+
+	@Override
+	public Person fetch(long PersonId) {
+		return findById(PersonId).orElseThrow(() -> new EntityMissingException(Person.class, PersonId));
+	}
+
+	@Override
+	public Person createPerson(Person person) {
+		validate(person);
+		Assert.isNull(person.getId(), "Person ID must be null, not: " + person.getId());
+		if (PersonRepo.countByUsername(person.getUsername()) > 0)
+			throw new RequestDeniedException("Person with username " + person.getUsername() + " already exists");
+		if (PersonRepo.countByEmail(person.getEmail()) > 0)
+			throw new RequestDeniedException("Person with email " + person.getEmail() + " already exists");
+		Person newPerson = new Person();
+		newPerson.setEmail(person.getEmail());
+		newPerson.setUsername(person.getUsername());
+		PasswordEncoder pe = new BCryptPasswordEncoder();
+		newPerson.setPassword(pe.encode(person.getPassword()));
+		return PersonRepo.save(newPerson);
+	}
+
+	@Override
+	public Person deletePerson(long PersonId) {
+		Person Person = fetch(PersonId);
+		PersonRepo.delete(Person);
+		return Person;
+	}
+
+	private void validate(Person person) {
+		Assert.notNull(person, "Person object must be given");
+		String username = person.getUsername();
+		Assert.hasText(username, "Username must be given");
+		String email = person.getEmail();
+		Assert.hasText(email, "Email must be given");
+		String password = person.getPassword();
+		Assert.hasText(password, "Passowrd must be given");
+	}
+
 }
