@@ -13,11 +13,35 @@ import hr.fer.progi.UndercookedDemo.domain.Person;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 	
+	/**
+	 * Funkcija nalazi osobu prema njenon mailu.
+	 * @param email
+	 * @return 
+	 */
+	
 	Optional<Person>  findByEmail(String email);
+	
+	/**
+	 * Funkcija nalazi osobu prema njenon usernameu.
+	 * @param email
+	 * @return 
+	 */
 	
 	Optional<Person> findByUsername(String username);
 	
+	/**
+	 * Funkcija koja broji broj ljudi sa zadanim usernameom.
+	 * @param email
+	 * @return 
+	 */
+	
 	int countByUsername(String username);
+	
+	/**
+	 * Funkcija koja broji broj ljudi sa zadanim mailom.
+	 * @param email
+	 * @return 
+	 */
 	
 	int countByEmail(String email);
 

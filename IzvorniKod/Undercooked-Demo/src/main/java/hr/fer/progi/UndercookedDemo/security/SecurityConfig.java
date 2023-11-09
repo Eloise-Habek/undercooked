@@ -1,4 +1,4 @@
-package hr.fer.progi.UndercookedDemo.rest;
+package hr.fer.progi.UndercookedDemo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> {
                     auth.antMatchers("/", "/login", "/register").permitAll();
                     auth.antMatchers("/profile").hasRole("USER");
-                    auth.antMatchers("/persons").hasRole("ADMIN");
+                    auth.antMatchers("/persons").hasRole("ADMIN"); 
                 })
                 .httpBasic(withDefaults())
                 .build();

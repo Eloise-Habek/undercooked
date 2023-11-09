@@ -17,6 +17,9 @@ import java.util.Optional;
 
 @Service
 public class PersonServiceJpa implements PersonService {
+	
+	private final String mailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
+	        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
 	@Autowired
 	private PersonRepository PersonRepo;
@@ -56,9 +59,12 @@ public class PersonServiceJpa implements PersonService {
 			throw new RequestDeniedException("Person with username " + person.getUsername() + " already exists");
 		if (PersonRepo.countByEmail(person.getEmail()) > 0)
 			throw new RequestDeniedException("Person with email " + person.getEmail() + " already exists");
+		if(person.getUsername().toLowerCase().equals("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
 		Person newPerson = new Person();
 		newPerson.setEmail(person.getEmail());
 		newPerson.setUsername(person.getUsername());
+		newPerson.setName(person.getName());
+		newPerson.setSurname(person.getSurname());
 		PasswordEncoder pe = new BCryptPasswordEncoder();
 		newPerson.setPassword(pe.encode(person.getPassword()));
 		return PersonRepo.save(newPerson);
@@ -77,8 +83,13 @@ public class PersonServiceJpa implements PersonService {
 		Assert.hasText(username, "Username must be given");
 		String email = person.getEmail();
 		Assert.hasText(email, "Email must be given");
+		Assert.isTrue(email.matches(mailPattern), "Invalid email");
 		String password = person.getPassword();
-		Assert.hasText(password, "Passowrd must be given");
+		Assert.hasText(password, "Password must be given");
+		String name = person.getName();
+		Assert.hasText(name, "Name must be given");
+		String surname = person.getSurname();
+		Assert.hasText(surname, "Surname must be given");
 	}
 
 }
