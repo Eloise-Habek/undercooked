@@ -1,4 +1,4 @@
-package hr.fer.progi.UndercookedDemo.rest;
+package hr.fer.progi.UndercookedDemo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
@@ -17,12 +17,17 @@ import static org.springframework.security.core.authority.AuthorityUtils.commaSe
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class UserUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	PersonRepository personRepo;
+	
+	@Value("${progi.admin.password}")
+	private String adminPasswordHash;
+
 	
 	@Bean
 	public PasswordEncoder passwordEnc() {
@@ -32,13 +37,12 @@ public class UserUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		if (username.equals("admin")) {
-			return new User(username, "$2a$10$VVOEMN1nR5DNU.tUsoj4ju85DMXXQfFfS0VZbPVC6RjHqLA1RezJO", commaSeparatedStringToAuthorityList("ROLE_ADMIN, ROLE_USER"));
+			return new User(username, adminPasswordHash, commaSeparatedStringToAuthorityList("ROLE_ADMIN, ROLE_USER"));
 		}
 		Optional<Person> person = personRepo.findByUsername(username);
 		if (person.isEmpty()) {
 			throw new UsernameNotFoundException(username);
 		} else {
-			System.out.println("proba");
 			return new User(username, person.get().getPassword(), commaSeparatedStringToAuthorityList("ROLE_USER"));
 		}
 	}
