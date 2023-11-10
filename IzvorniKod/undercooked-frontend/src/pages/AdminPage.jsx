@@ -16,16 +16,37 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
-        if (secureLocalStorage.getItem("id") == null) {
-            AdminService.getUsers().then(res => {
-                this.setState({users: res.data})
+        // if (secureLocalStorage.getItem("id") == null) {
+        //     fetch("http://localhost:8080/api/persons", {
+        //         method: "GET",
+        //         headers: {
+        //             "Authorization": secureLocalStorage.getItem("logInToken")
+        //         }
+        //     }).then(res => {
+        //         this.setState({users: res.data})
+        //     });
+
+        //     // AdminService.getUsers().then(res => {
+        //     //     this.setState({users: res.data})
+        //     // });
+        // } else {
+        //     fetch("http://localhost:8080/api/persons/" + secureLocalStorage.getItem("id").toString(), {
+        //         method: "GET",
+        //         headers: {
+        //             "Authorization": secureLocalStorage.getItem("logInToken")
+        //         }
+        //     }).then(res => {
+        //         this.setState([{users: res.data}])
+        //     });
+        // }
+        fetch("http://localhost:8080/api/persons", {
+                method: "GET",
+                headers: {
+                    "Authorization": secureLocalStorage.getItem("logInToken")
+                }
+            }).then(res => {
+                this.setState([{users: res.data}])
             });
-        } else {
-            AdminService.getUserById(secureLocalStorage.getItem("id")).then(res => {
-                this.setState({users: [res.data]})
-            });
-        }
-        
         
     }
 
