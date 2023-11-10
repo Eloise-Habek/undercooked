@@ -4,15 +4,16 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: rgb(255, 255, 255);
+  background-color: #d2d3d3;
 }
 
 .form_wrap {
-  width: 300px;
+  width: 400px;
   padding: 20px;
   border-radius: 8px;
-  background-color: #a0b6c2;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #7d7f80;
+  box-shadow: 0 0 15px #9615db;
+  margin-bottom: 40vh;
 }
 
 .wrap {
@@ -36,14 +37,15 @@
 .login_button {
   width: 100%;
   padding: 10px;
-  background-color: #3498db;
+  background-color: #2d3032;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: 1em;
 }
 
 .login_button:hover {
-  background-color: #2980b9;
+  background-color: #9615db;
 }

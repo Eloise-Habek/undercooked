@@ -37,11 +37,6 @@ class Nav extends Component {
                     
                     <div><NavLink className="izbornik" to={"/register"}>REGISTER</NavLink></div>
                 </div>
-                
-                
-                
-                 
-                
                 <hr />
             </nav>
         </header>

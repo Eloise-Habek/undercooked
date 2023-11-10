@@ -1,5 +1,9 @@
+body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .main_div {
-  background-color: rgb(255, 255, 255);
+  background-color: #d2d3d3;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -23,18 +27,17 @@
 
 .search-input {
   flex: 1;
-  margin-bottom: 8px;
-  padding: 8px;
-  border: 1px solid #000000;
-  border-radius: 4px 0 0 4px;
+  padding: 2vh;
+  border: 2px solid #9615db;
+  border-radius: 15px 0 0 15px;
   margin-right: 8px;
 }
 
 .search-button {
-  background-color: #2779a7;
+  background-color: #9615db;
   color: #fff;
-  padding: 1vh;
-  border: 1px solid #2779a7;
-  border-radius: 0 4px 4px 0;
-  cursor: crosshair;
+  padding: 2vh;
+  border: 1px solid #9615db;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
 }
