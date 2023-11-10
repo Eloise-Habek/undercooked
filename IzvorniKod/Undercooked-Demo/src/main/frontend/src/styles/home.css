@@ -1,0 +1,40 @@
+.main_div {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.naslov {
+  margin-top: 5vh;
+  font-size: 7vh;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 60vh;
+}
+
+.search-input {
+  flex: 1;
+  margin-bottom: 8px;
+  padding: 8px;
+  border: 1px solid #000000;
+  border-radius: 4px 0 0 4px;
+  margin-right: 8px;
+}
+
+.search-button {
+  background-color: #2779a7;
+  color: #fff;
+  padding: 1vh;
+  border: 1px solid #2779a7;
+  border-radius: 0 4px 4px 0;
+  cursor: crosshair;
+}
