@@ -1,7 +1,8 @@
 import axios from "axios";
 import secureLocalStorage from "react-secure-storage";
 
-const URL = "http://localhost:8080/api/persons";
+const server = "http://localhost:8080";
+const URL = server + "/api/persons";
 
 class AdminService {
   getUsers() {

@@ -1,14 +1,15 @@
 import axios from "axios";
-import secureLocalStorage from "react-secure-storage";
 
-const EMPLOYEE_API_BASE_URL = "http://localhost:8080/api/register";
+const server = "http://localhost:8080";
+const URL = server + "/api/register";
 
 class RegisterService {
-  registerUser(user) {
-    return axios.get(EMPLOYEE_API_BASE_URL,{
+  register(user) {
+    return axios.post(URL, JSON.stringify(user), {
       headers: {
-        "Authorization": secureLocalStorage.getItem("logInToken")
-    }});
+        "Content-Type": "application/json",
+      }
+    });
   }
 }
 

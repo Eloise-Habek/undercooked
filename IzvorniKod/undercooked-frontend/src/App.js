@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Home } from "./pages/Home";
-import Profile from "./pages/Profile";
+import { Profile } from "./pages/Profile";
 import { Login, loginAction } from "./pages/Login";
 import { Register, registerAction } from "./pages/Register";
 import Nav from "./pages/wrapper/Nav";
@@ -18,7 +18,7 @@ const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" Component={Nav}>
       <Route index element={<Home />} />
-      <Route path="profile" Component={Profile} />
+      <Route path="profile" element={<Profile />} />
       <Route path="login" element={<Login />} action={loginAction} />
       <Route path="register" element={<Register />} action={registerAction} />
       <Route path="logout" element={<Logout />} />

@@ -1,29 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfileService from '../services/ProfileService';
+import secureLocalStorage from 'react-secure-storage';
+import { useNavigate } from 'react-router-dom';
 
-class Profile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            username: ""
+export function Profile() {
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const navigate = useNavigate()
+
+    useEffect(
+        () => {
+            if(secureLocalStorage.getItem("logInToken") != null) {
+                ProfileService.getProfile().then(res => {
+                    setEmail(res.data.email);
+                    setUsername(res.data.username);
+                    setName(res.data.name);
+                    setSurname(res.data.surname);
+                });
+            } else {
+                // ovo je malo glitchy
+                // alert("Sign in to see your profile!")
+                // navigate("/")
+
+                //ovo je bolja solucija
+                navigate("/login");
+            }
+            
         }
-    }
-    
-    componentDidMount() {
-        ProfileService.getProfile().then(res => {
-            this.setState({email: res.data.email});
-            this.setState({username: res.data.username});
-        });
-    }
-    render() {
-        return (
+    );
+    return (
             <div>
-                <h1>Email: {this.state.email}</h1>
-                <h1>Username: {this.state.username}</h1>
+                <h1>Email: {email}</h1>
+                <h1>Username: {username}</h1>
+                <h1>Name: {name}</h1>
+                <h1>Surname: {surname}</h1>
             </div>
         );
-    }
 }
 
-export default Profile;
