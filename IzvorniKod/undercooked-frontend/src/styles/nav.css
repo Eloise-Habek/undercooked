@@ -1,11 +1,7 @@
 .navbar {
-  background-color: #2779a7;
+  background-color: #7d7f80;
   display: flex;
   justify-content: space-between;
-}
-
-.navbar2 {
-  background-color: #2779a7;
 }
 
 .left_home {
@@ -14,23 +10,46 @@
 
 .izbornik {
   text-decoration: none;
-  color: black;
+  position: relative;
+  color: #2D3032;
   font-weight: bold;
-  font-size: 2vh;
-  margin-left: 3vw;
+  font-size: 3vh;
+  margin-left: 2em;
   margin-right: 3vw;
   margin-bottom: 1vh;
   margin-top: 1vh;
 }
+
+.izbornik::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #9615db;
+  bottom: -5px;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .3s ease-in-out;
+}
+
+.izbornik:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
 .izbornik:hover {
-  color: white;
+  color: #000000;
+  text-decoration: none;
 }
 
 .home_text {
   text-decoration: none;
-  color: black;
+  color: #2D3032;
   font-weight: bold;
 }
+
 .home_text:hover {
   color: white;
 }
@@ -43,3 +62,8 @@
   align-items: center;
   color: rgb(152, 19, 19);
 }
+
+
+
+
+

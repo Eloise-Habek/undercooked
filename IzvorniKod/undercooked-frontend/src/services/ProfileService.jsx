@@ -1,4 +1,3 @@
-import axios from "axios";
 import secureLocalStorage from "react-secure-storage";
 
 const server = "http://localhost:8080";
@@ -6,10 +5,13 @@ const URL = server + "/api/profile";
 
 class ProfileService {
   getProfile() {
-    return axios.get(URL,{     
+    return fetch(URL, {
+      method: "GET",
+      mode: "cors",
       headers: {
-      "Authorization": secureLocalStorage.getItem("logInToken")
-    }})
+        "Authorization": secureLocalStorage.getItem("logInToken")
+      }
+    })
   }
 }
 

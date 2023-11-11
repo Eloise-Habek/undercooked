@@ -1,5 +1,12 @@
+body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .main_div {
-  background-color: rgb(255, 255, 255);
+  background-color: #d2d3d3;
+  background-image: url('pozadina.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -11,6 +18,13 @@
 .naslov {
   margin-top: 5vh;
   font-size: 7vh;
+  color: #9615db;
+  font-family: cursive;
+  backdrop-filter: blur(10px);
+  background-color: rgb(225, 225, 225, 0.6);
+  padding: 0.5em;
+  border-radius: 1em;
+  overflow: hidden;
 }
 
 .search-container {
@@ -19,22 +33,31 @@
   max-width: 400px;
   width: 100%;
   margin-bottom: 60vh;
+  backdrop-filter: blur(10px);
+  background-color: rgb(225, 225, 225, 0.6);
+  padding: 0.5em;
+  border-radius: 1em;
+  overflow: hidden;
 }
 
 .search-input {
   flex: 1;
-  margin-bottom: 8px;
-  padding: 8px;
-  border: 1px solid #000000;
-  border-radius: 4px 0 0 4px;
+  padding: 2vh;
+  border: 3px solid #9615db;
+  border-style: double;
+  border-radius: 15px 0 0 15px;
   margin-right: 8px;
 }
 
+
 .search-button {
-  background-color: #2779a7;
+  background-color: #9615db;
   color: #fff;
-  padding: 1vh;
-  border: 1px solid #2779a7;
-  border-radius: 0 4px 4px 0;
-  cursor: crosshair;
+  padding: 2vh;
+  border: 1px solid #9615db;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
 }
+
+
+

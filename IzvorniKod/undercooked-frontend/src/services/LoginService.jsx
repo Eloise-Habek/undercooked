@@ -1,11 +1,11 @@
-import axios from "axios";
-
 const server = "http://localhost:8080";
 const URL = server + "/api/";
 
 class LoginService {
   login (user) {
-    return axios.get(URL, {
+    return fetch(URL, {
+      method: "GET",
+      mode: "cors",
       headers: {
         "Authorization": user
       }
