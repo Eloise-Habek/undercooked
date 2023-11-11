@@ -1,10 +1,10 @@
-body{
+body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .main_div {
   background-color: #d2d3d3;
-  background-image: url('pozadina.jpg');
+  background-image: url("pozadina.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
@@ -19,7 +19,6 @@ body{
   margin-top: 5vh;
   font-size: 7vh;
   color: #9615db;
-  font-family: cursive;
   backdrop-filter: blur(10px);
   background-color: rgb(225, 225, 225, 0.6);
   padding: 0.5em;
@@ -49,7 +48,6 @@ body{
   margin-right: 8px;
 }
 
-
 .search-button {
   background-color: #9615db;
   color: #fff;
@@ -58,6 +56,3 @@ body{
   border-radius: 0 15px 15px 0;
   cursor: pointer;
 }
-
-
-
