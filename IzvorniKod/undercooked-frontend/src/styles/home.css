@@ -4,6 +4,9 @@ body{
 
 .main_div {
   background-color: #d2d3d3;
+  background-image: url('pozadina.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -15,6 +18,13 @@ body{
 .naslov {
   margin-top: 5vh;
   font-size: 7vh;
+  color: #9615db;
+  font-family: cursive;
+  backdrop-filter: blur(10px);
+  background-color: rgb(225, 225, 225, 0.6);
+  padding: 0.5em;
+  border-radius: 1em;
+  overflow: hidden;
 }
 
 .search-container {
@@ -23,15 +33,22 @@ body{
   max-width: 400px;
   width: 100%;
   margin-bottom: 60vh;
+  backdrop-filter: blur(10px);
+  background-color: rgb(225, 225, 225, 0.6);
+  padding: 0.5em;
+  border-radius: 1em;
+  overflow: hidden;
 }
 
 .search-input {
   flex: 1;
   padding: 2vh;
-  border: 2px solid #9615db;
+  border: 3px solid #9615db;
+  border-style: double;
   border-radius: 15px 0 0 15px;
   margin-right: 8px;
 }
+
 
 .search-button {
   background-color: #9615db;
@@ -41,3 +58,6 @@ body{
   border-radius: 0 15px 15px 0;
   cursor: pointer;
 }
+
+
+
