@@ -23,6 +23,7 @@ public class ProfileController {
 	//treba popraviti
 	@GetMapping("")
 	public Person myProfile(@AuthenticationPrincipal User user) {
+		if(user.getUsername().equals("admin")) return new Person(Long.valueOf(0), "admin", "undercooked@fer.hr", "pass", "admin", "admin");
 		Optional<Person> person = personService.findByUsername(user.getUsername());
 		return person.get();
 	}

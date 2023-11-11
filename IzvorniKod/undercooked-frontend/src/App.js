@@ -12,7 +12,6 @@ import { Register, registerAction } from "./pages/Register";
 import Nav from "./pages/wrapper/Nav";
 import { Logout } from "./pages/Logout";
 import { AdminPage, getById } from "./pages/AdminPage";
-import { adminPostAction } from "./pages/AdminPostHandler";
 
 const appRouter = createBrowserRouter(
   createRoutesFromElements(

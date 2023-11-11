@@ -1,9 +1,11 @@
+import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 
 const server = "http://localhost:8080";
 const URL = server + "/api/persons";
 
 class AdminService {
+  
   getUsers() {
     return fetch(URL, {
       method: "GET",
@@ -11,7 +13,7 @@ class AdminService {
       headers: {
         "Authorization": secureLocalStorage.getItem("logInToken")
       }
-    })
+    });
   }
   removeUser(id) {
     return fetch(URL + "/" + id.toString(), {

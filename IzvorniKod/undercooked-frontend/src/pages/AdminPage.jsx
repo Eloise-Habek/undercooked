@@ -1,27 +1,38 @@
 import { useEffect, useState } from "react";
 import AdminService from "../services/AdminService";
 import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
+import secureLocalStorage from 'react-secure-storage';
 
 export function AdminPage() {
     const [users, setUsers] = useState([]);
     let { id } = useParams();
     const navigate = useNavigate();
-    useEffect(() => {
-        if (id === undefined) {
-            AdminService.getUsers().then(res => res.json()).then(res => {
-                setUsers(res);
-            });
-        } else {
-            AdminService.getUserById(id).then(res => res.json()).then(res => {               
-                // if bi trebao biti === 200 ali nije radilo
-                if (res.status === 404) {
-                    alert("User with id " + id + " doesn't exist!");
-                    navigate("/admin");
-                } else {
-                    setUsers([res]);
-                }
-            });
+    const handleErrors = response => {
+        if (!response.ok) {
+            navigate("/");
         }
+        return response;
+    }
+    useEffect(() => {
+        if(secureLocalStorage.getItem("logInToken") != null) {
+            if (id === undefined) {
+                AdminService.getUsers().then(handleErrors).then(res => res.json()).then(d => setUsers(d));
+            } else {
+                AdminService.getUserById(id).then(res => res.json()).then(res => {               
+                    // if bi trebao biti === 200 ali nije radilo
+                    if (res.status === 404) {
+                        alert("User with id " + id + " doesn't exist!");
+                        navigate("/admin");
+                    } else {
+                        setUsers([res]);
+                    }
+                });
+            }
+        } else {
+            navigate("/login");
+        }
+
+        
         
     });
     return (
@@ -59,7 +70,7 @@ export function AdminPage() {
                                     <td>{user.email}</td>
                                     <td>{user.name}</td>
                                     <td>{user.surname}</td>
-                                    <td><button className='btn btn-info' onClick={() => {AdminService.removeUser(user.id);  window.location.reload(false);}}>Remove</button></td>
+                                    <td><button className='btn btn-info' onClick={() => {AdminService.removeUser(user.id);}}>Remove</button></td>
                                 </tr>
                             )
                         }
