@@ -1,5 +1,5 @@
 .navbar2{
-    background-color: #555759;
+    background-color: #2d3032;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -7,29 +7,40 @@
 }
 
 .izbornik_navbar2{
-    color: black;
+    color: #d2d3d3;
     text-decoration: none;
     margin-top: 2vh;
     margin-left: 2vw;
+    box-shadow: inset 0 0 0 0 #d2d3d3;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+    padding: 0.25rem;
+}
+
+.izbornik_navbar2:hover {
+    box-shadow: inset 300px 0 0 0 #9615db;
+    text-decoration: none;
+    color: #000000;
     font-weight: bold;
 }
+
 
 .izbornik_navbar2_admin{
     color: #9615db;
     text-decoration: none;
     margin-top: 2vh;
     margin-left: 2vw;
-    font-weight: bolder;
-}
-
-.izbornik_navbar2:hover{
-    text-decoration: none;
-    color: #7d7f80;
+    box-shadow: inset 0 0 0 0 #9615db;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+    padding: 0.25rem;
 }
 
 .izbornik_navbar2_admin:hover{
     text-decoration: none;
-    color: #7d7f80;
+    color: #000000;
+    font-weight: bold;
+    box-shadow: inset 300px 0 0 0 #9615db;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 
