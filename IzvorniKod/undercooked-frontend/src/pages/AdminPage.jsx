@@ -1,72 +1,47 @@
-import React, { Component } from 'react';
-import AdminService from '../services/AdminService';
-import { Form, redirect } from 'react-router-dom';
-import secureLocalStorage from 'react-secure-storage';
+import { useEffect, useState } from "react";
+import AdminService from "../services/AdminService";
+import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
 
-
-// TO DO: reimplementirati sortiranje po id
-// greška je bila u tome što više nisam vraćao [] nego {} i to ga je zbunilo
-class AdminPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: []
+export function AdminPage() {
+    const [users, setUsers] = useState([]);
+    let { id } = useParams();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (id === undefined) {
+            AdminService.getUsers().then(res => res.json()).then(res => {
+                setUsers(res);
+            });
+        } else {
+            AdminService.getUserById(id).then(res => res.json()).then(res => {               
+                // if bi trebao biti === 200 ali nije radilo
+                if (res.status === 404) {
+                    alert("User with id " + id + " doesn't exist!");
+                    navigate("/admin");
+                } else {
+                    setUsers([res]);
+                }
+            });
         }
         
-    }
-
-    componentDidMount() {
-        // if (secureLocalStorage.getItem("id") == null) {
-        //     fetch("http://localhost:8080/api/persons", {
-        //         method: "GET",
-        //         headers: {
-        //             "Authorization": secureLocalStorage.getItem("logInToken")
-        //         }
-        //     }).then(res => {
-        //         this.setState({users: res.data})
-        //     });
-
-        //     // AdminService.getUsers().then(res => {
-        //     //     this.setState({users: res.data})
-        //     // });
-        // } else {
-        //     fetch("http://localhost:8080/api/persons/" + secureLocalStorage.getItem("id").toString(), {
-        //         method: "GET",
-        //         headers: {
-        //             "Authorization": secureLocalStorage.getItem("logInToken")
-        //         }
-        //     }).then(res => {
-        //         this.setState([{users: res.data}])
-        //     });
-        // }
-        fetch("http://localhost:8080/api/persons", {
-                method: "GET",
-                headers: {
-                    "Authorization": secureLocalStorage.getItem("logInToken")
-                }
-            }).then(res => {
-                this.setState([{users: res.data}])
-            });
-        
-    }
-
-    
-    render() {
-        return (
+    });
+    return (
             <div>
-                <Form className='container' method='post' action="/admin">                                    
-                    <div>
-                        <label htmlFor=""> Get By ID: </label>
-                        <input required type="text" name="id" />
-                        <button className='btn btn-info' type="submit">Submit</button>
-                        <button className='btn btn-info' type='button' onClick={() => {secureLocalStorage.removeItem("id"); window.location.reload(false);}}>Reset</button>
-                    </div>                                    
+                <div className="container">
+                    <Form method="post" action="/admin" className='container'>
+                <div>
+                    <label htmlFor="" className='input_label'>Get by ID:</label>
+                    <input required type="text" name="userId" className='input_field'/>
+                </div>           
+                <button type="submit" className='btn btn-info'>Submit</button>
+                <button type="button" onClick={() => {navigate("/admin")}} className='btn btn-danger'>X</button>
                 </Form>
+                </div>
                 <div className='container'>
                 <div className='row'>
                 <table className='table table-striped table-bordered'>
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Username</th>
                             <th>Email</th>
                             <th>Name</th>
@@ -76,9 +51,10 @@ class AdminPage extends Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.users.map(
+                            users.map(
                                 user => 
                                 <tr key={user.id}>
+                                    <td>{user.id}</td>
                                     <td>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.name}</td>
@@ -91,12 +67,13 @@ class AdminPage extends Component {
                 </table>
                 </div>
                 </div>
-                
-                
-                
             </div>
-        );
-    }
+        ); 
 }
 
-export default AdminPage;
+//Ovo je jako glitchavo ne znam zašto izgleda mi ok
+export const getById = async ({request}) => {
+    const data = await request.formData();
+    let id = data.get("userId");
+    return redirect("/admin/" + id);
+}

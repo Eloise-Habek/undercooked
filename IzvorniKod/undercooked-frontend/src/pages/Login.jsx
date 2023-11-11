@@ -31,13 +31,7 @@ export const loginAction = async ({request}) => {
         const data = await request.formData();
         let user = "Basic " + btoa(data.get("username")+":"+data.get("password"));
         
-        //const response = await LoginService.login(user);
-        const response = await fetch("http://localhost:8080/api/", {
-            method: "GET",
-            headers: {
-                "Authorization": user
-            }
-        });
+        const response = await LoginService.login(user);
 
         if (response.status === 200) {
             secureLocalStorage.setItem('logInToken', user);

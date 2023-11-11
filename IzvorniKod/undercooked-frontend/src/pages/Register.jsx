@@ -48,14 +48,7 @@ export const registerAction = async ({request}) => {
         "surname": data.get("surname")
     }
     
-    //const response = await RegisterService.register(user);
-    const response = await fetch("http://localhost:8080/api/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user)
-    });
+    const response = await RegisterService.register(user);
     
     if (response.status === 400) {
         alert("User allready exists!");

@@ -11,7 +11,7 @@ import { Login, loginAction } from "./pages/Login";
 import { Register, registerAction } from "./pages/Register";
 import Nav from "./pages/wrapper/Nav";
 import { Logout } from "./pages/Logout";
-import AdminPage from "./pages/AdminPage";
+import { AdminPage, getById } from "./pages/AdminPage";
 import { adminPostAction } from "./pages/AdminPostHandler";
 
 const appRouter = createBrowserRouter(
@@ -22,7 +22,8 @@ const appRouter = createBrowserRouter(
       <Route path="login" element={<Login />} action={loginAction} />
       <Route path="register" element={<Register />} action={registerAction} />
       <Route path="logout" element={<Logout />} />
-      <Route path="admin" element={<AdminPage />} action={adminPostAction} />
+      <Route path="admin" element={<AdminPage />} action={getById} />
+      <Route path="admin/:id" element={<AdminPage />} />
     </Route>
   )
 );

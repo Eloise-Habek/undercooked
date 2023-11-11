@@ -13,12 +13,13 @@ export function Profile() {
     useEffect(
         () => {
             if(secureLocalStorage.getItem("logInToken") != null) {
-                ProfileService.getProfile().then(res => {
-                    setEmail(res.data.email);
-                    setUsername(res.data.username);
-                    setName(res.data.name);
-                    setSurname(res.data.surname);
+                ProfileService.getProfile().then(res => res.json()).then(data => {
+                    setEmail(data.email);
+                    setUsername(data.username);
+                    setName(data.name);
+                    setSurname(data.surname);
                 });
+
             } else {
                 // ovo je malo glitchy
                 // alert("Sign in to see your profile!")

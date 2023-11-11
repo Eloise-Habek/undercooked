@@ -1,4 +1,3 @@
-import axios from "axios";
 import secureLocalStorage from "react-secure-storage";
 
 const server = "http://localhost:8080";
@@ -6,22 +5,31 @@ const URL = server + "/api/persons";
 
 class AdminService {
   getUsers() {
-    return axios.get(URL,{     
+    return fetch(URL, {
+      method: "GET",
+      mode: "cors",
       headers: {
-      "Authorization": secureLocalStorage.getItem("logInToken")
-    }})
+        "Authorization": secureLocalStorage.getItem("logInToken")
+      }
+    })
   }
   removeUser(id) {
-    return axios.delete((URL + "/" + id.toString()),{     
+    return fetch(URL + "/" + id.toString(), {
+      method: "DELETE",
+      mode: "cors",
       headers: {
-      "Authorization": secureLocalStorage.getItem("logInToken")
-    }})
+        "Authorization": secureLocalStorage.getItem("logInToken")  
+      }
+    })
   }
   getUserById(id) {
-    return axios.get((URL + "/" + id.toString()),{     
+    return fetch(URL + "/" + id.toString(), {
+      method: "GET",
+      mode: "cors",
       headers: {
-      "Authorization": secureLocalStorage.getItem("logInToken")
-    }})
+        "Authorization": secureLocalStorage.getItem("logInToken")  
+      }
+    })
   }
 }
 
