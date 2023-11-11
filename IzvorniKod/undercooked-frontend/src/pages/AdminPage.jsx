@@ -7,13 +7,14 @@ export function AdminPage() {
     const [users, setUsers] = useState([]);
     let { id } = useParams();
     const navigate = useNavigate();
-    const handleErrors = response => {
-        if (!response.ok) {
-            navigate("/");
-        }
-        return response;
-    }
+    
     useEffect(() => {
+        const handleErrors = response => {
+            if (!response.ok) {
+                navigate("/");
+            }
+            return response;
+        }
         if(secureLocalStorage.getItem("logInToken") != null) {
             if (id === undefined) {
                 AdminService.getUsers().then(handleErrors).then(res => res.json()).then(d => setUsers(d));
@@ -34,7 +35,7 @@ export function AdminPage() {
 
         
         
-    });
+    }, [id, navigate]);
     return (
             <div>
                 <div className="container">
@@ -70,7 +71,7 @@ export function AdminPage() {
                                     <td>{user.email}</td>
                                     <td>{user.name}</td>
                                     <td>{user.surname}</td>
-                                    <td><button className='btn btn-info' onClick={() => {AdminService.removeUser(user.id);}}>Remove</button></td>
+                                    <td><button className='btn btn-info' onClick={() => {AdminService.removeUser(user.id); window.location.reload(false)}}>Remove</button></td>
                                 </tr>
                             )
                         }

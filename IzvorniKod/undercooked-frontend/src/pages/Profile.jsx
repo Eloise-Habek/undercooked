@@ -20,15 +20,10 @@ export function Profile() {
             });
 
          } else {
-                // ovo je malo glitchy
-                // alert("Sign in to see your profile!")
-                // navigate("/")
-
-                //ovo je bolja solucija
             navigate("/login");
         }
             
-    });
+    }, [navigate]);
     return (
             <div>
                 <h1>Email: {email}</h1>
