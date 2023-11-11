@@ -10,27 +10,25 @@ export function Profile() {
     const [surname, setSurname] = useState("");
     const navigate = useNavigate()
 
-    useEffect(
-        () => {
-            if(secureLocalStorage.getItem("logInToken") != null) {
-                ProfileService.getProfile().then(res => res.json()).then(data => {
-                    setEmail(data.email);
-                    setUsername(data.username);
-                    setName(data.name);
-                    setSurname(data.surname);
-                });
+    useEffect(() => {
+        if(secureLocalStorage.getItem("logInToken") != null) {
+            ProfileService.getProfile().then(res => res.json()).then(data => {
+                setEmail(data.email);
+                setUsername(data.username);
+                setName(data.name);
+                setSurname(data.surname);
+            });
 
-            } else {
+         } else {
                 // ovo je malo glitchy
                 // alert("Sign in to see your profile!")
                 // navigate("/")
 
                 //ovo je bolja solucija
-                navigate("/login");
-            }
-            
+            navigate("/login");
         }
-    );
+            
+    });
     return (
             <div>
                 <h1>Email: {email}</h1>

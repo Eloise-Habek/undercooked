@@ -25,6 +25,22 @@ public class Person{
 	private String name;
 	
 	private String surname;
+	
+	
+
+	public Person() {
+		super();
+	}
+
+	public Person(Long id, String username, String email, String password, String name, String surname) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+	}
 
 	public Long getId() {
 		return id;
