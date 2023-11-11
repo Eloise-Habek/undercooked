@@ -8,8 +8,8 @@ export function Register() {
     return (
         <>
         <div className='register_wrap'>
-            <h1>Register</h1>
             <Form method="post" action="/register" className='register_form'>
+            <h1>Register</h1>
                 <div className='user_data_input'>
                     <label htmlFor="" className='register_label'>email:</label>
                     <input required type="email" name="email" className='register_input'/>

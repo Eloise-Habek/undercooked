@@ -4,7 +4,7 @@ body {
 
 .main_div {
   background-color: #d2d3d3;
-  background-image: url("pozadina.jpg");
+  background-image: url('../pages/images/pozadina.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
@@ -24,6 +24,7 @@ body {
   padding: 0.5em;
   border-radius: 1em;
   overflow: hidden;
+  font-family: cursive;
 }
 
 .search-container {
@@ -32,11 +33,15 @@ body {
   max-width: 400px;
   width: 100%;
   margin-bottom: 60vh;
+
+
+  
   backdrop-filter: blur(10px);
   background-color: rgb(225, 225, 225, 0.6);
   padding: 0.5em;
   border-radius: 1em;
   overflow: hidden;
+  
 }
 
 .search-input {
@@ -46,6 +51,7 @@ body {
   border-style: double;
   border-radius: 15px 0 0 15px;
   margin-right: 8px;
+  
 }
 
 .search-button {
@@ -55,4 +61,5 @@ body {
   border: 1px solid #9615db;
   border-radius: 0 15px 15px 0;
   cursor: pointer;
+
 }

@@ -4,15 +4,24 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #d2d3d3;
+  background-image: url("../pages/images/pozadina.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .register_form {
   width: 400px;
   padding: 20px;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
   border-radius: 8px;
   background-color: #7d7f80;
-  box-shadow: 0 0 20px #9615db;
+  box-shadow: 0 0 40px #9615db;
+  backdrop-filter: blur(13px);
+  background-color: rgb(225, 225, 225, 0);
+  padding: 2em;
+  border-radius: 1em;
+  overflow: auto;
 }
 
 .user_data_input {
@@ -47,3 +56,6 @@
 .registerButton:hover {
   background-color: #9615db;
 }
+
+
+
