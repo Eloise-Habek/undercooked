@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import AdminService from "../services/AdminService";
-import { Form, redirect, useNavigate, useParams, NavLink } from 'react-router-dom';
+import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
 import secureLocalStorage from 'react-secure-storage';
 import "../styles/adminpage.css"
-import { RemoveUser } from "../services/RemoveUser";
 
 export function AdminPage() {
     const [users, setUsers] = useState([]);
-    const [num, setNum] = useState(0);
     let { id } = useParams();
     const navigate = useNavigate();
     
