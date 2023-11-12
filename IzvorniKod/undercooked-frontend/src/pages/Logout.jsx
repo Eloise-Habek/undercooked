@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 
 export function Logout() {

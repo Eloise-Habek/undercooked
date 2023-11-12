@@ -1,6 +1,4 @@
-import { Form, redirect, useNavigate } from 'react-router-dom'
-import secureLocalStorage from 'react-secure-storage';
-//import RegisterService from '../services/RegisterService'
+import { Form, redirect } from 'react-router-dom'
 import "../styles/register.css"
 import RegisterService from '../services/RegisterService';
 
@@ -38,6 +36,8 @@ export function Register() {
     )
 }
 
+// funkcija koja se pokreće kada radimo post request na /admin 
+// (to nije post reqest na backend nego post request na frontend)
 export const registerAction = async ({request}) => {
     const data = await request.formData();
     let user =  {
@@ -49,12 +49,12 @@ export const registerAction = async ({request}) => {
     }
     
     const response = await RegisterService.register(user);
-    
-    if (response.status === 400) {
-        alert("User allready exists!");
-        return redirect("/register");
-    } else {
+
+    if (response.status === 200) {
         alert("User registered!");
         return redirect("/login");
+    } else {
+        alert("User allready exists!");
+        return redirect("/register");
     }
 }

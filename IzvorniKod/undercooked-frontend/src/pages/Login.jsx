@@ -1,6 +1,5 @@
 import { Form, redirect } from 'react-router-dom'
 import  secureLocalStorage  from  "react-secure-storage";
-import Nav from './wrapper/Nav'
 import "../styles/login.css"
 import LoginService from '../services/LoginService';
 
@@ -25,7 +24,8 @@ export function Login() {
     )
 }
 
-
+// funkcija koja se pokreće kada radimo post request na /admin 
+// (to nije post reqest na backend nego post request na frontend)
 export const loginAction = async ({request}) => {
     if (secureLocalStorage.getItem("logInToken") == null) {
         const data = await request.formData();

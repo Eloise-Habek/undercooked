@@ -5,7 +5,8 @@ const server = "http://localhost:8080";
 const URL = server + "/api/persons";
 
 class AdminService {
-  
+  // šalje get request na backend i vraća response sa servera u obliku js promise
+  // služi za vraćanje svih registriranih korisnika
   getUsers() {
     return fetch(URL, {
       method: "GET",
@@ -15,6 +16,7 @@ class AdminService {
       }
     });
   }
+  // šalje delete request, služi za brisanje korisnika
   removeUser(id) {
     return fetch(URL + "/" + id.toString(), {
       method: "DELETE",
@@ -24,6 +26,7 @@ class AdminService {
       }
     })
   }
+  // šalje get request, služi za dobivanje korisnika s određenim id-om
   getUserById(id) {
     return fetch(URL + "/" + id.toString(), {
       method: "GET",

@@ -13,6 +13,7 @@ import Nav from "./pages/wrapper/Nav";
 import { Logout } from "./pages/Logout";
 import { AdminPage, getById } from "./pages/AdminPage";
 
+// stvaramo router koji za dani url učitava pripadajuću komponentu
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" Component={Nav}>

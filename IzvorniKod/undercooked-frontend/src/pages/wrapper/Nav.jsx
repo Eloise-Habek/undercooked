@@ -2,9 +2,7 @@ import {Outlet, NavLink} from 'react-router-dom'
 
 
 import React, { Component } from 'react';
-import secureLocalStorage from 'react-secure-storage';
-import Links from './Links'
-import {Links2} from './Links2'
+import {Links} from './Links'
 import "../../styles/nav.css"
 
 class Nav extends Component {
@@ -41,7 +39,7 @@ class Nav extends Component {
             </nav>
         </header>
         <main>
-            <Links2 />
+            <Links />
             <Outlet />
         </main>
         <footer>
