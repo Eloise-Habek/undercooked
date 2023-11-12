@@ -4,6 +4,7 @@ import {Outlet, NavLink} from 'react-router-dom'
 import React, { Component } from 'react';
 import {Links} from './Links'
 import "../../styles/nav.css"
+import { Footer } from './Footer';
 
 class Nav extends Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class Nav extends Component {
         <main>
             <Links />
             <Outlet />
+            <Footer />
         </main>
         <footer>
             <hr />
