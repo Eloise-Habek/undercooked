@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import AdminService from "../services/AdminService";
-import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
+import { Form, redirect, useNavigate, useParams, NavLink } from 'react-router-dom';
 import secureLocalStorage from 'react-secure-storage';
 import "../styles/adminpage.css"
+import { RemoveUser } from "../services/RemoveUser";
 
 export function AdminPage() {
     const [users, setUsers] = useState([]);
+    const [num, setNum] = useState(0);
     let { id } = useParams();
     const navigate = useNavigate();
+    
     
     useEffect(() => {
         const handleErrors = response => {
@@ -72,7 +75,9 @@ export function AdminPage() {
                                     <td>{user.email}</td>
                                     <td>{user.name}</td>
                                     <td>{user.surname}</td>
-                                    <td><button className='btn btn-info' onClick={() => {AdminService.removeUser(user.id); window.location.reload(false)}}>Remove</button></td>
+                            
+                                    <td><button className='btn btn-info' onClick={() => {AdminService.removeUser(user.id).then(() => {window.location.reload(false)})}}>Remove</button></td>
+                                    
                                 </tr>
                             )
                         }
