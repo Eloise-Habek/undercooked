@@ -8,8 +8,8 @@ export function Login() {
     return (
         <>
         <div className='main_login_div'>
-            <h1>Log in</h1>
             <Form method="post" action="/login" className='form_wrap'>
+            <h1>Log in</h1>
                 <div>
                     <label htmlFor="" className='input_label'>username:</label>
                     <input required type="text" name="username" className='input_field'/>

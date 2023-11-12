@@ -1,10 +1,10 @@
-body{
+body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .main_div {
   background-color: #d2d3d3;
-  background-image: url('pozadina.jpg');
+  background-image: url('../pages/images/pozadina.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
@@ -19,12 +19,19 @@ body{
   margin-top: 5vh;
   font-size: 7vh;
   color: #9615db;
-  font-family: cursive;
   backdrop-filter: blur(10px);
   background-color: rgb(225, 225, 225, 0.6);
   padding: 0.5em;
   border-radius: 1em;
   overflow: hidden;
+  font-family: cursive;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.naslov:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .search-container {
@@ -33,11 +40,22 @@ body{
   max-width: 400px;
   width: 100%;
   margin-bottom: 60vh;
+
+
+  
   backdrop-filter: blur(10px);
   background-color: rgb(225, 225, 225, 0.6);
   padding: 0.5em;
   border-radius: 1em;
   overflow: hidden;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .search-input {
@@ -47,8 +65,8 @@ body{
   border-style: double;
   border-radius: 15px 0 0 15px;
   margin-right: 8px;
+  
 }
-
 
 .search-button {
   background-color: #9615db;
@@ -57,7 +75,5 @@ body{
   border: 1px solid #9615db;
   border-radius: 0 15px 15px 0;
   cursor: pointer;
+
 }
-
-
-

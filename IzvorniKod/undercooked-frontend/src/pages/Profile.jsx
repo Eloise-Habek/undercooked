@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfileService from '../services/ProfileService';
 import secureLocalStorage from 'react-secure-storage';
 import { useNavigate } from 'react-router-dom';
+import "../styles/profile.css"
 
 export function Profile() {
     const [email, setEmail] = useState("");
@@ -20,22 +21,25 @@ export function Profile() {
             });
 
          } else {
-                // ovo je malo glitchy
-                // alert("Sign in to see your profile!")
-                // navigate("/")
-
-                //ovo je bolja solucija
             navigate("/login");
         }
             
-    });
+    }, [navigate]);
     return (
-            <div>
-                <h1>Email: {email}</h1>
-                <h1>Username: {username}</h1>
-                <h1>Name: {name}</h1>
-                <h1>Surname: {surname}</h1>
+        <div className='main_profile'>
+        <div className='slika_profila'>
+            <img src = {require("./images/default_profile_photo.png")} alt="" />
+        </div>
+
+        <div className='profile-card'>
+            <div className='info'>
+                <h2 className='one_info'>Username: {username}</h2>
+                <h2 className='one_info'>Name: {name}</h2>
+                <h2 className='one_info'>Surname: {surname}</h2>
+                <p className='one_info'>Email: {email}</p>
             </div>
+        </div>
+    </div>
         );
 }
 

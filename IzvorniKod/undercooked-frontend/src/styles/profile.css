@@ -1,5 +1,58 @@
-.profile_page_wrapper {
+.main_profile{
   display: flex;
+  width: 100vw;
   height: 100vh;
-  background-color: rgb(255, 255, 255);
+  flex-direction: row;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.slika_profila{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  margin: 1em;
+}
+
+.slika_profila img{
+  max-width: 100%;
+  max-height: 100%;
+
+}
+
+.profile-card {
+  width: 300px;
+  height: 200px;
+  background-color: #9615db;
+  padding: 20px;
+  margin: 1em;
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.info h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.info p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.info h2:hover {
+  color: #ff8c00; 
+  transition: color 0.2s;
 }
