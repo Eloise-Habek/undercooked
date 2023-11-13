@@ -4,6 +4,8 @@ const server = "http://localhost:8080";
 const URL = server + "/api/profile";
 
 class ProfileService {
+  // šalje get request na backend i vraća response sa servera u obliku js promise
+  // služi za vraćanje podataka o profilu korisnika
   getProfile() {
     return fetch(URL, {
       method: "GET",
