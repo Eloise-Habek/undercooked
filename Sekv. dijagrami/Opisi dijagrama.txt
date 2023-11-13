@@ -19,8 +19,9 @@ UC21 Pregled osobnih postavki
 Registrirani korisnik šalje zahtjev za pregled osobnih postavki. Web-aplikacija prihvaća zahtjev i pošalje upit bazi podataka koja šalje sve podatke korisnika koje može ažurirati/brisati. Korisnik može odabrati opciju uređivanja profila (UC23 Uređivanje osobnih postavki), a web-aplikacija mu šalje formu za uređivanje postavki. Nakon što korisnik upiše promjene, potvrda promjena se šalje web-aplikaciji koja prosljeđuje podatke bazi podataka koja za tog korisnika ažurira promjene. Druga opcija koju korisnik može odabrati je brisanje profila (UC22 Brisanje vlastitog profila). Korisnik šalje zahtjev za brisanje profila web-aplikaciji koja prosljeđuje podatke korisnika bazi podataka koja ga na kraju briše.
 
 
+
 UC25 Brisanje recepta
 
-Administrator šalje zahtjev za pregled recepta web-aplikaciji. Web-aplikacija zatražuje podatke tog recepta u bazi podataka. Administrator tako pretražuje recepte dok ne pronađe onog kojeg je namijenio obrisati. Kada pronađe recept za brisanje šalje zahtjev za brisanje i web-aplikacija bazi podataka šalje zahtjev za brisanje tog recepta.
+Administrator šalje zahtjev za pregled recepta kojeg želi obrisati web-aplikaciji. Web-aplikacija zatražuje podatke tog recepta u bazi podataka. Kada pronađe recept za brisanje šalje zahtjev za brisanje i web-aplikacija bazi podataka šalje zahtjev za brisanje tog recepta.
 
 
