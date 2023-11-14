@@ -662,54 +662,55 @@
 					\end{figure}
 				\eject		
 				
-			\subsection{Sekvencijski dijagrami}
+				\subsection{Sekvencijski dijagrami}
+
+					\begin{figure}[H]
+						\textbf{Obrazac uporabe UC3 - Registriranje novog korisnika}\\
+
+						Neregistrirani korisnik šalje zahtjev za registraciju te mu web-aplikacija šalje odgovor formom za registraciju. Dokle god web-aplikacija u bazi podataka provjerom dobije odgovor da su email ili lozinka zauzeti korisnik dobiva poruku o zauzetosti emaila ili lozinke te ponovnu formu za upis podataka. Nakon unosa kod kojeg su email i username dostupni korisnikove informacije se zapisuju u bazu podataka. Korisnik dobiva poruku o uspješnoj registraciji.
+						\begin{center}
+							\includegraphics[scale = 0.8]{slike/SEK_UC3_Registriranje_novog_korisnika.png}
+							\caption{Sekvencijski dijagram za UC3}
+							\label{fig:Sek_UC3}
+						\end{center}
+					\end{figure}
+
+					\begin{figure}[H]
+						\textbf{Obrazac uporabe UC7 - Objava recepta}\\
+
+						Registrirani korisnik šalje zahtjev za objavu recepte, a web-aplikacija mu odgovara formom za unos recepta. Registrirani korisnik unosi podatke o receptu: naslov, sastojci, priprema, vrijeme, kategorije, slike, video. Novonastali recept se zatim sprema u bazu podataka i web-aplikacija dobiva potvrdu o spremljenim podacima. Nakon potvrde web-aplikacija bazi podataka šalje zahtjev sa svim korisnicima koji su pratitelji autora objavljenog recepta te im svima šalje obavijest o novoj objavi.
+						\begin{center}
+							\includegraphics[scale = 0.8]{slike/SEK_UC7_Objavljivanje_recepta.png}
+							\caption{Sekvencijski dijagram za UC7}
+							\label{fig:Sek_UC7}							
+						\end{center}
+					\end{figure}
+
+					\begin{figure}[H]
+						\textbf{Obrazac uporabe UC18 - Pregledavanje vlastitog profila}\\
+
+						Registrirani korisnik šalje zahtjev za prikaz svog profila i web aplikaciju mu prikazuje sve informacije dobivene iz baze podataka. Nakon toga korisnik može zatražiti popis svih korisnika koji ga prate (UC20 Pregled profila koje korisnik prati), a web-aplikaciju bi mu odgovorila popisom korisnika koju bi dobila slanjem zahtjeva bazi podataka.
+						Korisnik može odabrati i opciju pregledavanja spremljenih recepata (UC19 Pregledavanje spremljenih recepata) koji se prikazuju tako što web-aplikacija dobiva popis spremljenih recepata iz baze podataka.
+						\begin{center}
+							\includegraphics[scale = 0.8]{slike/SEK_UC18_Pregledavanje_vlastitog_profila.png}
+							\caption{Sekvencijski dijagram za UC18}
+							\label{fig:Sek_UC18}
+						\end{center}
+					\end{figure}
+
+					\begin{figure}[H]
+						\textbf{Obrazac uporabe UC21 - Pregled osobnih postavki}\\
+
+						Registrirani korisnik šalje zahtjev za pregled osobnih postavki. Web-aplikacija prihvaća zahtjev i pošalje upit bazi podataka koja šalje sve podatke korisnika koje može ažurirati/brisati. Korisnik može odabrati opciju uređivanja profila (UC23 Uređivanje osobnih postavki), a web-aplikacija mu šalje formu za uređivanje postavki. Nakon što korisnik upiše promjene, potvrda promjena se šalje web-aplikaciji koja prosljeđuje podatke bazi podataka koja za tog korisnika ažurira promjene. Druga opcija koju korisnik može odabrati je brisanje profila (UC22 Brisanje vlastitog profila). Korisnik šalje zahtjev za brisanje profila web-aplikaciji koja prosljeđuje podatke korisnika bazi podataka koja ga na kraju briše.
+						\begin{center}
+							\includegraphics[scale = 0.8]{slike/SEK_UC21_Pregled_osobnih_postavki.png}
+							\caption{Sekvencijski dijagram za UC21}
+							\label{fig:Sek_UC21}
+						\end{center}
+					\end{figure}
+					
+				\eject
 				
-			\begin{figure}[H]
-				\textbf{Obrazac uporabe UC3 - Registriranje novog korisnika}\\
-
-				Neregistrirani korisnik šalje zahtjev za registraciju te mu web-aplikacija šalje odgovor formom za registraciju. Dokle god web-aplikacija u bazi podataka provjerom dobije odgovor da su email ili lozinka zauzeti korisnik dobiva poruku o zauzetosti emaila ili lozinke te ponovnu formu za upis podataka. Nakon unosa kod kojeg su email i username dostupni korisnikove informacije se zapisuju u bazu podataka. Korisnik dobiva poruku o uspješnoj registraciji.
-				\begin{center}
-					\includegraphics[scale = 0.8]{slike/SEK_UC3_Registriranje_novog_korisnika.png}
-					\caption{Sekvencijski dijagram za UC3}
-					\label{fig:Sek_UC3}
-				\end{center}
-			\end{figure}
-
-			\begin{figure}[H]
-				\textbf{Obrazac uporabe UC7 - Objava recepta}\\
-
-				Registrirani korisnik šalje zahtjev za objavu recepte, a web-aplikacija mu odgovara formom za unos recepta. Registrirani korisnik unosi podatke o receptu: naslov, sastojci, priprema, vrijeme, kategorije, slike, video. Novonastali recept se zatim sprema u bazu podataka i web-aplikacija dobiva potvrdu o spremljenim podacima. Nakon potvrde web-aplikacija bazi podataka šalje zahtjev sa svim korisnicima koji su pratitelji autora objavljenog recepta te im svima šalje obavijest o novoj objavi.
-				\begin{center}
-					\includegraphics[scale = 0.8]{slike/SEK_UC7_Objavljivanje_recepta.png}
-					\caption{Sekvencijski dijagram za UC7}
-					\label{fig:Sek_UC7}							
-				\end{center}
-			\end{figure}
-
-			\begin{figure}[H]
-				\textbf{Obrazac uporabe UC18 - Pregledavanje vlastitog profila}\\
-
-				Registrirani korisnik šalje zahtjev za prikaz svog profila i web aplikaciju mu prikazuje sve informacije dobivene iz baze podataka. Nakon toga korisnik može zatražiti popis svih korisnika koji ga prate (UC20 Pregled profila koje korisnik prati), a web-aplikaciju bi mu odgovorila popisom korisnika koju bi dobila slanjem zahtjeva bazi podataka.
-				Korisnik može odabrati i opciju pregledavanja spremljenih recepata (UC19 Pregledavanje spremljenih recepata) koji se prikazuju tako što web-aplikacija dobiva popis spremljenih recepata iz baze podataka.
-				\begin{center}
-					\includegraphics[scale = 0.8]{slike/SEK_UC18_Pregledavanje_vlastitog_profila.png}
-					\caption{Sekvencijski dijagram za UC18}
-					\label{fig:Sek_UC18}
-				\end{center}
-			\end{figure}
-
-			\begin{figure}[H]
-				\textbf{Obrazac uporabe UC21 - Pregled osobnih postavki}\\
-
-				Registrirani korisnik šalje zahtjev za pregled osobnih postavki. Web-aplikacija prihvaća zahtjev i pošalje upit bazi podataka koja šalje sve podatke korisnika koje može ažurirati/brisati. Korisnik može odabrati opciju uređivanja profila (UC23 Uređivanje osobnih postavki), a web-aplikacija mu šalje formu za uređivanje postavki. Nakon što korisnik upiše promjene, potvrda promjena se šalje web-aplikaciji koja prosljeđuje podatke bazi podataka koja za tog korisnika ažurira promjene. Druga opcija koju korisnik može odabrati je brisanje profila (UC22 Brisanje vlastitog profila). Korisnik šalje zahtjev za brisanje profila web-aplikaciji koja prosljeđuje podatke korisnika bazi podataka koja ga na kraju briše.
-				\begin{center}
-					\includegraphics[scale = 0.8]{slike/SEK_UC21_Pregled_osobnih_postavki.png}
-					\caption{Sekvencijski dijagram za UC21}
-					\label{fig:Sek_UC21}
-				\end{center}
-			\end{figure}
-				
-			\eject
 	
 		\section{Ostali zahtjevi}
 			 
