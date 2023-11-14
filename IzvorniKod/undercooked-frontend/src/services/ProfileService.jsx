@@ -1,7 +1,6 @@
 import secureLocalStorage from "react-secure-storage";
 
-const server = "http://localhost:8080";
-const URL = server + "/api/profile";
+const URL = "/api/profile";
 
 class ProfileService {
   // šalje get request na backend i vraća response sa servera u obliku js promise

@@ -1,5 +1,4 @@
-const server = "http://localhost:8080";
-const URL = server + "/api/register";
+const URL = "/api/register";
 
 class RegisterService {
   // šalje post request na backend s podatcima za registraciju korisnika

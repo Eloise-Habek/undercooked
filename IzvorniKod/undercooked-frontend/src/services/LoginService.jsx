@@ -1,5 +1,4 @@
-const server = "http://localhost:8080";
-const URL = server + "/api/";
+const URL = "/api/";
 
 class LoginService {
   // šalje get request na backend s headerom za basic auth
