@@ -1,0 +1,7 @@
+# pokrenuti sa ``docker compose up --build -d``
+# zaustaviti sa ``docker compose down``
+services:
+  backend:
+    build: Undercooked-Demo
+    ports:
+      - 8080:8080
