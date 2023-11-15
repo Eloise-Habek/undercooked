@@ -32,7 +32,7 @@
 					
 					\item pretražiti recept po značajkama
 					\item pregledati recept
-					\item osvježiti broj porcija, time će se s obzirom da broj unesem mjerice sastojaka ažurirati
+					\item osvježiti broj porcija, čime će se ažurirati mjerice sastojaka u skladu s navedenim brojem porcija
 					\item otvoriti profile registriranih korisnika koji su postavili recept
 					
 				\end{packed_enum}
@@ -53,7 +53,7 @@
 					\item sve što i korisnik (specijalizacija korisnika)
 					\item ažurirati profil, podaci koje je moguće ažurirati su email, broj telefona i vremenski period u kojima je korisnik dostupan
 					\item objaviti recept s obaveznim navođenjem naziva recepta, sastojaka, postupka pripreme i ukupnog trajanja pripreme, mogućnost navođenja dodatnih karakteristika poput oznaka tipa jela i dodavanja slika i videozapisa
-					\item ažuriranje već objavljenjih recepata
+					\item ažuriranje već objavljenih recepata
 					\item ocijeniti objavu
 					\item spremiti recept kako bi im mogli lakše pristupiti kasnije
 					\item zapratiti drugog autora (registriranog korisnika), korisnik će dobiti obavijest kada autor objavi novi recept
@@ -197,7 +197,7 @@
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Korisnik
-						\item \textbf{Cilj: }Prikazati potrebne sastojke recepta u skladu sa potrebnim porcijama jela
+						\item \textbf{Cilj: }Prikazati potrebne sastojke recepta u skladu s potrebnim porcijama jela
 						\item \textbf{Sudionici: }Baza podataka
 						\item \textbf{Preduvjet: }UC1 (Pregled recepta)
 						\item \textbf{Opis osnovnog tijeka:}
@@ -464,7 +464,7 @@
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item \textbf{Cilj: }Prikazati korisnikove najdraže recepte
 						\item \textbf{Sudionici: }Baza podataka
-						\item \textbf{Preduvjet: }UC18 (Pregledavanje vlastitiog profila)
+						\item \textbf{Preduvjet: }UC18 (Pregledavanje vlastitog profila)
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -556,7 +556,7 @@
 					\noindent \underbar{\textbf{UC25 - Brisanje recepta}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Administartor
+						\item \textbf{Glavni sudionik: }Administrator
 						\item \textbf{Cilj: }Brisanje recepta koji nije prikladan ili slično
 						\item \textbf{Sudionici: }Baza podataka
 						\item \textbf{Preduvjet: }UC6 (Prijava)
@@ -714,7 +714,7 @@
 		\section{Ostali zahtjevi}
 			 
 			 \begin{packed_item}
-			 	\item Aplikaciji se pristupa pomoću internetskog preglednika korištenjem HTTPS protokola
+			 	\item Aplikaciji se pristupa s pomoću internetskog preglednika korištenjem HTTPS protokola
 			 	\item Aplikaciji treba moći pristupiti više korisnika istovremeno
 			 	\item Korisničko sučelje mora biti intuitivno i jednostavno za korištenje
 			 	\item Dizajn korisničkog sučelja mora biti responzivan kako bi se aplikaciji moglo pristupiti i s mobilnih uređaja
@@ -723,7 +723,7 @@
 			 	\item Baza podataka mora sadržavati odgovarajuće indekse kako bi pristup podatcima bio brz
 			 	\item Baza podataka mora biti odvojena od ostatka sustava, ne smije joj se moći pristupiti izravno, već samo preko back-enda aplikacije
 			 	\item Korisničko sučelje i baza podataka moraju podržavati dijakritičke znakove
-			 	\item Pri implementaciji moraju biti korištena načela objektno-otijentiranog programiranja
+			 	\item Pri implementaciji moraju biti korištena načela objektno-orijentiranog programiranja
 			 	\item Razvojna verzija aplikacije mora biti u potpunosti odvojena od produkcijske kako rad na nadogradnjama ne bi utjecao na postojeće funkcionalnosti
 			 	
 			 \end{packed_item}

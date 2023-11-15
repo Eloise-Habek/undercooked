@@ -14,15 +14,15 @@
 				Arhitekturu sustava čine tri glavna dijela:
 				\begin{packed_item}
 					\item Baza podataka
-					\item Internetski poslužitelj
-					\item Aplikacija
+					\item Aplikacijski front-end
+					\item Aplikacijski back-end
 				\end{packed_item}
 			
-				Internetski poslužitelj ključan je dio u uspostavljanju komunikacije između korisnika i aplikacije. Korisnik aplikaciji pristupa pomoću internetskog preglednika na svom računalu, mobitelu ili nekom drugom uređaju. Preglednik komunicira s poslužiteljem preko HTTP protokola slanjem odgovarajućih zahtjeva. Poslužitelj je onaj koji pokreće aplikaciju te joj prosljeđuje korisnikove HTTP zahtjeve.
+				Front-end aplikacije ključan je dio u uspostavljanju komunikacije između korisnika i aplikacije. Korisnik aplikaciji pristupa uz pomoć internetskog preglednika na svom računalu, mobitelu ili nekom drugom uređaju. Preglednik komunicira s poslužiteljem preko HTTP protokola slanjem odgovarajućih zahtjeva. Front-end korisnikove zahtjeve zatim prosljeđuje back-endu koji predstavlja samu aplikaciju.
 				\linebreak
-				Aplikacija preuzima zahtjev te ga obrađuje sukladno njegovoj vrsti i parametrima. Obrada zahtjeva uključuje i pristupanje bazi podataka kako bi se dohvatili podatci potrebni za rad. Po završetku obrade zahtjeva, aplikacija preko poslužitelja korisniku vraća odgovor.
+				Aplikacija preuzima zahtjev te ga obrađuje sukladno njegovoj vrsti i parametrima. Obrada zahtjeva uključuje i pristupanje bazi podataka kako bi se dohvatili podatci potrebni za rad. Po završetku obrade zahtjeva, aplikacija front-endu vraća odgovor, a on ga dalje šalje korisniku.
 				\linebreak
-				Baza podataka može se nalaziti na istom računalu kao i poslužitelj i aplikacija ili različitom, no komunikacija se uvijeko odvija na isti način, preko preddefiniranih vrata na transportnom sloju i korištenjem odgovarajućeg protokola.
+				Baza podataka može se nalaziti na istom računalu kao i ostali dijelovi sustava ili različitom, no komunikacija se uvijek odvija na isti način, preko dobro poznatih vrata na transportnom sloju i korištenjem odgovarajućeg protokola.
 				\begin{figure}[H]
 					\includegraphics[scale=0.85]{slike/skica_arhitekture.png}
 					\centering
@@ -30,7 +30,7 @@
 					\label{fig:arhitektura_sustava}
 				\end{figure}
 			\subsection{Sklopovski zahtjevi}
-				Ukoliko se poslužitelj i baza podataka nalaze na različitim računalima, za optimalan rad ona bi trebala imati odgovarajuće karakteristike. Računalo na kojem će raditi poslužitelj treba imati dovoljnu veliku procesorsku moć kako bi moglo što brže odgovarati na zahtjeve i kako bi više korisnika moglo koristiti aplikaciju bez značajnog usporavanja sustava. Računalo na kojem će se nalaziti baza podataka treba imati dovoljno velike i brze diskove za pohranu podataka, idealno uz neku vrstu zaštite od gubitka podataka u slučaju kvara (na primjer, korištenje RAID sustava ili automatskog redovitog stvaranja sigurnosne kopije). Ako se pak poslužitelj i baza podataka pokreću na istom računalu, ono treba kombinirati prethodno navedene karakteristike.
+				Ako se aplikacijski poslužitelj i baza podataka nalaze na različitim računalima, za optimalan rad ona bi trebala imati odgovarajuće karakteristike. Računalo na kojem će raditi poslužitelj treba imati dovoljnu veliku procesorsku moć kako bi moglo što brže odgovarati na zahtjeve i kako bi više korisnika moglo koristiti aplikaciju bez značajnog usporavanja sustava. Računalo na kojem će se nalaziti baza podataka treba imati dovoljno velike i brze diskove za pohranu podataka, idealno uz neku vrstu zaštite od gubitka podataka u slučaju kvara (na primjer, korištenje RAID sustava ili automatskog redovitog stvaranja sigurnosne kopije). Ako se pak poslužitelj i baza podataka pokreću na istom računalu, ono treba kombinirati maloprije navedene karakteristike.
 			\subsection{Organizacija aplikacije}
 				Za izradu aplikacije odabrani su programski jezik Java uz razvojni okvir Spring te Javascript i razvojni okvir React. Dva glavna sloja aplikacije su frontend, koji komunicira s korisnikom (Javascript + React) i backend, koji obrađuje HTTP zahtjeve i komunicira s bazom podataka (Java + Spring).
 				%U primjeru dokumentacije oni ovdje jos pisu da se arhitektura temelji na MVCu i to dodatno opisuju
@@ -55,7 +55,7 @@
 			 \subsection{Opis tablica}
 			 
  
-				 \textbf{Korisnik} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: Korisničko ime, lozinku, ime, prezime, broj mobitela korisnika, razinu ovlasti korisnika i e-mail korisnika. Ovaj entitet u vezi je \textit{One-to-Many} sa entitetima Recept, Komentar i Ocjena te je sa entitetom poruka u ulozi primatelj i pošiljatelj isto u \textit{One-to-Many} vezi, sve preko ID-a korisnika.
+				 \textbf{Korisnik} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: Korisničko ime, lozinku, ime, prezime, broj mobitela korisnika, razinu ovlasti korisnika i e-mail korisnika. Ovaj entitet u vezi je \textit{One-to-Many} s entitetima Recept, Komentar i Ocjena te je s entitetom poruka u ulozi primatelj i pošiljatelj isto u \textit{One-to-Many} vezi, sve preko ID-a korisnika.
 				 
 				 
 				 \begin{longtblr}[
@@ -77,7 +77,7 @@
 					 Email & VARCHAR & e-mail adresa korisnika 	\\ \hline 
 				 \end{longtblr}
 				 
-				 \textbf{Recept} Ovaj entitet sadržava sve važne informacije o receptu. Sadrži atribute: ID recepta, naziv recepta, vrijeme pripreme, postupak pripreme, opis recepta, sliku recepta, datum recepta  i vrijeme objave recepta i prosječnu ocjenu recepta. Recept je u vezi \textit{Many-to-One} sa korisnikom koji ga je objavio, u vezi \textit{One-to-Many} sa ocjenom, sastojkom u receptu i komentarom preko ID-a recepta te u \textit{Many-to-Many} sa oznakom recepta preko ID-a oznake.
+				 \textbf{Recept} Ovaj entitet sadržava sve važne informacije o receptu. Sadrži atribute: ID recepta, naziv recepta, vrijeme pripreme, postupak pripreme, opis recepta, sliku recepta, datum recepta  i vrijeme objave recepta i prosječnu ocjenu recepta. Recept je u vezi \textit{Many-to-One} s korisnikom koji ga je objavio, u vezi \textit{One-to-Many} s ocjenom, sastojkom u receptu i komentarom preko ID-a recepta te u \textit{Many-to-Many} s oznakom recepta preko ID-a oznake.
 				 
 				 \begin{longtblr}[
 					 label=none,
@@ -169,7 +169,7 @@
 						 Datum i vrijeme poruke & TIMESTAMP &  datum i vrijeme poruke	\\ \hline 
 				 \end{longtblr}
  
-				 \textbf{Sastojak} Ovaj entitet sadržava sve važne informacije o sastojku navedenom u nekom receptu. Sadrži atribute: ID sastojka, naziv sastojka. Entitet je u vezi \textit{Many-to-Many} s sastojkom u receptu preko ID-a recepta.
+				 \textbf{Sastojak} Ovaj entitet sadržava sve važne informacije o sastojku navedenom u nekom receptu. Sadrži atribute: ID sastojka, naziv sastojka. Entitet je u vezi \textit{Many-to-Many} sa sastojkom u receptu preko ID-a recepta.
  
 				 \begin{longtblr}[
 					 label=none,
