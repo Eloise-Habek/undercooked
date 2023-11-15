@@ -207,7 +207,7 @@
 			 
 			 \subsection{Dijagram baze podataka}
 			 \begin{figure}[H]
-				 \includegraphics[scale=0.15]{slike/ER dijagram baze podataka.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				 \includegraphics[scale=0.10]{slike/ER dijagram baze podataka.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				 \centering
 				 \caption{ER dijagram baze podataka}
 				 \label{fig:ER dijagram baze podataka}
@@ -217,17 +217,30 @@
 			
 			
 		\section{Dijagram razreda}
+
+		Prvi dijagram prikazuje trenutno stanje stranice. Dijagram ima jedan repozitorij, entitet i servis te 5 kontrolera.
+		\begin{figure}[H]
+			\includegraphics[scale=0.65]{slike/dijagram_razreda2.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{dijagram s kontroler-ima}
+			\label{fig:Dijagram_razreda2}
+		\end{figure}
+
+
+		Drugi dijagram prikazuje glavne entitete i veze između njih, 
+		tj. preslikava strukturu baze podataka. Razred Korisnik 
+		predstavlja neregistriranog korisnika koji se može registrirati 
+		u Razred RegistriraniKorisnik predstavlja korisnika koji je registriran u sustav 
+		i koji može koristiti više od osnovnih funkcija korisnika. NeRegistriraniKorisnik predstavlja vrstu korisnika i može se registrirati.
+		Razred Administrator predstavlja administratora sustava koji ima najveće ovlasti. 
+
+
+
 		\begin{figure}[H]
 			\includegraphics[scale=1.3]{slike/dijagram_razreda1.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
-			\caption{dijagram s controller-ima}
-			\label{fig:Dijagram_razreda1}
-		\end{figure}
-		\begin{figure}[H]
-			\includegraphics[scale=1.3]{slike/dijagram_razreda2.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
-			\centering
 			\caption{dijagram baze podataka}
-			\label{fig:Dijagram_razreda2}
+			\label{fig:Dijagram_razreda1}
 		\end{figure}
 			
 			
