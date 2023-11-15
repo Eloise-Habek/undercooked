@@ -4,7 +4,7 @@ https://undercooked-frontend.onrender.com/
 Kako pokrenuti aplikaciju lokalno:
 
 1. git clone git@github.com:Eloise-Habek/undercooked.git
-2. undercooked/IzvorniKod/undercooked-frontend otvoriti u terminalu
+2. undercooked/IzvorniKod/undercooked-frontend otvoriti u terminalu \
    2.1 npm i
    2.2 npm start
 3. undercooked/IzvorniKod/Undercooked-Demo otvoriti u IDE-u
