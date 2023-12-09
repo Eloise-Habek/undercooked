@@ -1,11 +1,11 @@
-const URL = "/api/";
+const URL = "/api/token";
 
 class LoginService {
-  // šalje get request na backend s headerom za basic auth
+  // šalje post request na backend s headerom za basic auth
   // služi za log in
-  login (user) {
+  login(user) {
     return fetch(URL, {
-      method: "GET",
+      method: "POST",
       mode: "cors",
       headers: {
         "Authorization": user

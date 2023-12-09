@@ -19,8 +19,8 @@ public class AuthController {
     }
 
     @PostMapping("")
-    public String token(Authentication authentication) {
-        return tokenService.generateToken(authentication);
+    public AuthResponse token(Authentication authentication) {
+        return new AuthResponse(tokenService.generateToken(authentication));
     }
 
 }
