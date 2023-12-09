@@ -1,10 +1,9 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +21,10 @@ public class ProfileController {
 	
 	//treba popraviti
 	@GetMapping("")
-	public Person myProfile(@AuthenticationPrincipal User user) {
-		if(user.getUsername().equals("admin")) return new Person(Long.valueOf(0), "admin", "undercooked@fer.hr", "pass", "admin", "admin");
-		Optional<Person> person = personService.findByUsername(user.getUsername());
+	public Person myProfile(Principal user) {
+		System.out.println(user.toString());
+		if(user.getName().equals("admin")) return new Person(Long.valueOf(0), "admin", "undercooked@fer.hr", "pass", "admin", "admin");
+		Optional<Person> person = personService.findByUsername(user.getName());
 		return person.get();
 	}
 
