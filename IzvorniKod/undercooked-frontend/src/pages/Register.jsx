@@ -1,4 +1,4 @@
-import { Form, redirect } from 'react-router-dom'
+import { Form } from 'react-router-dom'
 import "../styles/register.css"
 import RegisterService from '../services/RegisterService';
 
@@ -51,10 +51,10 @@ export const registerAction = async ({ request }) => {
     const response = await RegisterService.register(user);
 
     if (response.status === 200) {
-        alert("User registered!");
-        return redirect("/login");
+        return "User registered!";
+        //return redirect("/login");
     } else {
-        alert("registration failed");
-        return redirect("/register");
+        return "Registration failed!";
+        //return redirect("/register");
     }
 }

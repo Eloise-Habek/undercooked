@@ -3,8 +3,9 @@ import { Links } from "./Links";
 import { Outlet } from "react-router-dom";
 // import { Footer } from "./Footer";
 import "../../styles/nav.css"
+import { Message } from "./Message";
 
-export function Header({ loggedIn, changeIsLoggedIn, isAdmin }) {
+export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmin }) {
 
 
     return (
@@ -21,8 +22,8 @@ export function Header({ loggedIn, changeIsLoggedIn, isAdmin }) {
                 </nav>
             </header>
             <main>
-
-                {loggedIn ? <Links changeIsLoggedIn={changeIsLoggedIn} isAdmin={isAdmin} /> : null}
+                <Message message={message} />
+                {loggedIn ? <Links setMessage={setMessage} changeIsLoggedIn={changeIsLoggedIn} isAdmin={isAdmin} /> : null}
                 <Outlet />
 
             </main>

@@ -21,7 +21,7 @@ import secureLocalStorage from "react-secure-storage";
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
   const [isAdmin,setIsAdmin] = useState(secureLocalStorage.getItem("isAdmin") === null ? false : true);
-
+  const [message,setMessage] = useState("");
 
 
   const loginActionWrapper = async ({ request }) => {
@@ -33,25 +33,31 @@ function App() {
         } else {
           setIsAdmin(false);
         }
-        alert("login success");
+        setMessage("login success");
       } else {
         setIsLoggedIn(false);
-        alert("login failed");
+        setMessage("login failed");
       }
     });
     return redirect("/");
   }
 
+  const registerActionWrapper = async ({ request }) => {
+    registerAction({request}).then((response) => {
+      setMessage(response);
+    });
+  }
 
 
   // stvaramo router koji za dani url učitava pripadajuću komponentu
   const appRouter = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Header loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
+      <Route path="/" element={<Header message={message} setMessage={setMessage}
+      loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
         <Route index element={<Home />} />
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login changeIsLoggedIn={setIsLoggedIn}/>} action={loginActionWrapper} />
-        <Route path="register" element={<Register />} action={registerAction} />
+        <Route path="register" element={<Register />} action={registerActionWrapper} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
       </Route>

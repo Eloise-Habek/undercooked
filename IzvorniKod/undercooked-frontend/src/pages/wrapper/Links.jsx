@@ -5,7 +5,7 @@ import secureLocalStorage from 'react-secure-storage';
 
 
 
-export function Links({ changeIsLoggedIn, isAdmin }) {
+export function Links({ setMessage, changeIsLoggedIn, isAdmin }) {
     return (
         <>
             <nav className='navbar2'>
@@ -19,7 +19,7 @@ export function Links({ changeIsLoggedIn, isAdmin }) {
                     <div><NavLink className="izbornik_navbar2" to={"/login"} onClick={() => {
                         secureLocalStorage.removeItem("logInToken");
                         changeIsLoggedIn(false);
-                        alert("Logged out!");
+                        setMessage("Logged out!");
                     }}>Logout</NavLink></div>
                 </div>
             </nav>
