@@ -38,10 +38,10 @@ public class SecurityConfig {
         return http
         		.cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .authorizeRequests(auth -> {
-                    auth.antMatchers("/", "/login", "/register").permitAll();
-                    auth.antMatchers("/profile").hasRole("USER");
-                    auth.antMatchers("/persons").hasRole("ADMIN");
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/", "/login", "/register").permitAll();
+                    auth.requestMatchers("/profile").hasRole("USER");
+                    auth.requestMatchers("/persons").hasRole("ADMIN");
                 })
                 .httpBasic(withDefaults())
                 .build();
