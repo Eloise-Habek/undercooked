@@ -46,6 +46,7 @@ function App() {
     registerAction({request}).then((response) => {
       setMessage(response);
     });
+    return redirect("/");
   }
 
 
