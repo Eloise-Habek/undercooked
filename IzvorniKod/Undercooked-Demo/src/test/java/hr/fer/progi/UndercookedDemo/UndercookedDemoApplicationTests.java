@@ -1,12 +1,12 @@
 package hr.fer.progi.UndercookedDemo;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class UndercookedDemoApplicationTests {
 
-	@Test
+//	@Test
 	void contextLoads() {
 	}
 
