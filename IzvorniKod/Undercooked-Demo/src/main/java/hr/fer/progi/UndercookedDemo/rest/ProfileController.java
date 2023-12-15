@@ -1,7 +1,6 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
 import java.security.Principal;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,7 @@ public class ProfileController {
 	@GetMapping("")
 	public Person myProfile(Principal user) {
 		System.out.println(user.toString());
-		if(user.getName().equals("admin")) return new Person(Long.valueOf(0), "admin", "undercooked@fer.hr", "pass", "admin", "admin");
+		if(user.getName().equals("admin")) return new Person(0L, "admin", "undercooked@fer.hr", "pass", "admin", "admin");
 		return personService.fromPrincipal(user);
 	}
 

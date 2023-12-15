@@ -33,7 +33,6 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -99,8 +98,8 @@ public class SecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList(CorsConfiguration.ALL));
+		configuration.setAllowedOrigins(List.of("*"));
+		configuration.setAllowedMethods(List.of(CorsConfiguration.ALL));
 		configuration.setAllowedHeaders(List.of("Content-Type", "Authorization"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);

@@ -60,7 +60,7 @@ public class PersonServiceJpa implements PersonService {
 			throw new RequestDeniedException("Person with username " + person.getUsername() + " already exists");
 		if (PersonRepo.countByEmail(person.getEmail()) > 0)
 			throw new RequestDeniedException("Person with email " + person.getEmail() + " already exists");
-		if(person.getUsername().toLowerCase().equals("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
+		if(person.getUsername().equalsIgnoreCase("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
 		Person newPerson = new Person();
 		newPerson.setEmail(person.getEmail());
 		newPerson.setUsername(person.getUsername());
