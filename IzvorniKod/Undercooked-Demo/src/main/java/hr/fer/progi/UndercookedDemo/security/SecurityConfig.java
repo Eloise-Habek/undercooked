@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,6 +38,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 	
 	private final RsaKeyProperties rsaKeys;
@@ -56,6 +58,7 @@ public class SecurityConfig {
 					auth.requestMatchers("/register").permitAll();
 					auth.requestMatchers("/profile").hasAuthority("SCOPE_ROLE_USER");
 					auth.requestMatchers("/persons/**").hasAuthority("SCOPE_ROLE_ADMIN");
+					auth.anyRequest().permitAll(); // dozvoli sve tako da @PreAuthorize radi
 				})
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
