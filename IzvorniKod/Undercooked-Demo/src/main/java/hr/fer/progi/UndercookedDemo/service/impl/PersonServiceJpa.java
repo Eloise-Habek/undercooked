@@ -12,6 +12,7 @@ import hr.fer.progi.UndercookedDemo.service.EntityMissingException;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +76,11 @@ public class PersonServiceJpa implements PersonService {
 		Person Person = fetch(PersonId);
 		PersonRepo.delete(Person);
 		return Person;
+	}
+
+	@Override
+	public Person fromPrincipal(Principal principal) {
+		return findByUsername(principal.getName()).orElseThrow(() -> new EntityMissingException(Person.class, principal));
 	}
 
 	private void validate(Person person) {

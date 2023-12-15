@@ -24,8 +24,7 @@ public class ProfileController {
 	public Person myProfile(Principal user) {
 		System.out.println(user.toString());
 		if(user.getName().equals("admin")) return new Person(Long.valueOf(0), "admin", "undercooked@fer.hr", "pass", "admin", "admin");
-		Optional<Person> person = personService.findByUsername(user.getName());
-		return person.get();
+		return personService.fromPrincipal(user);
 	}
 
 }
