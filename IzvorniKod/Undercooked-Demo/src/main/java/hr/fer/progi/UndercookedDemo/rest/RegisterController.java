@@ -25,9 +25,14 @@ public class RegisterController {
 	}
 	
 	@PostMapping("")
-	public String createPerson(@RequestBody Person Person) {
-		personService.createPerson(Person);
-		return "Korisnik dodan u sustav!";
+	public MessageResponse createPerson(@RequestBody Person Person) {
+		String rezultat = new String("User added");
+		try {
+			personService.createPerson(Person);
+		}catch(Exception exc) {
+			rezultat = exc.getMessage();
+		}
+		return new MessageResponse(rezultat);
 	}
 
 }
