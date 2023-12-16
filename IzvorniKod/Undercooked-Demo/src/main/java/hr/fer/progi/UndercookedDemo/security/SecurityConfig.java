@@ -47,6 +47,7 @@ public class SecurityConfig {
 	}
 	
 	
+	@SuppressWarnings("removal")
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
