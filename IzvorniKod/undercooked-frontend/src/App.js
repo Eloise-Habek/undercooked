@@ -9,12 +9,13 @@ import {
 import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
 import { Login, loginAction } from "./pages/Login";
-import { Register, registerAction } from "./pages/Register";
+import { Register } from "./pages/Register";
 //import Nav from "./pages/wrapper/Nav";
 import { AdminPage, getById } from "./pages/AdminPage";
 import {Header} from "./pages/wrapper/Header";
 import { useState } from "react";
 import secureLocalStorage from "react-secure-storage";
+import RegisterService from "./services/RegisterService";
 
 
 
@@ -23,6 +24,7 @@ function App() {
   const [isAdmin,setIsAdmin] = useState(secureLocalStorage.getItem("isAdmin") === null ? false : true);
   const [message,setMessage] = useState("");
 
+  let registerService = new RegisterService({ "setMessage": setMessage });
 
   const loginActionWrapper = async ({ request }) => {
     loginAction({ request }).then((response) => {
@@ -42,12 +44,6 @@ function App() {
     return redirect("/");
   }
 
-  const registerActionWrapper = async ({ request }) => {
-    registerAction({request}).then((response) => {
-      setMessage(response);
-    });
-    return redirect("/");
-  }
 
 
   // stvaramo router koji za dani url učitava pripadajuću komponentu
@@ -58,7 +54,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login changeIsLoggedIn={setIsLoggedIn}/>} action={loginActionWrapper} />
-        <Route path="register" element={<Register />} action={registerActionWrapper} />
+        <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
       </Route>
