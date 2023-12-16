@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 
 const URL = "/api/persons";
@@ -21,7 +20,7 @@ class AdminService {
       method: "DELETE",
       mode: "cors",
       headers: {
-        "Authorization": secureLocalStorage.getItem("logInToken")  
+        "Authorization": secureLocalStorage.getItem("logInToken")
       }
     })
   }
@@ -31,7 +30,7 @@ class AdminService {
       method: "GET",
       mode: "cors",
       headers: {
-        "Authorization": secureLocalStorage.getItem("logInToken")  
+        "Authorization": secureLocalStorage.getItem("logInToken")
       }
     })
   }
@@ -40,4 +39,3 @@ class AdminService {
 export default new AdminService();
 
 
-  

@@ -4,11 +4,10 @@ import {
   createRoutesFromElements,
   RouterProvider,
   Route,
-  redirect,
 } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
-import { Login, loginAction } from "./pages/Login";
+import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 //import Nav from "./pages/wrapper/Nav";
 import { AdminPage, getById } from "./pages/AdminPage";
@@ -16,6 +15,7 @@ import {Header} from "./pages/wrapper/Header";
 import { useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import RegisterService from "./services/RegisterService";
+import LoginService from "./services/LoginService";
 
 
 
@@ -25,24 +25,11 @@ function App() {
   const [message,setMessage] = useState("");
 
   let registerService = new RegisterService({ "setMessage": setMessage });
-
-  const loginActionWrapper = async ({ request }) => {
-    loginAction({ request }).then((response) => {
-      if (response === "login success") {
-        setIsLoggedIn(true);
-        if (secureLocalStorage.getItem("isAdmin") !== null) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-        setMessage("login success");
-      } else {
-        setIsLoggedIn(false);
-        setMessage("login failed");
-      }
-    });
-    return redirect("/");
-  }
+  let loginService = new LoginService({
+    "setIsLoggedIn": setIsLoggedIn,
+    "setIsAdmin": setIsAdmin,
+    "setMessage": setMessage,    
+  })
 
 
 
@@ -53,7 +40,7 @@ function App() {
       loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
         <Route index element={<Home />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="login" element={<Login changeIsLoggedIn={setIsLoggedIn}/>} action={loginActionWrapper} />
+        <Route path="login" element={<Login />} action={ loginService.loginAction } />
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
