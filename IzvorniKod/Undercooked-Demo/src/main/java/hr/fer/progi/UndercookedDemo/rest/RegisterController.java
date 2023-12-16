@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.progi.UndercookedDemo.domain.Person;
+import hr.fer.progi.UndercookedDemo.model.MessageResponse;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 
 @RestController

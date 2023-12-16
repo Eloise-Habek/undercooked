@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
+import hr.fer.progi.UndercookedDemo.model.AuthResponse;
 import hr.fer.progi.UndercookedDemo.service.TokenService;
 
 
