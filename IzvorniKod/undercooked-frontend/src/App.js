@@ -23,21 +23,32 @@ function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
   const [isAdmin,setIsAdmin] = useState(secureLocalStorage.getItem("isAdmin") === null ? false : true);
   const [message,setMessage] = useState("");
+  const [hideMessage,setHideMessage] = useState(0);
 
-  let registerService = new RegisterService({ "setMessage": setMessage });
+  const messageHandler = (message) => {
+    setHideMessage(0);
+    setMessage(message);
+  }
+
+  let registerService = new RegisterService({ "setMessage": messageHandler });
   let loginService = new LoginService({
     "setIsLoggedIn": setIsLoggedIn,
     "setIsAdmin": setIsAdmin,
-    "setMessage": setMessage,    
+    "setMessage": messageHandler,    
   })
 
+  
 
+  setTimeout(() => {
+    setHideMessage(1);    
+  }, 4000);
 
   // stvaramo router koji za dani url učitava pripadajuću komponentu
   const appRouter = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Header message={message} setMessage={setMessage}
-      loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
+      <Route path="/" element={<Header message={message} setMessage={messageHandler}
+      setHideMessage={setHideMessage}
+      hide={hideMessage} loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
         <Route index element={<Home />} />
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />

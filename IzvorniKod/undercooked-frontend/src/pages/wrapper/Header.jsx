@@ -5,9 +5,7 @@ import { Outlet } from "react-router-dom";
 import "../../styles/nav.css"
 import { Message } from "./Message";
 
-export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmin }) {
-
-
+export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmin, hide, setHideMessage }) {
     return (
         <>
             <header>
@@ -22,7 +20,7 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
                 </nav>
             </header>
             <main>
-                <Message message={message} />
+                <Message message={message} hide={hide} setHideMessage={setHideMessage} />
                 {loggedIn ? <Links setMessage={setMessage} changeIsLoggedIn={changeIsLoggedIn} isAdmin={isAdmin} /> : null}
                 <Outlet />
 
