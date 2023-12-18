@@ -1,8 +1,6 @@
-import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 
-const server = "http://localhost:8080";
-const URL = server + "/api/persons";
+const URL = "/api/persons";
 
 class AdminService {
   // šalje get request na backend i vraća response sa servera u obliku js promise
@@ -22,7 +20,7 @@ class AdminService {
       method: "DELETE",
       mode: "cors",
       headers: {
-        "Authorization": secureLocalStorage.getItem("logInToken")  
+        "Authorization": secureLocalStorage.getItem("logInToken")
       }
     })
   }
@@ -32,7 +30,7 @@ class AdminService {
       method: "GET",
       mode: "cors",
       headers: {
-        "Authorization": secureLocalStorage.getItem("logInToken")  
+        "Authorization": secureLocalStorage.getItem("logInToken")
       }
     })
   }
@@ -41,4 +39,3 @@ class AdminService {
 export default new AdminService();
 
 
-  

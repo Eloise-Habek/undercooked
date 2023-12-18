@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.progi.UndercookedDemo.domain.Person;
+import hr.fer.progi.UndercookedDemo.model.MessageResponse;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 
 @RestController
@@ -25,9 +26,14 @@ public class RegisterController {
 	}
 	
 	@PostMapping("")
-	public String createPerson(@RequestBody Person Person) {
-		personService.createPerson(Person);
-		return "Korisnik dodan u sustav!";
+	public MessageResponse createPerson(@RequestBody Person Person) {
+		String rezultat = new String("User added");
+		try {
+			personService.createPerson(Person);
+		}catch(Exception exc) {
+			rezultat = exc.getMessage();
+		}
+		return new MessageResponse(rezultat);
 	}
 
 }

@@ -12,6 +12,7 @@ import hr.fer.progi.UndercookedDemo.service.EntityMissingException;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,10 +57,10 @@ public class PersonServiceJpa implements PersonService {
 		validate(person);
 		Assert.isNull(person.getId(), "Person ID must be null, not: " + person.getId());
 		if (PersonRepo.countByUsername(person.getUsername()) > 0)
-			throw new RequestDeniedException("Person with username " + person.getUsername() + " already exists");
+			throw new RequestDeniedException("Username already exists");
 		if (PersonRepo.countByEmail(person.getEmail()) > 0)
-			throw new RequestDeniedException("Person with email " + person.getEmail() + " already exists");
-		if(person.getUsername().toLowerCase().equals("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
+			throw new RequestDeniedException("Email already exists");
+		if(person.getUsername().equalsIgnoreCase("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
 		Person newPerson = new Person();
 		newPerson.setEmail(person.getEmail());
 		newPerson.setUsername(person.getUsername());
@@ -75,6 +76,11 @@ public class PersonServiceJpa implements PersonService {
 		Person Person = fetch(PersonId);
 		PersonRepo.delete(Person);
 		return Person;
+	}
+
+	@Override
+	public Person fromPrincipal(Principal principal) {
+		return findByUsername(principal.getName()).orElseThrow(() -> new EntityMissingException(Person.class, principal));
 	}
 
 	private void validate(Person person) {

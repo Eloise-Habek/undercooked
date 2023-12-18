@@ -1,0 +1,27 @@
+UC3 Registriranje novog korisnika
+
+Neregistrirani korisnik šalje zahtjev za registraciju te mu web-aplikacija šalje odgovor formom za registraciju. Dokle god web-aplikacija u bazi podataka provjerom dobije odgovor da su email ili lozinka zauzeti korisnik dobiva poruku o zauzetosti emaila ili lozinke te ponovnu formu za upis podataka. Nakon unosa kod kojeg su email i username dostupni korisnikove informacije se zapisuju u bazu podataka. Korisnik dobiva poruku o uspješnoj registraciji.
+
+
+UC7 Objava recepta
+
+Registrirani korisnik šalje zahtjev za objavu recepte, a web-aplikacija mu odgovara formom za unos recepta. Registrirani korisnik unosi podatke o receptu: naslov, sastojci, priprema, vrijeme, kategorije, slike, video. Novonastali recept se zatim sprema u bazu podataka i web-aplikacija dobiva potvrdu o spremljenim podacima. Nakon potvrde web-aplikacija bazi podataka šalje zahtjev sa svim korisnicima koji su pratitelji autora objavljenog recepta te im svima šalje obavijest o novoj objavi.
+
+
+UC18 Pregledavanje vlastitog profila
+
+Registrirani korisnik šalje zahtjev za prikaz svog profila i web aplikaciju mu prikazuje sve informacije dobivene iz baze podataka. Nakon toga korisnik može zatražiti popis svih korisnika koji ga prate (UC20 Pregled profila koje korisnik prati), a web-aplikaciju bi mu odgovorila popisom korisnika koju bi dobila slanjem zahtjeva bazi podataka.
+Korisnik može odabrati i opciju pregledavanja spremljenih recepata (UC19 Pregledavanje spremljenih recepata) koji se prikazuju tako što web-aplikacija dobiva popis spremljenih recepata iz baze podataka. 
+
+
+UC21 Pregled osobnih postavki
+
+Registrirani korisnik šalje zahtjev za pregled osobnih postavki. Web-aplikacija prihvaća zahtjev i pošalje upit bazi podataka koja šalje sve podatke korisnika koje može ažurirati/brisati. Korisnik može odabrati opciju uređivanja profila (UC23 Uređivanje osobnih postavki), a web-aplikacija mu šalje formu za uređivanje postavki. Nakon što korisnik upiše promjene, potvrda promjena se šalje web-aplikaciji koja prosljeđuje podatke bazi podataka koja za tog korisnika ažurira promjene. Druga opcija koju korisnik može odabrati je brisanje profila (UC22 Brisanje vlastitog profila). Korisnik šalje zahtjev za brisanje profila web-aplikaciji koja prosljeđuje podatke korisnika bazi podataka koja ga na kraju briše.
+
+
+
+UC25 Brisanje recepta
+
+Administrator šalje zahtjev za pregled recepta kojeg želi obrisati web-aplikaciji. Web-aplikacija zatražuje podatke tog recepta u bazi podataka. Kada pronađe recept za brisanje šalje zahtjev za brisanje i web-aplikacija bazi podataka šalje zahtjev za brisanje tog recepta.
+
+

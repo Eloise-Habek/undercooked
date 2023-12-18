@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All in recipe integration test" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" path="$PROJECT_DIR$/src/test/http-client/recipe integration test.http">
+    <method v="2" />
+  </configuration>
+</component>

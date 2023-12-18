@@ -1,5 +1,6 @@
 package hr.fer.progi.UndercookedDemo.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,6 @@ public interface PersonService {
 	Optional<Person> findByEmail(String jmbag);
 
 	Person deletePerson(long PersonId);
+
+	Person fromPrincipal(Principal principal);
 }

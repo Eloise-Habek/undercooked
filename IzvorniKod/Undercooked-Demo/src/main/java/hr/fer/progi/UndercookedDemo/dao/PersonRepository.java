@@ -23,7 +23,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	
 	/**
 	 * Funkcija nalazi osobu prema njenon usernameu.
-	 * @param email
+	 * @param username
 	 * @return 
 	 */
 	
@@ -31,7 +31,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	
 	/**
 	 * Funkcija koja broji broj ljudi sa zadanim usernameom.
-	 * @param email
+	 * @param username
 	 * @return 
 	 */
 	
