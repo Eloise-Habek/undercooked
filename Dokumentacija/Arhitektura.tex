@@ -258,10 +258,19 @@
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
-			
+			 %\textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			 Dijagram aktivnosti u nastavku prikazuje tok upravljanja jedne od najvažnijih funkcionalnosti stranice, a to je objava novog recepta. Dva glavna sudionika su korisnik koji objavljuje recept te baza podataka u koju se zapisuje, a cijelim postupkom upravlja sama aplikacija, odnosno back-end. Dijagram je sukladno tome podijeljen na tri particije.
+			 
+			 Korisnik se najprije mora prijaviti u aplikaciju. Nakon uspješne prijave prikazuje mu se početna stranica s koje korisnik može odabrati opciju za objavu novog recepta. Odabirom te opcije otvara se novi prozor te korisnik može započeti s pisanjem recepta. Nakon što je korisnik gotov s pisanjem, back-end provjerava sadrži li recept sve potrebne podatke. Ako je recept valjan, upisuje ga se u bazu podataka te se na kraju korisnicima koji prate autora u obliku poruke šalje obavijest o novoj objavi.
+			 \begin{figure}
+			 	\includegraphics[scale=0.41]{slike/dijagram_aktivnosti.png}
+			 	\centering
+			 	\caption{Dijagram aktivnosti}
+			 	\label{fig:Dijagram_aktivnosti}
+			 \end{figure}
+			 
 			\eject
 		\section{Dijagram komponenti}
 		
