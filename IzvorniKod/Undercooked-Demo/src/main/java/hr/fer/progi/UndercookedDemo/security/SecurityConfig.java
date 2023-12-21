@@ -57,6 +57,7 @@ public class SecurityConfig {
 					auth.requestMatchers("/login").permitAll();
 					auth.requestMatchers("/register").permitAll();
 					auth.requestMatchers("/profile").hasAuthority("SCOPE_ROLE_USER");
+					auth.requestMatchers("/message/**").hasAuthority("SCOPE_ROLE_USER");
 					auth.requestMatchers("/persons/**").hasAuthority("SCOPE_ROLE_ADMIN");
 					auth.anyRequest().permitAll(); // dozvoli sve tako da @PreAuthorize radi
 				})

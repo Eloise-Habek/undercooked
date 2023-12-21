@@ -3,6 +3,7 @@ package hr.fer.progi.UndercookedDemo.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,9 @@ public class MessageService {
 
 	public List<Message> getAllMessages(){
 		return messageRepo.findAll();
+	}
+	
+	public Optional<Message> findMessageById(long id) {
+		return messageRepo.findById(id);
 	}
 }
