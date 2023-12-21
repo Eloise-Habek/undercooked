@@ -1,6 +1,7 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.fer.progi.UndercookedDemo.domain.Message;
+import hr.fer.progi.UndercookedDemo.model.UserResponse;
 import hr.fer.progi.UndercookedDemo.service.MessageService;
 
 @RestController
@@ -43,12 +45,15 @@ public class MessageController {
 	 */
 	
 	@GetMapping("allMessages")
-	public List<Message> allMessages(Principal principal){
+	public List<UserResponse> allMessages(Principal principal){
 		List<Message> messages = service.getAllMessages();
-		System.out.println(messages);
 		List<Message> userMessages = messages.stream().filter((m) -> m.getReceiver().getUsername().equals(principal.getName()) || 
-																	 m.getSender().getSurname().equals(principal.getName())).collect(Collectors.toList());
-		return userMessages;
+																	 m.getSender().getUsername().equals(principal.getName())).collect(Collectors.toList());
+		List<UserResponse> list = new ArrayList<>();
+		for(Message m : userMessages) {
+			list.add(new UserResponse(m.getId(), m.getText(), m.getSender().getUsername(), m.getReceiver().getUsername(), m.getTime()));
+		}
+		return list;
 	}
 	
 	/**
@@ -60,10 +65,10 @@ public class MessageController {
 	 */
 	
 	@GetMapping("getMessages/{id}")
-	public Message getMessage(@PathVariable("id") Long id, Principal principal) throws AuthenticationException {
+	public UserResponse getMessage(@PathVariable("id") Long id, Principal principal) throws AuthenticationException {
 		Message message = service.findMessageById(id).get();
 		if(!message.getReceiver().getSurname().equals(principal.getName()) && !message.getSender().getUsername().equals(principal.getName()))
 			throw new AuthenticationException("Not authenticated for this message");
-		return message;
+		return new UserResponse(message.getId(), message.getText(), message.getSender().getUsername(), message.getReceiver().getUsername(), message.getTime());
 	}
 }
