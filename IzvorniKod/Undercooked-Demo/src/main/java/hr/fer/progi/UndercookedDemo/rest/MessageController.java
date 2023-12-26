@@ -44,7 +44,7 @@ public class MessageController {
 	 * @return
 	 */
 	
-	@GetMapping("allMessages")
+	@GetMapping("getMessages")
 	public List<UserResponse> allMessages(Principal principal){
 		List<Message> messages = service.getAllMessages();
 		List<Message> userMessages = messages.stream().filter((m) -> m.getReceiver().getUsername().equals(principal.getName()) || 
