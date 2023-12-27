@@ -1,9 +1,9 @@
-import SearchRecipesWithComponents from '../components/SearchRecipesWithComponents';
+import SearchRecipesWithCategories from '../components/SearchRecipesWithCategories';
 
 export function Search(){
     return(
         <>
-            {<SearchRecipesWithComponents/>}
+            {<SearchRecipesWithCategories/>}
         </>
     )
 }
