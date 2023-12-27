@@ -9,6 +9,8 @@ import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { Inbox } from "./pages/Inbox";
+import { Search } from "./pages/Search";
 //import Nav from "./pages/wrapper/Nav";
 import { AdminPage, getById } from "./pages/AdminPage";
 import {Header} from "./pages/wrapper/Header";
@@ -55,6 +57,8 @@ function App() {
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
+        <Route path="search" element={<Search />} />
+        <Route path="inbox" element={<Inbox />} />
       </Route>
     )
   );

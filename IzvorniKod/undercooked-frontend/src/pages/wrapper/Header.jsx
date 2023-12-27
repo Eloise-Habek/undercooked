@@ -12,6 +12,8 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
                 <nav className='navbar'>
                     <hr />
                     <div className='right'>
+                        <div><NavLink className="izbornik" to={"/search"}>SEARCH</NavLink></div>
+                        <div><NavLink className="izbornik" to={"/inbox"}>INBOX</NavLink></div>
                         <div><NavLink className="izbornik" to={"/"}>HOME</NavLink></div>
                         <div><NavLink className="izbornik" to={"/login"}>LOGIN</NavLink></div>
                         <div><NavLink className="izbornik" to={"/register"}>REGISTER</NavLink></div>
