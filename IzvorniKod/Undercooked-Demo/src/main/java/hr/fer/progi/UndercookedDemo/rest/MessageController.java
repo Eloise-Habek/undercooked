@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hr.fer.progi.UndercookedDemo.dao.MessageRepository;
 import hr.fer.progi.UndercookedDemo.domain.Message;
 import hr.fer.progi.UndercookedDemo.model.UserResponse;
 import hr.fer.progi.UndercookedDemo.service.MessageService;
@@ -25,7 +26,10 @@ import hr.fer.progi.UndercookedDemo.service.MessageService;
 public class MessageController {
 	
 	@Autowired
-	private MessageService service; 
+	private MessageService service;
+	
+	@Autowired
+	private MessageRepository repo;
 
 	/**
 	 * Ruta za slanje poruke.
@@ -103,6 +107,7 @@ public class MessageController {
 		Message message = service.findMessageById(id).get();
 		if(message.getReceiver().getUsername().equals(principal.getName())) {
 			message.setRead(true);
+			repo.save(message);
 		}
 	}
 }
