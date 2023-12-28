@@ -81,6 +81,12 @@ public class MessageController {
 		return new UserResponse(message.getId(), message.getText(), message.getSender().getUsername(), message.getReceiver().getUsername(), message.getTime(), message.isRead());
 	}
 	
+	/**
+	 * Vraca broj neprocitanih poruka (samo ako je korisnik receiver)
+	 * @param principal
+	 * @return
+	 */
+	
 	@GetMapping("getNumberOfUnreadedMessages")
 	public int getNumberOfUnReadedMessages(Principal principal) {
 		List<Message> messages = service.getAllMessages();
