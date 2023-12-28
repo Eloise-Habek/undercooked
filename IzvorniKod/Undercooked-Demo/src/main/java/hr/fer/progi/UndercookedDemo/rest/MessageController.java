@@ -77,7 +77,6 @@ public class MessageController {
 		Message message = service.findMessageById(id).get();
 		if(!message.getReceiver().getUsername().equals(principal.getName()) && !message.getSender().getUsername().equals(principal.getName()))
 			throw new AuthenticationException("Not authenticated for this message");
-		if(message.getReceiver().getUsername().equals(principal.getName())) message.setRead(true);
 		return new UserResponse(message.getId(), message.getText(), message.getSender().getUsername(), message.getReceiver().getUsername(), message.getTime(), message.isRead());
 	}
 	
@@ -97,5 +96,13 @@ public class MessageController {
 			}
 		}
 		return number;
+	}
+	
+	@PostMapping("read/{id}")
+	public void readMessage(@PathVariable("id") Long id, Principal principal) {
+		Message message = service.findMessageById(id).get();
+		if(message.getReceiver().getUsername().equals(principal.getName())) {
+			message.setRead(true);
+		}
 	}
 }
