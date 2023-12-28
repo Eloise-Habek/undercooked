@@ -90,7 +90,7 @@ public class MessageController {
 	 * @return
 	 */
 	
-	@GetMapping("getNumberOfUnreadedMessages")
+	@GetMapping("getUnread")
 	public int getNumberOfUnReadedMessages(Principal principal) {
 		List<Message> messages = service.getAllMessages();
 		int number = 0;
