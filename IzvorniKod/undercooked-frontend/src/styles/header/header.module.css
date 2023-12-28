@@ -1,0 +1,46 @@
+.header {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.webpage_title {
+    padding: 1em;
+}
+
+.profile_btns {
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile {
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+}
+
+.profile img {
+    height: 5em;
+}
+
+.btn {
+    padding: 1em;
+}
+
+.header_profile_image {
+    background-color: aliceblue;
+    border: 1px solid pink;
+    width: 4em;
+    height: 4em;
+}
+
+.header_profile_image img{
+    width: 100%;
+}

@@ -1,0 +1,17 @@
+.search_box {
+    padding: 1em;
+}
+
+.search_box input{
+    width: 100%;
+}
+
+.category_select {
+    padding: 1em;
+}
+
+.category_btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}

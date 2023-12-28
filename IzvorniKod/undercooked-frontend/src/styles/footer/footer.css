@@ -1,0 +1,16 @@
+.footer {
+   background-color: #6cf;
+   color: white;
+   text-align: center;
+   padding: 1em;
+   width: 100%;
+   bottom: 0;
+}
+
+.footer-sticky {
+   position: sticky;
+}
+
+.footer-fixed {
+   position: fixed;
+}
