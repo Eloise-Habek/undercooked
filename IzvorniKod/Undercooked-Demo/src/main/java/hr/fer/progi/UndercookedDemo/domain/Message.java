@@ -23,6 +23,8 @@ public class Message {
 	private Person receiver;
 	
 	private LocalDateTime time;
+	
+	private boolean read;
 
 	public Long getId() {
 		return id;
@@ -30,6 +32,14 @@ public class Message {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isRead() {
+		return read;
+	}
+
+	public void setRead(boolean read) {
+		this.read = read;
 	}
 
 	public String getText() {

@@ -51,7 +51,7 @@ public class MessageController {
 																	 m.getSender().getUsername().equals(principal.getName())).collect(Collectors.toList());
 		List<UserResponse> list = new ArrayList<>();
 		for(Message m : userMessages) {
-			list.add(new UserResponse(m.getId(), m.getText(), m.getSender().getUsername(), m.getReceiver().getUsername(), m.getTime()));
+			list.add(new UserResponse(m.getId(), m.getText(), m.getSender().getUsername(), m.getReceiver().getUsername(), m.getTime(), m.isRead()));
 		}
 		return list;
 	}
@@ -64,11 +64,32 @@ public class MessageController {
 	 * @throws AuthenticationException
 	 */
 	
+	/**
+	 * Ruta za dohvat poruke, ako receiver dohvaca poruku <code>read</code> postaje <code>true</code>
+	 * @param id
+	 * @param principal
+	 * @return
+	 * @throws AuthenticationException
+	 */
+	
 	@GetMapping("getMessages/{id}")
 	public UserResponse getMessage(@PathVariable("id") Long id, Principal principal) throws AuthenticationException {
 		Message message = service.findMessageById(id).get();
-		if(!message.getReceiver().getSurname().equals(principal.getName()) && !message.getSender().getUsername().equals(principal.getName()))
+		if(!message.getReceiver().getUsername().equals(principal.getName()) && !message.getSender().getUsername().equals(principal.getName()))
 			throw new AuthenticationException("Not authenticated for this message");
-		return new UserResponse(message.getId(), message.getText(), message.getSender().getUsername(), message.getReceiver().getUsername(), message.getTime());
+		if(message.getReceiver().getUsername().equals(principal.getName())) message.setRead(true);
+		return new UserResponse(message.getId(), message.getText(), message.getSender().getUsername(), message.getReceiver().getUsername(), message.getTime(), message.isRead());
+	}
+	
+	@GetMapping("getNumberOfUnreadedMessages")
+	public int getNumberOfUnReadedMessages(Principal principal) {
+		List<Message> messages = service.getAllMessages();
+		int number = 0;
+		for(Message m : messages) {
+			if(m.getReceiver().getUsername().equals(principal.getName()) && !m.isRead()) {
+				number++;
+			}
+		}
+		return number;
 	}
 }
