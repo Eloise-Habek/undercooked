@@ -1,0 +1,6 @@
+.navigation {
+    border: 1px solid orange;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}

@@ -17,7 +17,8 @@ import secureLocalStorage from "react-secure-storage";
 import RegisterService from "./services/RegisterService";
 import LoginService from "./services/LoginService";
 
-
+import { Inbox } from "./pages/Inbox";
+import MessageService from "./services/MessageService";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -37,7 +38,7 @@ function App() {
     "setMessage": messageHandler,    
   })
 
-  
+  let messageService = new MessageService();
 
   setTimeout(() => {
     setHideMessage(1);    
@@ -55,6 +56,8 @@ function App() {
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
+        <Route path="inbox" element={<Inbox />} />
+        <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
       </Route>
     )
   );

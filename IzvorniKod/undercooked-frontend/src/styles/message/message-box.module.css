@@ -1,0 +1,14 @@
+.wrapper {
+    border: 1px solid black;
+    width: 25%;
+    position: sticky;
+}
+
+.to_input {
+    display: flex;
+    justify-content: left;
+}
+
+.text_input {
+    max-width: 100px;
+}

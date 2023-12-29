@@ -51,6 +51,7 @@ class LoginService {
       .then((response) => {
         if (response.loggedIn) {
           secureLocalStorage.setItem("logInToken", `Bearer ${response.token}`);
+          secureLocalStorage.setItem("username", username);
           if (response.admin) {
             secureLocalStorage.setItem("isAdmin", true);
             this.setIsAdmin(true);
@@ -60,6 +61,7 @@ class LoginService {
           }
         } else {
           secureLocalStorage.removeItem("logInToken");
+          secureLocalStorage.removeItem("username");
         }
         return response;
       })
