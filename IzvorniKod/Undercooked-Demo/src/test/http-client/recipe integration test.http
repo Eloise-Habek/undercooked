@@ -34,6 +34,14 @@ Authorization: Basic pero zdero123
 
 ###
 GET {{api}}/profile
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body.username == "admin");
+%}
+
+###
+GET {{api}}/profile
 Authorization: Bearer {{token}}
 
 > {%
