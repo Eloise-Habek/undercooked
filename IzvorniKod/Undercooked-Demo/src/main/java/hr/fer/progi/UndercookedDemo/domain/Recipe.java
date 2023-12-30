@@ -1,6 +1,7 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
 import hr.fer.progi.UndercookedDemo.dto.PersonPublicDto;
+import hr.fer.progi.UndercookedDemo.dto.RecipeAuthorDto;
 import jakarta.persistence.*;
 
 import java.time.Duration;
@@ -68,8 +69,8 @@ public class Recipe {
 		this.preparationDescription = preparationDescription;
 	}
 
-	public PersonPublicDto getAuthor() {
-		return new PersonPublicDto(author);
+	public RecipeAuthorDto getAuthor() {
+		return new RecipeAuthorDto(author);
 	}
 
 	public void setAuthor(Person author) {

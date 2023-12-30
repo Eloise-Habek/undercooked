@@ -1,9 +1,8 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Person {
@@ -25,6 +24,9 @@ public class Person {
 	private String surname;
 
 	private boolean isAdmin;
+
+	@OneToMany(mappedBy = "author") // naziv mora biti isti kao i onaj u Recipe.java
+	private List<Recipe> recipes;
 
 	public Long getId() {
 		return id;
@@ -80,5 +82,9 @@ public class Person {
 
 	public void setAdmin(Boolean admin) {
 		isAdmin = admin;
+	}
+
+	public List<Recipe> getRecipes() {
+		return recipes;
 	}
 }
