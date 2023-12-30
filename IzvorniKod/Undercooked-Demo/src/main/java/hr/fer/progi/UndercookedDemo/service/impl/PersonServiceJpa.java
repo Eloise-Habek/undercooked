@@ -1,16 +1,15 @@
 package hr.fer.progi.UndercookedDemo.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
 import hr.fer.progi.UndercookedDemo.dao.PersonRepository;
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.service.EntityMissingException;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,14 +17,14 @@ import java.util.Optional;
 
 @Service
 public class PersonServiceJpa implements PersonService {
-	
-	private final String mailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
-	        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
+	private final String mailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
 	private final PersonRepository PersonRepo;
 
-	public PersonServiceJpa(PersonRepository PersonRepo) {
+	public PersonServiceJpa(PersonRepository PersonRepo, @Value("${progi.admin.password}") String adminPasswordHash) {
 		this.PersonRepo = PersonRepo;
+		seedData(adminPasswordHash);
 	}
 
 	@Override
@@ -59,11 +58,9 @@ public class PersonServiceJpa implements PersonService {
 	public Person createPerson(Person person) {
 		validate(person);
 		Assert.isNull(person.getId(), "Person ID must be null, not: " + person.getId());
-		if (PersonRepo.countByUsername(person.getUsername()) > 0)
-			throw new RequestDeniedException("Username already exists");
-		if (PersonRepo.countByEmail(person.getEmail()) > 0)
-			throw new RequestDeniedException("Email already exists");
-		if(person.getUsername().equalsIgnoreCase("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
+		if (PersonRepo.countByUsername(person.getUsername()) > 0) throw new RequestDeniedException("Username already exists");
+		if (PersonRepo.countByEmail(person.getEmail()) > 0) throw new RequestDeniedException("Email already exists");
+		if (person.getUsername().equalsIgnoreCase("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
 		Person newPerson = new Person();
 		newPerson.setEmail(person.getEmail());
 		newPerson.setUsername(person.getUsername());
@@ -102,4 +99,28 @@ public class PersonServiceJpa implements PersonService {
 		Assert.hasText(surname, "Surname must be given");
 	}
 
+	/**
+	 * Seeds the database with default data: `admin` and `pero`
+	 */
+	private void seedData(String adminPasswordHash) {
+		var admin = new Person();
+		admin.setUsername("admin");
+		admin.setEmail("admin.undercooked@fer.hr");
+		admin.setName("Admin");
+		admin.setSurname("Nimda");
+		admin.setPassword(adminPasswordHash);
+		admin.setAdmin(true);
+		validate(admin);
+		PersonRepo.save(admin);
+
+		var pero = new Person();
+		pero.setUsername("pero");
+		pero.setEmail("pperic@fer.hr");
+		pero.setName("Pero");
+		pero.setSurname("Ždero");
+		pero.setPassword(new BCryptPasswordEncoder().encode("zdero123"));
+		pero.setAdmin(false);
+		validate(pero);
+		PersonRepo.save(pero);
+	}
 }
