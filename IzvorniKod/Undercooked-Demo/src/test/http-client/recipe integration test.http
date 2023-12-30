@@ -142,7 +142,7 @@ Authorization: Basic admin pass
 %}
 
 ### delete recipe 3 (fails)
-DELETE {{api}}/recipes/3
+DELETE {{api}}/recipes/admin/3
 Authorization: Bearer {{admin_token}}
 
 > {%
@@ -150,7 +150,7 @@ Authorization: Bearer {{admin_token}}
 %}
 
 ### delete recipe 1 (success)
-DELETE {{api}}/recipes/1
+DELETE {{api}}/recipes/admin/1
 Authorization: Bearer {{admin_token}}
 
 > {%
