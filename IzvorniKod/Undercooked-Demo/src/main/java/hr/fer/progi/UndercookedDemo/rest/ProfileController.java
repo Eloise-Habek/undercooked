@@ -27,14 +27,6 @@ public class ProfileController {
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
 	public Person myProfile(Principal principal) {
 		Optional<Person> person = personService.findByUsername(principal.getName());
-		if (principal.getName().equals("admin")) {
-			Person p = new Person();
-			p.setUsername("admin");
-			p.setEmail("undercooked@fer.hr");
-			p.setName("admin");
-			p.setEmail("admin");
-			return p;
-		}
 		return person.get();
 	}
 

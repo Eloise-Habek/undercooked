@@ -60,7 +60,6 @@ public class PersonServiceJpa implements PersonService {
 		Assert.isNull(person.getId(), "Person ID must be null, not: " + person.getId());
 		if (PersonRepo.countByUsername(person.getUsername()) > 0) throw new RequestDeniedException("Username already exists");
 		if (PersonRepo.countByEmail(person.getEmail()) > 0) throw new RequestDeniedException("Email already exists");
-		if (person.getUsername().equalsIgnoreCase("admin")) throw new RequestDeniedException("Person's username can not be \"admin\"");
 		Person newPerson = new Person();
 		newPerson.setEmail(person.getEmail());
 		newPerson.setUsername(person.getUsername());
