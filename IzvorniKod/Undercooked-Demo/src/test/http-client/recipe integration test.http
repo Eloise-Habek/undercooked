@@ -161,5 +161,73 @@ Authorization: Bearer {{admin_token}}
 GET {{api}}/recipes
 
 > {%
-    client.assert(response.body.length == 1)
+    client.assert(response.body.length == 1);
+    client.assert(response.body[0].id == 2);
+    client.assert(response.body[0].author.username == "pero");
+%}
+
+### Neuspječno brisanje recepta kada trenutno logirana osoba nije autor recepta
+
+### Prvo stvori nekog drugog korisnika
+POST {{api}}/register
+Content-Type: application/json
+
+{
+  "username": "mallory",
+  "email": "malicious@hacker.com",
+  "password": "hunter2",
+  "name": "Mallory",
+  "surname": "Darth"
+}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### login Mallory
+POST {{api}}/token
+Authorization: Basic mallory hunter2
+
+> {%
+    client.global.set("mallory_token", response.body.token);
+%}
+
+###
+GET {{api}}/profile
+Authorization: Bearer {{mallory_token}}
+
+> {%
+    client.assert(response.body.username == "mallory");
+%}
+
+### Trenutni recepti, autor je pero
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 1);
+    client.assert(response.body[0].id == 2);
+    client.assert(response.body[0].author.username == "pero");
+%}
+
+### Mallory pukušava izbrisati Perin recept, neuspješno
+DELETE {{api}}/recipes/2
+Authorization: Bearer {{mallory_token}}
+
+> {%
+    client.assert(response.status == 400);
+%}
+
+### Pero briše svoj recept
+DELETE {{api}}/recipes/2
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Recept je zaista izbrisan
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 0);
 %}
