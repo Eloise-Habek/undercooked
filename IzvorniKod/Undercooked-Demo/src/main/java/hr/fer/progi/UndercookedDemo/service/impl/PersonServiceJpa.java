@@ -22,8 +22,11 @@ public class PersonServiceJpa implements PersonService {
 	private final String mailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
 	        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
-	@Autowired
-	private PersonRepository PersonRepo;
+	private final PersonRepository PersonRepo;
+
+	public PersonServiceJpa(PersonRepository PersonRepo) {
+		this.PersonRepo = PersonRepo;
+	}
 
 	@Override
 	public List<Person> listAll() {
