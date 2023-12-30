@@ -6,22 +6,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Person{
-	
+public class Person {
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(unique=true, nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String username;
-	
-	@Column(unique=true, nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String email;
-	
+
 	private String password;
-	
+
 	private String name;
-	
+
 	private String surname;
 
 	public Long getId() {
