@@ -24,6 +24,8 @@ public class Person {
 
 	private String surname;
 
+	private boolean isAdmin;
+
 	public Long getId() {
 		return id;
 	}
@@ -72,4 +74,11 @@ public class Person {
 		this.surname = surname;
 	}
 
+	public Boolean getAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		isAdmin = admin;
+	}
 }

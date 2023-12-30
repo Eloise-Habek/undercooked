@@ -68,6 +68,7 @@ public class PersonServiceJpa implements PersonService {
 		newPerson.setSurname(person.getSurname());
 		PasswordEncoder pe = new BCryptPasswordEncoder();
 		newPerson.setPassword(pe.encode(person.getPassword()));
+		newPerson.setAdmin(false);
 		return PersonRepo.save(newPerson);
 	}
 
