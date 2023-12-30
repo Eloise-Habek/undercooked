@@ -239,3 +239,16 @@ GET {{api}}/recipes
 > {%
     client.assert(response.body.length == 0);
 %}
+
+### Admin postavlja recept
+POST {{api}}/recipes
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "krug",
+  "preparationTime": "PT3H14M",
+  "description": "klasičnu krug sa r=1",
+  "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
+  "ingredients": []
+}
