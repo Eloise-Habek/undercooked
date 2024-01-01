@@ -7,12 +7,20 @@ import { Footer } from "./wrapper/Footer";
 import RecipeService from "../services/RecipeService";
 
 function parseTime(time) {
-    let i = time.indexOf("M")
-    time = time.substring(2, i);
+    time = time.substring(2);
+    let hours = null;
     if (time.includes("H")) {
-        return time.split("H")[0] + " h " + time.split("H")[1] + " min";
+        hours = time.split("H")[0];
     }
-    return time + " min";
+    let mins = null;
+    if (time.includes("M") && time.includes("H")) {
+        mins = time.substring(time.indexOf("H") + 1, time.indexOf("M"));
+    }
+    if (time.includes("M") && !time.includes("H")) {
+        mins = time.substring(0, time.indexOf("M"));
+    }
+    time = (hours !== null ? hours + " h " : "") + (mins !== null ? mins + " min" : "");
+    return time;
 }
 
 export function Recipe() {
