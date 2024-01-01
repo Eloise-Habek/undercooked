@@ -15,7 +15,7 @@ export function Links({ setMessage, changeIsLoggedIn, isAdmin }) {
 
                 <div className='right_navbar2'>
                     <img src={require('../images/chef.png')} alt="profile_icon" />
-                    <NavLink className="izbornik_navbar2_right" to={"/profile"}>My Profile</NavLink>
+                    <NavLink className="izbornik_navbar2_right" to={"/profile/" + secureLocalStorage.getItem("username")}>My Profile</NavLink>
                     <div><NavLink className="izbornik_navbar2" to={"/login"} onClick={() => {
                         secureLocalStorage.removeItem("logInToken");
                         changeIsLoggedIn(false);

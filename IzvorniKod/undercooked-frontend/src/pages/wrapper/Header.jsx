@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Links } from "./Links";
 import { Outlet } from "react-router-dom";
-// import { Footer } from "./Footer";
+import { Footer } from "./Footer";
 import "../../styles/nav.css"
 import { Message } from "./Message";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
             setUnread(0);
         }
 
-    })
+    }, [])
     return (
         <>
             <header>
@@ -41,7 +41,7 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
 
             </main>
             <footer>
-                <hr />
+                <Footer sticky={0} />
             </footer>
         </>
     );

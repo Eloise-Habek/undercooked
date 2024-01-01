@@ -1,0 +1,32 @@
+.wrapper {
+    padding: 2em;
+    min-height: 63vh;
+}
+
+.mini_wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mini_wrapper img {
+    width: 20%;
+}
+
+.image {
+    border: 1px solid blue;
+    height: 500px;
+}
+
+.description {
+    border: 1px solid green;
+    height: 300px;
+}
+
+.checked {
+  color: orange;
+}
+
+.rate_stars {
+    display: flex;
+    justify-content: left;
+}

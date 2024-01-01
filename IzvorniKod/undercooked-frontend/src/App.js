@@ -19,6 +19,9 @@ import LoginService from "./services/LoginService";
 
 import { Inbox } from "./pages/Inbox";
 import MessageService from "./services/MessageService";
+import { Recipe } from "./pages/Recipe";
+import { PostRecipePage } from "./pages/PostRecipePage";
+import RecipeService from "./services/RecipeService";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -39,6 +42,7 @@ function App() {
   })
 
   let messageService = new MessageService();
+  let recipeService = new RecipeService();
 
   setTimeout(() => {
     setHideMessage(1);    
@@ -51,13 +55,15 @@ function App() {
       setHideMessage={setHideMessage}
       hide={hideMessage} loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
         <Route index element={<Home />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile/:user" element={<Profile />} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
         <Route path="inbox" element={<Inbox />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
+        <Route path="recipe/:id" element={<Recipe />} />
+        <Route path="postRecipe" element={<PostRecipePage />} action={recipeService.postAction}/>
       </Route>
     )
   );

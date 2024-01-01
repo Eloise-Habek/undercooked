@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { MessageMini } from "../components/MessageMini";
 // import { PageNav } from "../components/PageNav";
 import { SendMessageBox } from "../components/SendMessageBox";
-import { Footer } from "../pages/wrapper/Footer";
+// import { Footer } from "../pages/wrapper/Footer";
 import classes from "../styles/inbox/inbox.module.css"
 import secureLocalStorage from "react-secure-storage";
 import MessageService from "../services/MessageService";
@@ -29,12 +29,12 @@ export function Inbox() {
                 {showReplyBox ? "Close message box" : "Send message"}
             </button>
             <div className={classes.wrapper}>
-                {arrayDataItems.length > 0 ? arrayDataItems.reverse() : "Loading..."}
+                {arrayDataItems.length > 0 ? arrayDataItems.reverse() : "Inbox empty!"}
             </div>
 
 
             {/* <PageNav /> */}
-            <Footer sticky={1} />
+            {/* <Footer sticky={1} /> */}
         </>
     );
 }

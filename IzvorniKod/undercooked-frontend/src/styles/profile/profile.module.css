@@ -1,0 +1,18 @@
+.wrapper {
+    padding: 2em;
+    min-height: 63vh;
+}
+
+.profile_intro {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile_intro img {
+    width: 5%;
+}
+
+.profile_stats {
+    display: flex;
+    justify-content: space-between;
+}
