@@ -1,5 +1,6 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
+import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 import hr.fer.progi.UndercookedDemo.service.RecipeService;
