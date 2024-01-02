@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 public class Recipe {
 
+	public static final String author_field_name = "author";
+
 	@Id
 	@GeneratedValue
 	private Long id;

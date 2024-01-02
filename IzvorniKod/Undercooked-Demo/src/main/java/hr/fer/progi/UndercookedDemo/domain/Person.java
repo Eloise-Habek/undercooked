@@ -25,7 +25,7 @@ public class Person {
 
 	private boolean isAdmin;
 
-	@OneToMany(mappedBy = "author") // naziv mora biti isti kao i onaj u Recipe.java
+	@OneToMany(mappedBy = Recipe.author_field_name)
 	private List<Recipe> recipes;
 
 	public Long getId() {
