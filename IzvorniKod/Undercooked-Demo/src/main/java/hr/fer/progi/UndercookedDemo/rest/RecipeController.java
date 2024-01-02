@@ -50,9 +50,22 @@ public class RecipeController {
 		var person = personService.fromPrincipal(principal);
 		var existing = recipeService.findById(id);
 
-		if(!existing.getAuthor().id().equals(person.getId()))
+		if (!authorisedToModify(existing, person))
 			throw new RequestDeniedException("Tried to delete another person's recipe.");
 
 		recipeService.deleteById(id);
+	}
+
+	/**
+	 * Checks whether the person is authorised to modify the existing recipe.
+	 * @param existing The existing recipe to check against.
+	 * @param person The person that is trying to make changes to the existing recipe.
+	 * @return true if the person is authorised to modify the recipe, false otherwise.
+	 */
+	private boolean authorisedToModify(Recipe existing, Person person) {
+		if (person.getAdmin())
+			return true;
+
+		return existing.getAuthor().id().equals(person.getId());
 	}
 }
