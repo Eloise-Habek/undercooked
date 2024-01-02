@@ -252,3 +252,41 @@ Content-Type: application/json
   "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
   "ingredients": []
 }
+
+> {%
+    client.global.set("recipe_id", response.body.id);
+%}
+
+### Admin update-a svoj recept
+PUT {{api}}/recipes/{{recipe_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "krug",
+  "preparationTime": "PT3H14M",
+  "description": "klasičnu krug sa r=1",
+  "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
+  "ingredients": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "name": "jqshudhjawiudajwiw awdw adad "
+      }
+    }
+  ]
+}
+
+> {%
+    client.assert(response.body.id == client.global.get("recipe_id"));
+    client.assert(response.body.ingredients[0].amount == 1);
+%}
+
+### Provjeri je li se recept zaista updateao
+GET {{api}}/recipes/{{recipe_id}}
+Content-Type: application/json
+
+> {%
+    client.assert(response.body.id == client.global.get("recipe_id"));
+    client.assert(response.body.ingredients[0].amount == 1);
+%}

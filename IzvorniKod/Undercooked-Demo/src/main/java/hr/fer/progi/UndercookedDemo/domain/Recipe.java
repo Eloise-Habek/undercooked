@@ -1,6 +1,5 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
-import hr.fer.progi.UndercookedDemo.dto.PersonPublicDto;
 import hr.fer.progi.UndercookedDemo.dto.RecipeAuthorDto;
 import jakarta.persistence.*;
 

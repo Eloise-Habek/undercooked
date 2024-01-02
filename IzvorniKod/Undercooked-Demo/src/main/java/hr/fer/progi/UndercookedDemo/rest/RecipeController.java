@@ -33,6 +33,18 @@ public class RecipeController {
 		return recipeService.findById(id);
 	}
 
+	@PutMapping("/{id}")
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public Recipe put(@PathVariable("id") Long id, @RequestBody Recipe requestRecipe, Principal principal) {
+		var person = personService.fromPrincipal(principal);
+		var existing = recipeService.findById(id);
+		if (!authorisedToModify(existing, person)) {
+			throw new RequestDeniedException("Tried to update another person's recipe.");
+		}
+
+		return recipeService.modifyExisting(existing, requestRecipe);
+	}
+
 	@PostMapping
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
 	public Recipe post(@RequestBody Recipe recipe, Principal principal) {

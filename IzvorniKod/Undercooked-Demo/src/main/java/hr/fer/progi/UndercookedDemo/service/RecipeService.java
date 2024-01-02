@@ -33,12 +33,25 @@ public class RecipeService {
 		return repo.findAll();
 	}
 
-	public void deleteById(Long id)
-	{
+	public void deleteById(Long id) {
 		repo.deleteById(id);
 	}
 
 	public Recipe findById(Long id) {
 		return repo.findById(id).orElseThrow(() -> new EntityMissingException(Recipe.class, id));
+	}
+
+	public Recipe modifyExisting(Recipe existing, Recipe requestRecipe) {
+		// ovo mora biti prije existing.setIngredients(), inače se sve krši sa TransientObjectException
+		for (var ingredientWithAmount : requestRecipe.getIngredients()) {
+			ingredientService.fillInformation(ingredientWithAmount.getIngredient());
+		}
+		existing.setName(requestRecipe.getName());
+		existing.setPreparationTime(requestRecipe.getPreparationTime());
+		existing.setDescription(requestRecipe.getDescription());
+		existing.setPreparationDescription(requestRecipe.getPreparationDescription());
+		existing.setIngredients(requestRecipe.getIngredients());
+		repo.save(existing);
+		return existing;
 	}
 }
