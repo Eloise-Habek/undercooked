@@ -99,7 +99,7 @@ Content-Type: application/json
 }
 
 > {%
-    client.assert(response.body.id == 1);
+    client.assert(response.body.id == 2); // id 1 je već tu zbog seedanja
 %}
 
 ### recept 2
@@ -136,7 +136,7 @@ Content-Type: application/json
 }
 
 > {%
-    client.assert(response.body.id == 2);
+    client.assert(response.body.id == 3);
 %}
 
 ###
@@ -150,16 +150,16 @@ Authorization: Bearer {{token}}
 ###
 GET {{api}}/recipes
 
-### delete recipe 3 (fails)
-DELETE {{api}}/recipes/3
+### delete recipe 4 (fails)
+DELETE {{api}}/recipes/4
 Authorization: Bearer {{admin_token}}
 
 > {%
     client.assert(response.status != 200);
 %}
 
-### delete recipe 1 (success)
-DELETE {{api}}/recipes/1
+### delete recipe 2 (success)
+DELETE {{api}}/recipes/2
 Authorization: Bearer {{admin_token}}
 
 > {%
@@ -170,9 +170,9 @@ Authorization: Bearer {{admin_token}}
 GET {{api}}/recipes
 
 > {%
-    client.assert(response.body.length == 1);
-    client.assert(response.body[0].id == 2);
-    client.assert(response.body[0].author.username == "pero");
+    client.assert(response.body.length == 2);
+    client.assert(response.body[1].id == 3);
+    client.assert(response.body[1].author.username == "pero");
 %}
 
 ### Neuspječno brisanje recepta kada trenutno logirana osoba nije autor recepta
@@ -213,21 +213,28 @@ Authorization: Bearer {{mallory_token}}
 GET {{api}}/recipes
 
 > {%
-    client.assert(response.body.length == 1);
-    client.assert(response.body[0].id == 2);
-    client.assert(response.body[0].author.username == "pero");
+    client.assert(response.body.length == 2);
+    client.assert(response.body[1].id == 3);
+    client.assert(response.body[1].author.username == "pero");
 %}
 
 ### Mallory pukušava izbrisati Perin recept, neuspješno
-DELETE {{api}}/recipes/2
+DELETE {{api}}/recipes/3
 Authorization: Bearer {{mallory_token}}
 
 > {%
     client.assert(response.status == 400);
 %}
 
+### Stanje prije
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 2);
+%}
+
 ### Pero briše svoj recept
-DELETE {{api}}/recipes/2
+DELETE {{api}}/recipes/3
 Authorization: Bearer {{token}}
 
 > {%
@@ -238,7 +245,7 @@ Authorization: Bearer {{token}}
 GET {{api}}/recipes
 
 > {%
-    client.assert(response.body.length == 0);
+    client.assert(response.body.length == 1);
 %}
 
 ### Admin postavlja recept
