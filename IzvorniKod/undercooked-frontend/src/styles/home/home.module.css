@@ -1,5 +1,6 @@
 .wrapper {
-    padding: 2em;
-    border: 1px solid greenyellow;
-    min-height: 63vh;
+  padding: 2em;
+  background-image: url("../../pages/images/pozadina.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 }

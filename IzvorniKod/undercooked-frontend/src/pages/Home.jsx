@@ -1,12 +1,12 @@
 import { PageNav } from "../components/PageNav";
-import { RecipeMini } from "../components/RecipeMini"
+import { RecipeMini } from "../components/RecipeMini";
 import { Footer } from "./wrapper/Footer";
-import classes from "../styles/home/home.module.css"
+import classes from "../styles/home/home.module.css";
 
 export function Home() {
-    return (
-        <>
-            {/* <div className="main_div">
+  return (
+    <>
+      {/* <div className="main_div">
         <h1 className="naslov">Dobrodošli na CookBooked!</h1>
 
         <div className="search-container">
@@ -14,13 +14,18 @@ export function Home() {
             <button className="search-button">Pretraži</button>
         </div>
     </div> */}
-            <div className={classes.wrapper}>
-                <RecipeMini />
-                <RecipeMini />
-                <RecipeMini />
-            </div>
-            <PageNav />
-            <Footer sticky={1} />
-        </>
-    )
+      <div className={classes.wrapper}>
+        <RecipeMini />
+        <RecipeMini />
+        <RecipeMini />
+        <RecipeMini />
+        <RecipeMini />
+        <RecipeMini />
+        <RecipeMini />
+        <RecipeMini />
+      </div>
+      <PageNav />
+      <Footer sticky={1} />
+    </>
+  );
 }

@@ -1,6 +1,8 @@
 .navigation {
-    border: 1px solid orange;
-    display: flex;
-    justify-content: space-between;
-    padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  align-items: center;
+  background-color: #7d7f80;
+  font-size: larger;
 }

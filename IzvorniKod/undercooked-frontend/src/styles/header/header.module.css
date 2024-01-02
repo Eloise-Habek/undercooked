@@ -1,46 +1,129 @@
 .header {
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  background-color: #d2d3d3;
+  text-align: center;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid #999;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .navigation {
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  background-color: #7d7f80;
+  height: 50px;
+}
+
+.placeholder {
+  height: 100px;
+  width: 100vw;
+}
+
+.empty_div {
+  width: 30vw;
 }
 
 .webpage_title {
-    padding: 1em;
+  display: flex;
+  width: 40vw;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
 }
 
-.profile_btns {
-    border: 1px solid red;
-    display: flex;
-    justify-content: space-between;
+.webpage_title h3 {
+  margin: 0;
+  font-size: 3em;
 }
 
-.profile {
-    border: 1px solid green;
-    display: flex;
-    justify-content: center;
+.profile_btns_wrapper {
+  width: 30vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
 }
 
-.profile img {
-    height: 5em;
+.top_buttons {
+  width: 15%;
 }
 
-.btn {
-    padding: 1em;
+.top_buttons {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #9615db;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.header_profile_image {
-    background-color: aliceblue;
-    border: 1px solid pink;
-    width: 4em;
-    height: 4em;
+.top_buttons:hover {
+  background-color: #2d3032;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(150, 21, 219, 0.7);
+  transform: scale(1.05);
 }
 
-.header_profile_image img{
-    width: 100%;
+.top_buttons:active {
+  background-color: #2d3032;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(150, 21, 219, 0.7);
+  transform: scale(0.95);
+}
+
+.chef_button {
+  width: 30%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav_btn {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.nav_btn a {
+  color: #000;
+  text-decoration: none;
+  font-size: 24px;
+  transition: transform 0.3s, color 0.3s, opacity 0.3s;
+}
+
+.nav_btn a:hover {
+  color: #9615db;
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+.buttonImage {
+  width: 40%;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.buttonImage:hover {
+  /* Hover effect */
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.buttonImage:active {
+  /* Pressed effect */
+  transform: scale(0.9);
+  filter: brightness(0.8);
 }

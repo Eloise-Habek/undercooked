@@ -1,17 +1,128 @@
 .search_box {
-    padding: 1em;
+  padding: 1em;
 }
 
-.search_box input{
-    width: 100%;
+.search_box input {
+  width: 100%;
 }
 
 .category_select {
-    padding: 1em;
+  padding: 1em;
 }
 
 .category_btns {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.search_container {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+
+  backdrop-filter: blur(10px);
+  background-color: rgb(225, 225, 225, 0.6);
+  padding: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search_container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.search_input {
+  flex: 1;
+  padding: 2vh;
+  border: 3px solid #9615db;
+  border-style: double;
+  border-radius: 15px 0 0 15px;
+  margin-right: 8px;
+}
+
+.search_button {
+  margin: 0;
+  background-color: #9615db;
+  color: #fff;
+  padding: 2vh;
+  border: 1px solid #9615db;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
+}
+
+.main_div {
+  background-color: #d2d3d3;
+  background-image: url("../../pages/images/pozadina.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.search_category_wrapper {
+  position: fixed;
+  height: 40%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.category_select {
+  background-color: rgb(225, 225, 225, 0.96);
+
+  text-align: center;
+  margin-top: 20px;
+}
+
+.category_select div {
+  margin-bottom: 10px;
+}
+
+.category_btns {
+  display: flex;
+  justify-content: center;
+}
+
+.category_btns div {
+  margin: 0 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #9615db;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: #7514ab;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(150, 21, 219, 0.7);
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #641386;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(150, 21, 219, 0.7);
+  transform: scale(0.95);
 }
