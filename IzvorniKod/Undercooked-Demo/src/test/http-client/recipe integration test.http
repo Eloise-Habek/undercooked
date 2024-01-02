@@ -150,15 +150,15 @@ Authorization: Basic admin pass
 %}
 
 ### delete recipe 3 (fails)
-DELETE {{api}}/recipes/admin/3
+DELETE {{api}}/recipes/3
 Authorization: Bearer {{admin_token}}
 
 > {%
-    // client.assert(response.status != 200);
+    client.assert(response.status != 200);
 %}
 
 ### delete recipe 1 (success)
-DELETE {{api}}/recipes/admin/1
+DELETE {{api}}/recipes/1
 Authorization: Bearer {{admin_token}}
 
 > {%

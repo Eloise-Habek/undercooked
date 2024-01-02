@@ -38,15 +38,9 @@ public class RecipeController {
 		return recipeService.createRecipe(recipe, personService.fromPrincipal(principal));
 	}
 
-	@DeleteMapping("/admin/{id}")
-	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-	public void adminDelete(@PathVariable("id") Long id) {
-		recipeService.deleteById(id);
-	}
-
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
-	public void userDelete(@PathVariable("id") Long id, Principal principal) {
+	public void delete(@PathVariable("id") Long id, Principal principal) {
 		var person = personService.fromPrincipal(principal);
 		var existing = recipeService.findById(id);
 
