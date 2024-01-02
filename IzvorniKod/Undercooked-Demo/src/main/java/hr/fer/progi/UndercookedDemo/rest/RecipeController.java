@@ -52,8 +52,9 @@ public class RecipeController {
 
 	/**
 	 * Checks whether the person is authorised to modify the existing recipe.
+	 *
 	 * @param existing The existing recipe to check against.
-	 * @param person The person that is trying to make changes to the existing recipe.
+	 * @param person   The person that is trying to make changes to the existing recipe.
 	 * @return true if the person is authorised to modify the recipe, false otherwise.
 	 */
 	private boolean authorisedToModify(Recipe existing, Person person) {
