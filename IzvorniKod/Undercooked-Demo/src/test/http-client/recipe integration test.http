@@ -14,7 +14,7 @@ GET {{api}}/ingredients
 #
 #{
 #  "username": "pero",
-#  "email": "pero@zdero.hr",
+#  "email": "pero@ zdero.hr",
 #  "password": "amogus",
 #  "name": "Pero",
 #  "surname": "Perić"
@@ -31,6 +31,15 @@ Authorization: Basic pero zdero123
 > {%
     client.global.set("token", response.body.token);
 %}
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
 
 ###
 GET {{api}}/profile
@@ -140,14 +149,6 @@ Authorization: Bearer {{token}}
 
 ###
 GET {{api}}/recipes
-
-### login admin
-POST {{api}}/token
-Authorization: Basic admin pass
-
-> {%
-    client.global.set("admin_token", response.body.token);
-%}
 
 ### delete recipe 3 (fails)
 DELETE {{api}}/recipes/3
