@@ -176,8 +176,9 @@ export function PostRecipePage() {
 
                     </textarea>
                 </div>
+                <button className={classes.save_recipe} type="submit" >{id !== undefined ? "Post changes" : "Post recipe"}</button>
                 {id !== undefined ? <input type="text" hidden={true} value={id} name='recipe_id' /> : null}
-                <button type="submit" >{id !== undefined ? "Post changes" : "Post recipe"}</button>
+
             </Form>
             {/* <Footer sticky={1} /> */}
         </>
