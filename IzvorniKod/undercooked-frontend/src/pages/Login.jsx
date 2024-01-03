@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom'
+import { Form, NavLink } from 'react-router-dom'
 import "../styles/login.css"
 //import Header from './wrapper/Header';
 
@@ -18,7 +18,9 @@ export function Login() {
                         <input required type="password" name="password" className='input_field' />
                     </div>
                     <button type="submit" className='login_button'>Login</button>
+                    <NavLink to={"/register"}>Don't have an account?</NavLink>
                 </Form>
+
             </div>
         </>
     )

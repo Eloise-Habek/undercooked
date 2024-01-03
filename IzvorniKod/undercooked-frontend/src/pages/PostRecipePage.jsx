@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Form, useParams } from 'react-router-dom'
 import RecipeService from '../services/RecipeService';
+import classes from "../styles/recipe/postrecipepage.module.css";
 
 function parseTime(time) {
     time = time.substring(2);
@@ -23,6 +24,9 @@ function getOption(index, setInputs, inputs) {
         <input required placeholder='ingredient' type="text" name={"ingredient " + index.toString()} id={"ingredient " + index.toString()} />
         <input placeholder='amount' type="number" name={"ingredient " + index.toString() + " amount"} id={"ingredient " + index.toString() + " amount"} />
         <select name={"ingredient " + index.toString() + " unitOfMeasure"} id={"ingredient " + index.toString() + " unitOfMeasure"}>
+            {/* <option value=""></option>
+            <option value="l">l</option>
+            <option value="dL">dL</option> */}
             <option value="g">g</option>
             <option value="dag">dag</option>
             <option value="kg">kg</option>
@@ -79,23 +83,23 @@ export function PostRecipePage() {
         hour_input.setAttribute('value', 0);
 
     }, [id, setInputs])
-    return <div>
-        <Form method={id === undefined ? "post" : "put"} action={id === undefined ? "/recipe/post" : "/recipe/edit/" + id}>
+    return <div className={classes.register_wrap}>
+        <Form className={classes.form_wrapper} method={id === undefined ? "post" : "put"} action={id === undefined ? "/recipe/post" : "/recipe/edit/" + id}>
 
-            <div>
+            <div className={classes.columns}>
                 <label htmlFor="">Title:</label>
                 <input required id='title' type="text" name="title" />
             </div>
-            <div>
+            <div className={classes.columns}>
                 <label htmlFor="">Image:</label>
                 <input id="image" type="file" name="image" />
             </div>
-            <div>
+            <div className={classes.columns}>
                 <textarea id="description" name="description" rows="4" cols="50" placeholder='Discription...'>
 
                 </textarea>
             </div>
-            <div>
+            <div className={classes.columns}>
                 <label htmlFor="">Preparation time:</label>
                 <div>
                     <input id='hour_input' required type="number" name="time_h" placeholder='hours' />
@@ -105,7 +109,7 @@ export function PostRecipePage() {
                 </div>
 
             </div>
-            <div>
+            <div className={classes.columns}>
                 <label htmlFor="">Ingredients:</label>
                 <ul>{inputs}</ul>
                 <button type='button' onClick={() => {
@@ -116,7 +120,7 @@ export function PostRecipePage() {
                     setInputs(inputs2);
                 }}>Add ingredient</button>
             </div>
-            <div>
+            <div className={classes.columns}>
                 <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
 
                 </textarea>

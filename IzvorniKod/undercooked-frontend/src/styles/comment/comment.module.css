@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  margin: 2em;
+  border: 1px solid black;
+  border-radius: 1em;
+}
+
+.img_and_username {
+  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+}
+
+.img_and_username img {
+  max-width: 100px;
+  height: auto;
+}
+
+.comment_text {
+  margin: 1em;
+  flex: 1;
+}

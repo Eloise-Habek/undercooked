@@ -48,61 +48,86 @@ export function Profile() {
 
     }, [navigate, user]);
     const [showMessageBox, setShowMessageBox] = useState(0)
-    return <>
-        <div className={classes.wrapper}>
-            <div>
-                <div className={classes.profile_intro}>
-                    <img src={require("./images/chef.png")} alt="" />
-                    <h3>@{username}</h3>
-                    <NavLink className="fa fa-cog" to={"/editProfile"}></NavLink>
-                </div>
-                {username === secureLocalStorage.getItem("username") ? null :
-                    <div >
+    return (
+        <>
+            <div className={classes.profileWrapper}>
+                <div className={classes.profileSection}>
+                    <div className={classes.profileIntro}>
+                        <img
+                            src={require("./images/chef.png")}
+                            alt=""
+                            className={classes.profileImage}
+                        />
+                        {user === secureLocalStorage.getItem("username") ?
+                            <NavLink
+                                to={"/settings"}
+                                className={`${classes.settingsLink} fa fa-cog`}
+                            ></NavLink>
+                            : null}
 
-                        <button type='button' onClick={() => {
-                            setIsFollowing(!isFollowing);
-                            let followService = new FollowService();
-                            if (isFollowing) {
-                                followService.unfollow(username).then(res => {
-                                    if (!res.ok) {
-                                        alert("Something went wrong!");
-                                    }
-                                })
-                            } else {
-                                followService.follow(username).then(res => {
-                                    if (!res.ok) {
-                                        alert("Something went wrong!");
-                                    }
-                                })
-                            }
-                        }}>{isFollowing ? "Following" : "Follow"}</button>
-                        <button onClick={() => { showMessageBox ? setShowMessageBox(0) : setShowMessageBox(1) }
-                        }>
-                            {showMessageBox ? "Close message box" : "Message"}
-                        </button>
+                        <h3 className={classes.username}>@{username}</h3>
                     </div>
-                }
 
-            </div>
-            {showMessageBox ? <SendMessageBox username={user} /> : null}
 
-            <div className={classes.profile_stats}>
-                <div><NavLink to={"/following/" + username}>{following + " Following"}</NavLink></div>
-                <div><NavLink to={"/followers/" + username}>{followers + " Followers"}</NavLink></div>
-                <div>100 Recipes saved</div>
-            </div>
-            {arrayDataItems.length > 0 ? <>
-                <div>Posted recipes:</div>
-                <div>
-                    {arrayDataItems.reverse()}
+                    {username === secureLocalStorage.getItem("username") ? null :
+                        <div className={classes.profileActions}>
+
+                            <button className={classes.followButton} type='button' onClick={() => {
+                                setIsFollowing(!isFollowing);
+                                let followService = new FollowService();
+                                if (isFollowing) {
+                                    followService.unfollow(username).then(res => {
+                                        if (!res.ok) {
+                                            alert("Something went wrong!");
+                                        }
+                                    })
+                                } else {
+                                    followService.follow(username).then(res => {
+                                        if (!res.ok) {
+                                            alert("Something went wrong!");
+                                        }
+                                    })
+                                }
+                            }}>{isFollowing ? "Following" : "Follow"}</button>
+                            <button onClick={() => { showMessageBox ? setShowMessageBox(0) : setShowMessageBox(1) }
+                            }>
+                                {showMessageBox ? "Close message box" : "Message"}
+                            </button>
+                        </div>
+                    }
+
+
+                    <div className={classes.profileStats}>
+                        <div className={classes.statItem}>
+                            <span className={classes.statValue}><NavLink to={"/following/" + username}>{following}</NavLink></span>
+                            <span className={classes.statLabel}>Following</span>
+                        </div>
+                        <div className={classes.statItem}>
+                            <span className={classes.statValue}><NavLink to={"/followers/" + username}>{followers}</NavLink></span>
+                            <span className={classes.statLabel}>Followers</span>
+                        </div>
+                        <div className={classes.statItem}>
+                            <span className={classes.statValue}>100</span>
+                            <span className={classes.statLabel}>Recipes saved</span>
+                        </div>
+                    </div>
                 </div>
 
-            </> : null}
+                {showMessageBox ? <SendMessageBox username={user} /> : null}
 
+                <div className={classes.recipeSection}>
+                    {arrayDataItems.length > 0 ? <>
+                        <div className={classes.postedRecipes}>Posted recipes:</div>
+                        <div className={classes.recipeContainer}>
+                            {arrayDataItems.reverse()}
+                        </div>
 
-        </div>
-        <PageNav />
-        <Footer sticky={1} />
-    </>
+                    </> :
+                        <div className={classes.postedRecipes}>User didn't post anything</div>}
+                </div>
+            </div>
+            {/* <PageNav /> */}
+        </>
+    );
 
 }

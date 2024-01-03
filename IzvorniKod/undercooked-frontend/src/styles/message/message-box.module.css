@@ -1,14 +1,31 @@
-.wrapper {
-    border: 1px solid black;
-    width: 25%;
-    position: sticky;
+.message_box_wrapper {
+  border-radius: 1em;
+  margin: 2em;
+  padding: 0.2em;
+  background-color: rgba(33, 150, 243, 0.3);
+  margin-left: auto 2em;
+  margin-right: auto 2em;
+  height: min-content;
 }
 
 .to_input {
-    display: flex;
-    justify-content: left;
+  display: flex;
+  justify-content: left;
 }
 
 .text_input {
-    max-width: 100px;
+  max-width: 100px;
+}
+
+.reply_column {
+  margin: 1em;
+}
+
+.send_button {
+  margin: 0.5em;
+}
+
+.text_fields {
+  border-radius: 10px;
+  padding: 10px;
 }

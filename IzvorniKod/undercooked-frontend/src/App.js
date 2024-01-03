@@ -23,6 +23,9 @@ import { Recipe } from "./pages/Recipe";
 import { PostRecipePage } from "./pages/PostRecipePage";
 import RecipeService from "./services/RecipeService";
 import { UserList } from "./services/UserList";
+import { Search } from "./pages/Search";
+import { PleaseLogin } from "./pages/PleaseLogin";
+import { Settings } from "./pages/Settings";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -55,19 +58,23 @@ function App() {
       <Route path="/" element={<Header message={message} setMessage={messageHandler}
       setHideMessage={setHideMessage}
       hide={hideMessage} loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
-        <Route index element={<Home />} />
+        <Route index element={<Search />} />
+        <Route path="search" element={<Search />} />
+        <Route path="feed" element={isLoggedIn ? <Home /> : <PleaseLogin />} />
         <Route path="profile/:user" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
         <Route path="followers/:user" element={<UserList followers={1} following={0}/>} />
         <Route path="following/:user" element={<UserList followers={0} following={1}/>} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
-        <Route path="inbox" element={<Inbox />} />
+        <Route path="inbox" element={isLoggedIn ? <Inbox /> : <PleaseLogin />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
         <Route path="recipe/:id" element={<Recipe />} />
         <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
         <Route path="recipe/edit/:id" element={<PostRecipePage />} action={recipeService.editAction}/>
+        <Route path="*" element={<Search />}/>
       </Route>
     )
   );

@@ -25,7 +25,7 @@ export function Inbox() {
     return (
         <>
             {showReplyBox ? <SendMessageBox username={null} /> : null}
-            <button onClick={() => { showReplyBox ? setShowReplyBox(0) : setShowReplyBox(1) }}>
+            <button className={classes.send_message_btn} onClick={() => { showReplyBox ? setShowReplyBox(0) : setShowReplyBox(1) }}>
                 {showReplyBox ? "Close message box" : "Send message"}
             </button>
             <div className={classes.wrapper}>

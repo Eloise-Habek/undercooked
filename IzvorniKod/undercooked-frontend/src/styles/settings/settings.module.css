@@ -1,0 +1,30 @@
+.wrapper {
+  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.components {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  background-color: rgba(33, 149, 243, 0.423);
+  border-radius: 1em;
+  padding: 0.5em;
+  height: auto;
+  width: 50vw;
+}
+
+.delete_btn {
+  background-color: red;
+}
+
+.inputs {
+  margin: 1em;
+  padding: 5px;
+  border-radius: 5px;
+  border-style: groove;
+  border-color: black;
+}

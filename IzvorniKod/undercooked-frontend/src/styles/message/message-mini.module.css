@@ -1,17 +1,48 @@
 .wrapper {
-    border: 1px solid black;
-    width: 50%;
+  margin: 2em;
+  border: 1px solid black;
+  border-radius: 1em;
+  width: 80%;
 }
 .message_wrapper {
-    display: flex;
-    justify-content: space-between;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  height: auto;
 }
 
-.img {
-    width: 50px;
-    height: 50px;
+.img_and_username {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 70px;
+  height: 70px;
+  margin: 1em;
+  font-weight: bolder;
 }
 
-.img img{
-    width: 100%;
+.img_and_username img {
+  width: 100%;
+}
+
+.message_text {
+  display: flex;
+  justify-content: left;
+  flex: 1;
+  margin: 1em;
+}
+
+.expand_btn {
+  width: 100px;
+  height: 50px;
+}
+
+.collapse_btn {
+  margin: 1em;
+}
+
+.btns_wrapper {
+  margin: 1em;
 }
