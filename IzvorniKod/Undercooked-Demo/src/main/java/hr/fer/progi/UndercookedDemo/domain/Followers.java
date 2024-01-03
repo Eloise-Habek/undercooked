@@ -3,6 +3,7 @@ package hr.fer.progi.UndercookedDemo.domain;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -10,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 public class Followers {
 	
 	@Id
+	@GeneratedValue
 	private long id;
 
 	/**
@@ -25,6 +27,13 @@ public class Followers {
 	
 	@ManyToOne
 	private Person to;
+	
+	public Followers(long id, Person from, Person to) {
+		this.id = id;
+		this.from = from;
+		this.to = to;
+	}
+	
 	
 	public Followers(Person from, Person to) {
 		this.from = from;
