@@ -87,4 +87,11 @@ public class Person {
 	public List<Recipe> getRecipes() {
 		return recipes;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", name="
+				+ name + ", surname=" + surname + ", isAdmin=" + isAdmin + ", recipes=" + recipes + "]";
+	}
+	
 }

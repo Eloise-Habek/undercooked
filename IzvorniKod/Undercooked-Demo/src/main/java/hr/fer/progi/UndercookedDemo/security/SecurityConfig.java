@@ -58,6 +58,7 @@ public class SecurityConfig {
 					auth.requestMatchers("/register").permitAll();
 					auth.requestMatchers("/message/**").hasAuthority("SCOPE_ROLE_USER");
 					auth.requestMatchers("/persons/**").hasAuthority("SCOPE_ROLE_ADMIN");
+					auth.requestMatchers("/follow/**").hasAuthority("SCOPE_ROLE_USER");
 					auth.anyRequest().permitAll(); // dozvoli sve tako da @PreAuthorize radi
 				})
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
