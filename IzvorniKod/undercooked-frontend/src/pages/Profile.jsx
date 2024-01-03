@@ -17,7 +17,9 @@ export function Profile() {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [followers, setFollowers] = useState("");
+    const [following, setFollowing] = useState("");
 
     let { user } = useParams();
     let [recipeArray, setRecipeArray] = useState([]);
@@ -33,6 +35,8 @@ export function Profile() {
                 setName(data.name);
                 setSurname(data.surname);
                 setRecipeArray(data.recipes);
+                setFollowers(data.followers);
+                setFollowing(data.following);
             });
 
         } else {
@@ -40,22 +44,6 @@ export function Profile() {
         }
 
     }, [navigate, user]);
-    // return (
-    //     <div className='main_profile'>
-    //     <div className='slika_profila'>
-    //         <img src = {require("./images/default_profile_photo.png")} alt="" />
-    //     </div>
-
-    //     <div className='profile-card'>
-    //         <div className='info'>
-    //             <h2 className='one_info'>Username: {username}</h2>
-    //             <h2 className='one_info'>Name: {name}</h2>
-    //             <h2 className='one_info'>Surname: {surname}</h2>
-    //             <p className='one_info'>Email: {email}</p>
-    //         </div>
-    //     </div>
-    // </div>
-    //     );
     const [showMessageBox, setShowMessageBox] = useState(0)
     return <>
         <div className={classes.wrapper}>
@@ -79,8 +67,8 @@ export function Profile() {
             {showMessageBox ? <SendMessageBox username={user} /> : null}
 
             <div className={classes.profile_stats}>
-                <div>100 Folowing</div>
-                <div>100 Followers</div>
+                <div>{following + " Folowing"}</div>
+                <div>{followers + " Followers"}</div>
                 <div>100 Recipes saved</div>
             </div>
             {arrayDataItems.length > 0 ? <>
