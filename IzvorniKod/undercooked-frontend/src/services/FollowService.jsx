@@ -26,6 +26,24 @@ class FollowService {
             }
         });
     }
+    getFollowers(user) {
+        return fetch(URL + "/followers/" + user, {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        });
+    }
+    getFollowing(user) {
+        return fetch(URL + "/following/" + user, {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        });
+    }
 }
 
 export default FollowService;

@@ -87,8 +87,8 @@ export function Profile() {
             {showMessageBox ? <SendMessageBox username={user} /> : null}
 
             <div className={classes.profile_stats}>
-                <div>{following + " Folowing"}</div>
-                <div>{followers + " Followers"}</div>
+                <div><NavLink to={"/following/" + username}>{following + " Folowing"}</NavLink></div>
+                <div><NavLink to={"/followers/" + username}>{followers + " Followers"}</NavLink></div>
                 <div>100 Recipes saved</div>
             </div>
             {arrayDataItems.length > 0 ? <>

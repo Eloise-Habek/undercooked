@@ -22,6 +22,7 @@ import MessageService from "./services/MessageService";
 import { Recipe } from "./pages/Recipe";
 import { PostRecipePage } from "./pages/PostRecipePage";
 import RecipeService from "./services/RecipeService";
+import { UserList } from "./services/UserList";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -56,6 +57,8 @@ function App() {
       hide={hideMessage} loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
         <Route index element={<Home />} />
         <Route path="profile/:user" element={<Profile />} />
+        <Route path="followers/:user" element={<UserList followers={1} following={0}/>} />
+        <Route path="following/:user" element={<UserList followers={0} following={1}/>} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
