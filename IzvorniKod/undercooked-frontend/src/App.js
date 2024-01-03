@@ -66,7 +66,8 @@ function App() {
         <Route path="inbox" element={<Inbox />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
         <Route path="recipe/:id" element={<Recipe />} />
-        <Route path="postRecipe" element={<PostRecipePage />} action={recipeService.postAction}/>
+        <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
+        <Route path="recipe/edit/:id" element={<PostRecipePage />} action={recipeService.editAction}/>
       </Route>
     )
   );

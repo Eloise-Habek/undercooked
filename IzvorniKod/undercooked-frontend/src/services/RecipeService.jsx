@@ -9,6 +9,7 @@ class RecipeService {
     constructor(props) {
         //this.setMessage = props.setMessage;
         this.postAction = this.postAction.bind(this);
+        this.editAction = this.editAction.bind(this);
     }
 
     formatInput(data) {
@@ -81,6 +82,17 @@ class RecipeService {
             body: JSON.stringify(recipe)
         });
     }
+    updateRecipe(recipe, id) {
+        return fetch(URL + "/" + id, {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            },
+            body: JSON.stringify(recipe)
+        });
+    }
     getRecipe(id) {
         return fetch(URL + "/" + id, {
             method: "GET",
@@ -112,6 +124,19 @@ class RecipeService {
                 });
             });
 
+        return null;
+    }
+
+    async editAction({ request }) {
+        const data = await request.formData();
+        let recipe = this.formatInput(data);
+        this.updateRecipe(recipe, data.get("recipe_id")).then(res => {
+            if (res.ok) {
+                alert("posted")
+            } else {
+                alert("something went wrong")
+            }
+        })
         return null;
     }
 }

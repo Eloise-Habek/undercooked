@@ -5,6 +5,7 @@ import classes from "../styles/recipe/recipe.module.css"
 import { NavLink, useParams } from "react-router-dom";
 import { Footer } from "./wrapper/Footer";
 import RecipeService from "../services/RecipeService";
+import secureLocalStorage from "react-secure-storage";
 
 function parseTime(time) {
     time = time.substring(2);
@@ -40,7 +41,11 @@ export function Recipe() {
                 </div>
                 <div><h2>{details.length > 0 ? details[0].author.username : "loading.."}</h2></div>
                 <div><h2>{details.length > 0 ? details[0].name : "loading.."}</h2></div>
-                <NavLink to={"/editRecipe"}>edit</NavLink>
+                {details.length > 0 &&
+                    (details[0].author.username === secureLocalStorage.getItem("username") ||
+                        "admin" === secureLocalStorage.getItem("username"))
+                    ? <NavLink to={"/recipe/edit/" + id}>edit</NavLink> : null}
+
             </div>
             <div className={classes.image}>SLIKA</div>
             <div className={classes.description}>{details.length > 0 ? details[0].description : "loading.."}</div>
