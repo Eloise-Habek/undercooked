@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import classes from "../styles/recipe/recipe.module.css"
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
 import RecipeService from "../services/RecipeService";
 import { Form } from 'react-router-dom'
@@ -177,6 +177,16 @@ export function PostRecipePage() {
                     </textarea>
                 </div>
                 <button className={classes.save_recipe} type="submit" >{id !== undefined ? "Post changes" : "Post recipe"}</button>
+                <button className={classes.save_recipe} type="button" onClick={() => {
+                    let recipeService = new RecipeService();
+                    recipeService.deleteRecipe(id).then(res => {
+                        if (!res.ok) {
+                            alert("Something went wrong!");
+                        } else {
+                            alert("Deleted!");
+                        }
+                    })
+                }} >Delete recipe</button>
                 {id !== undefined ? <input type="text" hidden={true} value={id} name='recipe_id' /> : null}
 
             </Form>

@@ -99,6 +99,15 @@ class RecipeService {
             mode: "cors"
         });
     }
+    deleteRecipe(id) {
+        return fetch(URL + "/" + id, {
+            method: "DELETE",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        });
+    }
     async postAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);
