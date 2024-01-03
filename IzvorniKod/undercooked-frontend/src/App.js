@@ -74,6 +74,8 @@ function App() {
         <Route path="recipe/:id" element={<Recipe />} />
         <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
         <Route path="recipe/edit/:id" element={<PostRecipePage />} action={recipeService.editAction}/>
+
+        <Route path="proba" element={<PostRecipePage />} />
         <Route path="*" element={<Search />}/>
       </Route>
     )
