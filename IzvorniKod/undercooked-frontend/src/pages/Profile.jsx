@@ -11,6 +11,7 @@ import classes from "../styles/profile/profile.module.css"
 import { Footer } from "./wrapper/Footer";
 import { NavLink } from "react-router-dom";
 import { PageNav } from "../components/PageNav";
+import FollowService from '../services/FollowService';
 
 export function Profile() {
     const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export function Profile() {
     const navigate = useNavigate();
     const [followers, setFollowers] = useState("");
     const [following, setFollowing] = useState("");
+    const [isFollowing, setIsFollowing] = useState("");
 
     let { user } = useParams();
     let [recipeArray, setRecipeArray] = useState([]);
@@ -37,6 +39,7 @@ export function Profile() {
                 setRecipeArray(data.recipes);
                 setFollowers(data.followers);
                 setFollowing(data.following);
+                setIsFollowing(data.isFollowed);
             });
 
         } else {
@@ -55,7 +58,24 @@ export function Profile() {
                 </div>
                 {username === secureLocalStorage.getItem("username") ? null :
                     <div >
-                        <button>Follow</button>
+
+                        <button type='button' onClick={() => {
+                            setIsFollowing(!isFollowing);
+                            let followService = new FollowService();
+                            if (isFollowing) {
+                                followService.unfollow(username).then(res => {
+                                    if (!res.ok) {
+                                        alert("Something went wrong!");
+                                    }
+                                })
+                            } else {
+                                followService.follow(username).then(res => {
+                                    if (!res.ok) {
+                                        alert("Something went wrong!");
+                                    }
+                                })
+                            }
+                        }}>{isFollowing ? "Following" : "Follow"}</button>
                         <button onClick={() => { showMessageBox ? setShowMessageBox(0) : setShowMessageBox(1) }
                         }>
                             {showMessageBox ? "Close message box" : "Message"}

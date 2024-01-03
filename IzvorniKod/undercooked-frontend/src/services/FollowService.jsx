@@ -4,10 +4,10 @@ import secureLocalStorage from "react-secure-storage";
 const URL = "/api/follow";
 
 class FollowService {
-    constructor(props) {
-        //this.setMessage = props.setMessage;
-        this.postAction = this.postAction.bind(this);
-    }
+    // constructor(props) {
+    //     //this.setMessage = props.setMessage;
+    //     this.postAction = this.postAction.bind(this);
+    // }
     follow(user) {
         return fetch(URL + "/" + user, {
             method: "POST",
