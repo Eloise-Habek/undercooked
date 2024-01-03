@@ -1,5 +1,7 @@
 // import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
+import FollowService from "./FollowService";
+import MessageService from "./MessageService";
 
 const URL = "/api/recipes";
 
@@ -95,6 +97,21 @@ class RecipeService {
                 alert("something went wrong")
             }
         })
+
+        let followService = new FollowService();
+        let messageService = new MessageService();
+        followService.getFollowers(secureLocalStorage.getItem("username"))
+            .then(res => res.json()).then(res => {
+                res.forEach(element => {
+                    let m = {
+                        "text": "I just posted a new recipe! Check it out!",
+                        "sender": secureLocalStorage.getItem("username"),
+                        "receiver": element.username
+                    }
+                    messageService.sendMessage(m);
+                });
+            });
+
         return null;
     }
 }
