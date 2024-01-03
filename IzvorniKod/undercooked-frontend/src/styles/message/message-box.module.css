@@ -1,12 +1,11 @@
 .message_box_wrapper {
-  width: 80%;
   border-radius: 1em;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2em;
-  margin-bottom: 2em;
+  margin: 2em;
   padding: 0.2em;
   background-color: rgba(33, 150, 243, 0.3);
+  margin-left: auto 2em;
+  margin-right: auto 2em;
+  height: min-content;
 }
 
 .to_input {

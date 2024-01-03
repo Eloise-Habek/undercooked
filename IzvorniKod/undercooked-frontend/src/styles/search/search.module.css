@@ -1,3 +1,7 @@
+.main_div {
+  background-attachment: fixed;
+}
+
 .search_box {
   padding: 1em;
 }
@@ -19,12 +23,11 @@
 .search_container {
   display: flex;
   align-items: center;
-  max-width: 400px;
-  width: 100%;
-
+  width: 85%;
+  margin-top: 1em;
   backdrop-filter: blur(10px);
   background-color: rgb(225, 225, 225, 0.6);
-  padding: 20px;
+  padding: 2em;
   border-radius: 20px;
   overflow: hidden;
 
@@ -39,25 +42,24 @@
 
 .search_input {
   flex: 1;
-  padding: 2vh;
+  padding: 3vh;
   border: 3px solid #9615db;
-  border-style: double;
   border-radius: 15px 0 0 15px;
   margin-right: 8px;
+  font-size: large;
 }
 
 .search_button {
   margin: 0;
   background-color: #9615db;
   color: #fff;
-  padding: 2vh;
+  padding: 3vh;
   border: 1px solid #9615db;
   border-radius: 0 15px 15px 0;
   cursor: pointer;
 }
 
 .main_div {
-  background-color: #d2d3d3;
   background-image: url("../../pages/images/pozadina.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -71,19 +73,20 @@
 
 .search_category_wrapper {
   position: fixed;
-  height: 40%;
-  width: 40%;
+  height: 50%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 
 .category_select {
   background-color: rgb(225, 225, 225, 0.96);
-
   text-align: center;
   margin-top: 20px;
+  width: 75%;
 }
 
 .category_select div {
@@ -92,7 +95,7 @@
 
 .category_btns {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .category_btns div {

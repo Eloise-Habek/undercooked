@@ -33,7 +33,7 @@ export function Recipe() {
           />
           <img
             className={classes.images}
-            src={require("../pages/images/6978255.png")}
+            src={require("../pages/images/test_slika.jpg")}
             alt=""
           />
           <img
@@ -44,6 +44,11 @@ export function Recipe() {
           <img
             className={classes.images}
             src={require("../pages/images/6978255.png")}
+            alt=""
+          />
+          <img
+            className={classes.images}
+            src={require("../pages/images/test_slika.jpg")}
             alt=""
           />
           slike ili videi

@@ -9,7 +9,7 @@ import classes from "../../styles/header/header.module.css";
 export function Header() {
   return (
     <>
-      <header>
+      <header className={classes.two_headers_wrapper}>
         <div className={classes.header}>
           <div className={classes.empty_div}></div>
           <div className={classes.webpage_title}>
@@ -34,7 +34,6 @@ export function Header() {
             </NavLink>
           </div>
         </div>
-        <div className={classes.placeholder}></div>
         <div className={classes.navigation}>
           <div className={classes.nav_btn}>
             <NavLink className="fa fa-home" to={"/search"}></NavLink>
@@ -47,6 +46,7 @@ export function Header() {
           </div>
         </div>
       </header>
+      <div className={classes.placeholder}></div>
       {/* <header>
                 <nav className='navbar'>
                     <hr />

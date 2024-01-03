@@ -1,14 +1,15 @@
+.two_headers_wrapper {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
 .header {
   display: flex;
   align-items: center;
   background-color: #d2d3d3;
   text-align: center;
   height: 100px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
   border-bottom: 1px solid #999;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
@@ -21,7 +22,7 @@
 }
 
 .placeholder {
-  height: 100px;
+  height: 150px;
   width: 100vw;
 }
 
@@ -49,7 +50,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: space-around;
 }
 
 .top_buttons {
@@ -96,6 +97,8 @@
 .nav_btn {
   padding: 10px;
   cursor: pointer;
+  margin-left: 3em;
+  margin-right: 3em;
 }
 
 .nav_btn a {
@@ -112,18 +115,17 @@
 }
 
 .buttonImage {
-  width: 40%;
+  max-height: 60px;
+  width: auto;
   transition: transform 0.3s, filter 0.3s;
 }
 
 .buttonImage:hover {
-  /* Hover effect */
   transform: scale(1.1);
   filter: brightness(1.2);
 }
 
 .buttonImage:active {
-  /* Pressed effect */
   transform: scale(0.9);
   filter: brightness(0.8);
 }

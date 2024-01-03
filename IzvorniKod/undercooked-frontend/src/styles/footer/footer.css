@@ -2,12 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #d2d3d3;
+  background-color: #d2d3d300;
   text-align: center;
-  padding: 1em;
   width: 100%;
   bottom: 0;
-  height: 30px;
+  height: 100px;
 }
 
 .footer-sticky {
@@ -18,6 +17,22 @@
   position: fixed;
 }
 
-h2 {
+.post_recipe_button {
+  background-color: #9615db;
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
   text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.post_recipe_button:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(150, 21, 219, 0.5);
+}
+
+.post_recipe_button:active {
+  transform: scale(0.4);
+  box-shadow: none;
 }

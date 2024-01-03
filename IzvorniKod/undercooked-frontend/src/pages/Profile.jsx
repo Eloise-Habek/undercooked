@@ -52,7 +52,7 @@ export function Profile() {
   const [showMessageBox, setShowMessageBox] = useState(0);
   return (
     <>
-      <div className={`${classes.wrapper} ${classes.profileWrapper}`}>
+      <div className={classes.profileWrapper}>
         <div className={classes.profileSection}>
           <div className={classes.profileIntro}>
             <img
