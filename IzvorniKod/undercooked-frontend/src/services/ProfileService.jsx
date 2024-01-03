@@ -8,7 +8,10 @@ class ProfileService {
   getProfile(username) {
     return fetch(URL + "/" + username, {
       method: "GET",
-      mode: "cors"
+      mode: "cors",
+      headers: {
+        "Authorization": secureLocalStorage.getItem("logInToken")
+      },
     })
   }
 }
