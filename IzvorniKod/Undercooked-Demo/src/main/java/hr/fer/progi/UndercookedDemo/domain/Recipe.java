@@ -4,6 +4,7 @@ import hr.fer.progi.UndercookedDemo.dto.PersonMinimalDto;
 import jakarta.persistence.*;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,9 @@ public class Recipe {
 	@ElementCollection
 	@OrderColumn
 	private List<IngredientWithAmount> ingredients;
+
+	@OneToMany(mappedBy = StarRating.recipe_field_name)
+	private Collection<StarRating> ratings;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -84,5 +88,18 @@ public class Recipe {
 
 	public void setIngredients(List<IngredientWithAmount> ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	public void setRatings(Collection<StarRating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public Collection<StarRating> getRatings() {
+		return ratings;
+	}
+
+	public Double getAverageRating() {
+		var average = ratings.stream().mapToDouble(StarRating::getRating).average();
+		return average.isPresent() ? average.getAsDouble() : null;
 	}
 }

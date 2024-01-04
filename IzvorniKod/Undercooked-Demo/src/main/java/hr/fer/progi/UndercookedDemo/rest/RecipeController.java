@@ -2,9 +2,11 @@ package hr.fer.progi.UndercookedDemo.rest;
 
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
+import hr.fer.progi.UndercookedDemo.domain.StarRating;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 import hr.fer.progi.UndercookedDemo.service.RecipeService;
 import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
+import hr.fer.progi.UndercookedDemo.service.StarRatingService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,12 @@ public class RecipeController {
 
 	private final PersonService personService;
 	private final RecipeService recipeService;
+	private final StarRatingService ratingService;
 
-	public RecipeController(PersonService personService, RecipeService recipeService) {
+	public RecipeController(PersonService personService, RecipeService recipeService, StarRatingService ratingService) {
 		this.personService = personService;
 		this.recipeService = recipeService;
+		this.ratingService = ratingService;
 	}
 
 	@GetMapping
@@ -61,6 +65,28 @@ public class RecipeController {
 			throw new RequestDeniedException("Tried to delete another person's recipe.");
 
 		recipeService.deleteById(id);
+	}
+
+	@PutMapping("/{id}/rating")
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public StarRating putRating(@PathVariable("id") Long recipeId, Principal principal, @RequestBody StarRating rating) {
+		var person = personService.fromPrincipal(principal);
+		var recipe = recipeService.findById(recipeId);
+
+		rating.setPerson(person);
+		rating.setRecipe(recipe);
+
+		return ratingService.addOrUpdateRating(rating);
+	}
+
+	@DeleteMapping("/{id}/rating")
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public void deleteRating(@PathVariable("id") Long recipeId, Principal principal) {
+		var person = personService.fromPrincipal(principal);
+		var recipe = recipeService.findById(recipeId);
+
+		var rating = ratingService.getRating(person, recipe);
+		ratingService.removeRating(rating);
 	}
 
 	/**

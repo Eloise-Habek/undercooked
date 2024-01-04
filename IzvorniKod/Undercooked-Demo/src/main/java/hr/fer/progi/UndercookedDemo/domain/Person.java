@@ -2,6 +2,7 @@ package hr.fer.progi.UndercookedDemo.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,9 @@ public class Person {
 
 	@OneToMany(mappedBy = Recipe.author_field_name)
 	private List<Recipe> recipes;
+
+	@OneToMany(mappedBy = StarRating.person_field_name)
+	private Collection<StarRating> ratings;
 
 	public Long getId() {
 		return id;
@@ -88,10 +92,14 @@ public class Person {
 		return recipes;
 	}
 
+	public Collection<StarRating> getRatings() {
+		return ratings;
+	}
+
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", name="
 				+ name + ", surname=" + surname + ", isAdmin=" + isAdmin + ", recipes=" + recipes + "]";
 	}
-	
+
 }

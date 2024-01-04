@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,6 +25,7 @@ public class RecipeService {
 	}
 
 	public Recipe createRecipe(Recipe recipe, Person author) {
+		recipe.setRatings(Collections.emptyList());
 		recipe.setAuthor(author);
 
 		for (var ingredientWithAmount : recipe.getIngredients()) {
