@@ -45,6 +45,6 @@ public class ProfileController {
 		var person = personService.findByUsername(username).get();
 		return new FollowersResponse(person.getUsername(), followersService.numberOfFollowers(username),
 				followersService.numberOfFollowing(username), personService.findByUsername(username).get().getRecipes(),
-				followersService.isFollowing(principal.getName(), username));
+				principal != null && followersService.isFollowing(principal.getName(), username));
 	}
 }
