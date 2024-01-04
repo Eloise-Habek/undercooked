@@ -1,12 +1,16 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import hr.fer.progi.UndercookedDemo.dto.IPersonMinimal;
+import hr.fer.progi.UndercookedDemo.dto.IPersonPublic;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Person {
+@JsonSerialize(as = IPersonPublic.class)
+public class Person implements IPersonPublic, IPersonMinimal {
 
 	@Id
 	@GeneratedValue

@@ -19,7 +19,7 @@ public class StarRatingService {
 	public StarRating addOrUpdateRating(StarRating rating) {
 		Assert.isNull(rating.getId(), "StarRating.id not null");
 
-		var existing = repo.findByPersonAndRecipe(rating.privatePerson(), rating.privateRecipe());
+		var existing = repo.findByPersonAndRecipe(rating.getPerson(), rating.getRecipe());
 
 		if (existing.isPresent()) {
 			var r = existing.get();

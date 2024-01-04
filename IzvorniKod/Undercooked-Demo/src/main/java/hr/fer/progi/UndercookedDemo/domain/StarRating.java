@@ -1,8 +1,8 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hr.fer.progi.UndercookedDemo.dto.PersonMinimalDto;
-import hr.fer.progi.UndercookedDemo.dto.RecipeMinimalDto;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import hr.fer.progi.UndercookedDemo.dto.IPersonMinimal;
+import hr.fer.progi.UndercookedDemo.dto.IRecipeMinimal;
 import jakarta.persistence.*;
 
 @Entity
@@ -46,12 +46,8 @@ public class StarRating {
 		return id;
 	}
 
-	public PersonMinimalDto getPerson() {
-		return new PersonMinimalDto(person);
-	}
-
-	@JsonIgnore
-	public Person privatePerson() {
+	@JsonSerialize(as = IPersonMinimal.class)
+	public Person getPerson() {
 		return person;
 	}
 
@@ -59,12 +55,8 @@ public class StarRating {
 		this.person = person;
 	}
 
-	public RecipeMinimalDto getRecipe() {
-		return new RecipeMinimalDto(recipe);
-	}
-
-	@JsonIgnore
-	public Recipe privateRecipe() {
+	@JsonSerialize(as = IRecipeMinimal.class)
+	public Recipe getRecipe() {
 		return recipe;
 	}
 

@@ -1,7 +1,7 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
 import hr.fer.progi.UndercookedDemo.domain.Person;
-import hr.fer.progi.UndercookedDemo.dto.PersonPublicDto;
+import hr.fer.progi.UndercookedDemo.dto.IPersonPublic;
 import hr.fer.progi.UndercookedDemo.model.FollowersResponse;
 import hr.fer.progi.UndercookedDemo.service.FollowersService;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
@@ -35,9 +35,9 @@ public class ProfileController {
 	}
 
 //	@GetMapping("/{username}")
-//	public PersonPublicDto profile(@PathVariable("username") String username) {
+//	public IPersonPublic profile(@PathVariable("username") String username) {
 //		var person = personService.findByUsername(username);
-//		return new PersonPublicDto(person.orElseThrow(() -> new RequestDeniedException("Profile not found")));
+//		return person.orElseThrow(() -> new RequestDeniedException("Profile not found"));
 //	}
 
 	@GetMapping("/{username}")

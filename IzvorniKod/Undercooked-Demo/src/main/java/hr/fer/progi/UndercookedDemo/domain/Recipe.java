@@ -1,6 +1,8 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
-import hr.fer.progi.UndercookedDemo.dto.PersonMinimalDto;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import hr.fer.progi.UndercookedDemo.dto.IPersonMinimal;
+import hr.fer.progi.UndercookedDemo.dto.IRecipeMinimal;
 import jakarta.persistence.*;
 
 import java.time.Duration;
@@ -8,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Recipe {
+public class Recipe implements IRecipeMinimal {
 
 	public static final String author_field_name = "author";
 
@@ -74,8 +76,9 @@ public class Recipe {
 		this.preparationDescription = preparationDescription;
 	}
 
-	public PersonMinimalDto getAuthor() {
-		return new PersonMinimalDto(author);
+	@JsonSerialize(as = IPersonMinimal.class)
+	public Person getAuthor() {
+		return author;
 	}
 
 	public void setAuthor(Person author) {
