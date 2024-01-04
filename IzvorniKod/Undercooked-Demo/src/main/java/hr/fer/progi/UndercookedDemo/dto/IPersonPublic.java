@@ -14,4 +14,6 @@ public interface IPersonPublic extends IPersonMinimal {
 	List<Recipe> getRecipes();
 
 	Collection<StarRating> getRatings();
+
+	List<Recipe> getSavedRecipes();
 }

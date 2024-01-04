@@ -44,7 +44,7 @@ public class Person implements IPersonPublic, IPersonMinimal {
 	 */
 	@ManyToMany
 	@OrderColumn
-	private Collection<Recipe> savedRecipes;
+	private List<Recipe> savedRecipes;
 
 	public Long getId() {
 		return id;
@@ -110,7 +110,7 @@ public class Person implements IPersonPublic, IPersonMinimal {
 		return ratings;
 	}
 
-	public Collection<Recipe> getSavedRecipes() {
+	public List<Recipe> getSavedRecipes() {
 		return savedRecipes;
 	}
 
