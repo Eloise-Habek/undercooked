@@ -108,6 +108,17 @@ class RecipeService {
             }
         });
     }
+    setRating(id, rating) {
+        return fetch(URL + "/" + id + "/rating", {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            },
+            body: JSON.stringify({ "rating": parseInt(rating) })
+        });
+    }
     async postAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Comment } from "../components/Comment"
 import { CommentBox } from "../components/CommentBox"
 import classes from "../styles/recipe/recipe.module.css"
+import star_classes from "../styles/recipe/stars.module.css"
 import { NavLink, useParams } from "react-router-dom";
 import { Footer } from "./wrapper/Footer";
 import RecipeService from "../services/RecipeService";
@@ -24,15 +25,33 @@ function parseTime(time) {
     return time;
 }
 
+function getMyRating(ratings) {
+    let username = secureLocalStorage.getItem("username");
+    for (var i = 0; i < ratings.length; i++) {
+        if (ratings[i].person.username === username) {
+            return ratings[i].rating;
+        }
+    }
+    return 0;
+}
+
 export function Recipe() {
     const [comment, setComment] = useState(0);
     let [details, setDetails] = useState([]);
     let { id } = useParams();
+    let recipeService = new RecipeService();
 
     useEffect(() => {
         const recipeService = new RecipeService();
-        recipeService.getRecipe(id).then(res => res.json()).then(res => setDetails([res]));
-    })
+        recipeService.getRecipe(id).then(res => res.json()).then(res => {
+            var star_id = "stars-" + getMyRating(res.ratings).toString();
+            if (star_id !== "stars-0") {
+                document.getElementById(star_id).checked = true;
+            }
+            setDetails([res]);
+        });
+        console.log("useeffect")
+    }, [id, setDetails])
     return (
         <>
             <div className={classes.wrapper}>
@@ -111,14 +130,91 @@ export function Recipe() {
                 <div className={classes.save_recipe}>Save Recipe</div>
 
                 <div className={classes.comments_and_rate}>
+                    {details.length > 0 && details[0].averageRating !== null ?
+                        <div>
+                            {details[0].averageRating.toFixed(1)}
+                            <span className={"fa fa-star " + classes.checked}></span>
+                        </div>
+                        : null}
+
                     <div className={classes.rate_stars}>
+
                         <div>Rate: </div>
                         <div>
-                            <span className={"fa fa-star " + classes.checked}></span>
-                            <span className={"fa fa-star " + classes.checked}></span>
-                            <span className={"fa fa-star"}></span>
-                            <span className={"fa fa-star"}></span>
-                            <span className={"fa fa-star"}></span>
+                            <form className={star_classes.rating} onChange={() => {
+                                if (details.length > 0) {
+                                    recipeService.setRating(details[0].id,
+                                        document.querySelector('input[name="stars"]:checked').value)
+                                        .then(res => {
+                                            if (res.ok) {
+                                                alert("rating set");
+                                            } else {
+                                                alert("something went wrong");
+                                            }
+                                        })
+                                }
+                            }}>
+                                <label>
+                                    <input type="radio" name="stars" value="1" id="stars-1" />
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="stars" value="2" id="stars-2" />
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="stars" value="3" id="stars-3" />
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="stars" value="4" id="stars-4" />
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="stars" value="5" id="stars-5" />
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                    <span className={star_classes.icon}>
+                                        <span className={"fa fa-star"}></span>
+                                    </span>
+                                </label>
+                            </form>
                         </div>
                     </div>
                     <div></div>
