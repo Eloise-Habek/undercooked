@@ -8,9 +8,10 @@ import jakarta.persistence.*;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-public class Recipe implements IRecipeMinimal {
+public final class Recipe implements IRecipeMinimal {
 
 	public static final String author_field_name = "author";
 
@@ -104,5 +105,18 @@ public class Recipe implements IRecipeMinimal {
 	public Double getAverageRating() {
 		var average = ratings.stream().mapToDouble(StarRating::getRating).average();
 		return average.isPresent() ? average.getAsDouble() : null;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Recipe recipe = (Recipe) o;
+		return Objects.equals(id, recipe.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 }

@@ -1,0 +1,83 @@
+@api = http://localhost:8080/api
+@id = 1
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
+### Recipe not saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false);
+%}
+
+### Save recipe
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+true
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true);
+%}
+
+### Recipe saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true);
+%}
+
+### Un-save recipe
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+false
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true); // saved state changed
+%}
+
+### Recipe not saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false);
+%}
+
+
+### Try to un-save recipe again
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+false
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false); // saved state didn't change
+%}
+
+### Recipe still not saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false);
+%}

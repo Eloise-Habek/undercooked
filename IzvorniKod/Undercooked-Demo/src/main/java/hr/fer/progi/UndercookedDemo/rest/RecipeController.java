@@ -3,10 +3,7 @@ package hr.fer.progi.UndercookedDemo.rest;
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.StarRating;
-import hr.fer.progi.UndercookedDemo.service.PersonService;
-import hr.fer.progi.UndercookedDemo.service.RecipeService;
-import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
-import hr.fer.progi.UndercookedDemo.service.StarRatingService;
+import hr.fer.progi.UndercookedDemo.service.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +17,13 @@ public class RecipeController {
 	private final PersonService personService;
 	private final RecipeService recipeService;
 	private final StarRatingService ratingService;
+	private final SavedRecipeService savedRecipeService;
 
-	public RecipeController(PersonService personService, RecipeService recipeService, StarRatingService ratingService) {
+	public RecipeController(PersonService personService, RecipeService recipeService, StarRatingService ratingService, SavedRecipeService savedRecipeService) {
 		this.personService = personService;
 		this.recipeService = recipeService;
 		this.ratingService = ratingService;
+		this.savedRecipeService = savedRecipeService;
 	}
 
 	@GetMapping
@@ -87,6 +86,24 @@ public class RecipeController {
 
 		var rating = ratingService.getRating(person, recipe);
 		ratingService.removeRating(rating);
+	}
+
+	@GetMapping("/{id}/saved")
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public boolean getSaved(@PathVariable("id") Long recipeId, Principal principal) {
+		var person = personService.fromPrincipal(principal);
+		var recipe = recipeService.findById(recipeId);
+
+		return savedRecipeService.isSavedFor(person, recipe);
+	}
+
+	@PutMapping("/{id}/saved")
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public boolean putSaved(@PathVariable("id") Long recipeId, Principal principal, @RequestBody boolean save) {
+		var person = personService.fromPrincipal(principal);
+		var recipe = recipeService.findById(recipeId);
+
+		return save ? savedRecipeService.saveRecipe(person, recipe) : savedRecipeService.removeSavedRecipe(person, recipe);
 	}
 
 	/**

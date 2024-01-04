@@ -30,11 +30,21 @@ public class Person implements IPersonPublic, IPersonMinimal {
 
 	private boolean isAdmin;
 
+	/**
+	 * Recipes that this person authored.
+	 */
 	@OneToMany(mappedBy = Recipe.author_field_name)
 	private List<Recipe> recipes;
 
 	@OneToMany(mappedBy = StarRating.person_field_name)
 	private Collection<StarRating> ratings;
+
+	/**
+	 * Recipes that this person has saved for later.
+	 */
+	@ManyToMany
+	@OrderColumn
+	private Collection<Recipe> savedRecipes;
 
 	public Long getId() {
 		return id;
@@ -98,6 +108,10 @@ public class Person implements IPersonPublic, IPersonMinimal {
 
 	public Collection<StarRating> getRatings() {
 		return ratings;
+	}
+
+	public Collection<Recipe> getSavedRecipes() {
+		return savedRecipes;
 	}
 
 	@Override
