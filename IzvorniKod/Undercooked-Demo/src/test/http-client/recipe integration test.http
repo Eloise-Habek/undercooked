@@ -75,6 +75,7 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "neobičan bijeli kruh",
   "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "GlavnoJelo",
   "ingredients": [
     {
       "amount": 250,
@@ -112,6 +113,7 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "neobičan bijeli kruh",
   "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "Desert",
   "ingredients": [
     {
       "amount": 250,
@@ -137,6 +139,7 @@ Content-Type: application/json
 
 > {%
     client.assert(response.body.id == 3);
+    client.assert(response.body.category == "Desert");
 %}
 
 ###
@@ -258,6 +261,7 @@ Content-Type: application/json
   "preparationTime": "PT3H14M",
   "description": "klasičnu krug sa r=1",
   "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
+  "category": "Predjelo",
   "ingredients": []
 }
 

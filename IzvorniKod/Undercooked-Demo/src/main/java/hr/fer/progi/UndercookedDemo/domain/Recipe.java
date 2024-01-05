@@ -30,6 +30,8 @@ public final class Recipe implements IRecipeMinimal {
 	@ManyToOne
 	private Person author;
 
+	private RecipeCategory category;
+
 	@ElementCollection
 	@OrderColumn
 	private List<IngredientWithAmount> ingredients;
@@ -88,6 +90,14 @@ public final class Recipe implements IRecipeMinimal {
 
 	public void setAuthor(Person author) {
 		this.author = author;
+	}
+
+	public RecipeCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(RecipeCategory category) {
+		this.category = category;
 	}
 
 	public List<IngredientWithAmount> getIngredients() {

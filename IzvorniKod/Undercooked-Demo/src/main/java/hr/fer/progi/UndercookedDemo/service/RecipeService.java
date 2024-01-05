@@ -3,6 +3,7 @@ package hr.fer.progi.UndercookedDemo.service;
 import hr.fer.progi.UndercookedDemo.dao.RecipeRepository;
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
+import hr.fer.progi.UndercookedDemo.domain.RecipeCategory;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -70,6 +71,7 @@ public class RecipeService {
 		recipe.setDescription("slatki kruh");
 		recipe.setPreparationDescription("1. stavi sastojke\n2. ???\n3. Profit");
 		recipe.setIngredients(new ArrayList<>());
+		recipe.setCategory(RecipeCategory.GlavnoJelo);
 		createRecipe(recipe, pero);
 	}
 }
