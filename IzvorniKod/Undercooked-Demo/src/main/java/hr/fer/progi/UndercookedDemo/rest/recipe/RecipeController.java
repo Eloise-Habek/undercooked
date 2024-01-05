@@ -70,7 +70,7 @@ public class RecipeController {
 	 * @param person   The person that is trying to make changes to the existing recipe.
 	 * @return true if the person is authorised to modify the recipe, false otherwise.
 	 */
-	private boolean authorisedToModify(Recipe existing, Person person) {
+	public static boolean authorisedToModify(Recipe existing, Person person) {
 		if (person.getAdmin())
 			return true;
 

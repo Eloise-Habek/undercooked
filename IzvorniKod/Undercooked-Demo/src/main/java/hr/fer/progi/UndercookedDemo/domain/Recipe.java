@@ -1,5 +1,6 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import hr.fer.progi.UndercookedDemo.dto.IPersonMinimal;
 import hr.fer.progi.UndercookedDemo.dto.IRecipeMinimal;
@@ -42,6 +43,9 @@ public final class Recipe implements IRecipeMinimal {
 	@OneToMany(mappedBy = Comment.recipe_field_name)
 	@OrderBy("postedAt")
 	private List<Comment> comments;
+
+	@Embedded
+	private ImageData image;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -123,6 +127,16 @@ public final class Recipe implements IRecipeMinimal {
 
 	public List<Comment> getComments() {
 		return comments;
+	}
+
+	@JsonIgnore
+	public ImageData getImage() {
+		return image;
+	}
+
+	@JsonIgnore
+	public void setImage(ImageData image) {
+		this.image = image;
 	}
 
 	@Override

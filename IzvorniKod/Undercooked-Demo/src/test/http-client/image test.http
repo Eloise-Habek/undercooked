@@ -1,0 +1,77 @@
+@api = http://localhost:8080/api
+@recipe_id = 1
+
+### login user
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
+### Upload image/png file
+POST {{api}}/recipes/1/image
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="nije bitno.png"
+Content-Type: image/png
+
+< smile.png
+--WebAppBoundary--
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Get image
+GET {{api}}/recipes/1/image
+
+> {%
+    client.assert(response.contentType.mimeType == "image/png");
+    client.assert(response.headers.valueOf("Content-Length") > 200); // "slika postoji"
+%}
+
+### Delete image
+DELETE {{api}}/recipes/1/image
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Image deleted
+GET {{api}}/recipes/1/image
+
+> {%
+    client.assert(response.status == 404);
+%}
+
+### Try to delete again
+DELETE {{api}}/recipes/1/image
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 404);
+%}
+
+
+### Test upload with wrong request type
+POST {{api}}/recipes/1/image
+Authorization: Bearer {{token}}
+Content-Type: image/png
+
+< smile.png
+
+> {%
+    client.assert(response.status == 400); // bad request
+%}
