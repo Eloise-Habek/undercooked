@@ -1,17 +1,17 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import hr.fer.progi.UndercookedDemo.domain.Person;
-import hr.fer.progi.UndercookedDemo.service.*;
+import hr.fer.progi.UndercookedDemo.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
-	
+
 	@Autowired
 	private PersonService personService;
 
@@ -29,5 +29,17 @@ public class PersonController {
 	@DeleteMapping("/{id}")
 	public Person deletePerson(@PathVariable("id") long PersonId) {
 		return personService.deletePerson(PersonId);
+	}
+
+	@GetMapping("/{id}/admin")
+	public boolean isAdmin(@PathVariable("id") long id) {
+		return personService.fetch(id).getAdmin();
+	}
+
+	@PostMapping("/{id}/admin")
+	public ResponseEntity<?> setAdmin(@PathVariable("id") long id, @RequestBody boolean isAdmin) {
+		var person = personService.fetch(id);
+		personService.setAdmin(person, isAdmin);
+		return ResponseEntity.noContent().build();
 	}
 }

@@ -72,6 +72,11 @@ public class PersonService {
 		return findByUsername(principal.getName());
 	}
 
+	public void setAdmin(Person person, boolean isAdmin) {
+		person.setAdmin(isAdmin);
+		PersonRepo.save(person);
+	}
+
 	private void validate(Person person) {
 		Assert.notNull(person, "Person object must be given");
 		String username = person.getUsername();

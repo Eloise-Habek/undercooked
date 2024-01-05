@@ -1,0 +1,66 @@
+@api = http://localhost:8080/api
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
+### dohvati sve korisnike
+GET {{api}}/persons
+Authorization: Bearer {{admin_token}}
+
+### dohvati korisnika "pero"
+GET {{api}}/profile/pero
+
+> {%
+    client.global.set("user_id", response.body.id);
+%}
+
+### Pero nije admin
+GET {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body === false);
+%}
+
+### Postavi Peru kao admina
+POST {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+true
+
+> {%
+    client.assert(response.status === 204); // 204 No Content
+%}
+
+### Pero je admin
+GET {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body === true);
+%}
+
+### Postavi da Pero nije admin
+POST {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+false
+
+> {%
+    client.assert(response.status === 204); // 204 No Content
+%}
+
+### Pero nije admin
+GET {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body === false);
+%}
