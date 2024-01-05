@@ -3,6 +3,9 @@ package hr.fer.progi.UndercookedDemo.service;
 import hr.fer.progi.UndercookedDemo.dao.PersonRepository;
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +33,14 @@ public class SavedRecipeService {
 		saved.add(recipe);
 		personRepo.save(person);
 		return true;
+	}
+	
+	public List<Recipe> allSaved(Person person) {
+		return person.getSavedRecipes();
+	}
+	
+	public int savedCount(Person person) {
+		return allSaved(person).size();
 	}
 
 	/**
