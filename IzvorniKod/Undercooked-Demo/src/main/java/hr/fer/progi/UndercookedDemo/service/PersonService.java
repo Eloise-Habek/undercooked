@@ -18,9 +18,11 @@ public class PersonService {
 	private final String mailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
 	private final PersonRepository PersonRepo;
+	private final TokenService tokenService;
 
-	public PersonService(PersonRepository PersonRepo, @Value("${progi.admin.password}") String adminPasswordHash) {
+	public PersonService(PersonRepository PersonRepo, @Value("${progi.admin.password}") String adminPasswordHash, TokenService tokenService) {
 		this.PersonRepo = PersonRepo;
+		this.tokenService = tokenService;
 		seedData(adminPasswordHash);
 	}
 
@@ -75,6 +77,7 @@ public class PersonService {
 	public void setAdmin(Person person, boolean isAdmin) {
 		person.setAdmin(isAdmin);
 		PersonRepo.save(person);
+		tokenService.revokeTokens(person);
 	}
 
 	private void validate(Person person) {
