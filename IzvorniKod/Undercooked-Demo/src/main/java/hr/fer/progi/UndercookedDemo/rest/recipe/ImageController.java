@@ -68,7 +68,7 @@ public class ImageController {
 			return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).build();
 
 		imageService.upload(recipe, file);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping
