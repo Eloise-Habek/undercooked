@@ -74,6 +74,6 @@ public class RecipeController {
 		if (person.getAdmin())
 			return true;
 
-		return existing.getAuthor().getId().equals(person.getId());
+		return existing.getAuthor().equals(person);
 	}
 }

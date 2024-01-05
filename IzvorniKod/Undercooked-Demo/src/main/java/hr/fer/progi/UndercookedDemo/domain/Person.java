@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @JsonSerialize(as = IPersonPublic.class)
-public class Person implements IPersonPublic, IPersonMinimal {
+public final class Person implements IPersonPublic, IPersonMinimal {
 
 	@Id
 	@GeneratedValue
@@ -112,6 +112,21 @@ public class Person implements IPersonPublic, IPersonMinimal {
 
 	public List<Recipe> getSavedRecipes() {
 		return savedRecipes;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Person person = (Person) o;
+
+		return id.equals(person.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
 	}
 
 	@Override
