@@ -32,9 +32,9 @@ public class PersonService {
 		return PersonRepo.findById(PersonId);
 	}
 
-	public Optional<Person> findByUsername(String username) {
+	public Person findByUsername(String username) {
 		Assert.notNull(username, "Username must be given");
-		return PersonRepo.findByUsername(username);
+		return PersonRepo.findByUsername(username).orElseThrow(() -> new EntityMissingException(Person.class, username));
 	}
 
 	public Optional<Person> findByEmail(String email) {
@@ -69,7 +69,7 @@ public class PersonService {
 	}
 
 	public Person fromPrincipal(Principal principal) {
-		return findByUsername(principal.getName()).orElseThrow(() -> new EntityMissingException(Person.class, principal));
+		return findByUsername(principal.getName());
 	}
 
 	private void validate(Person person) {

@@ -64,7 +64,7 @@ public class RecipeService {
 	}
 
 	private void seedData(PersonService personService) {
-		var pero = personService.findByUsername("pero").get();
+		var pero = personService.findByUsername("pero");
 		var recipe = new Recipe();
 		recipe.setName("Kruh");
 		recipe.setPreparationTime(Duration.ofMinutes(40));
