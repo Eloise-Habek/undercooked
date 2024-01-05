@@ -37,6 +37,10 @@ public final class Recipe implements IRecipeMinimal {
 	@OneToMany(mappedBy = StarRating.recipe_field_name)
 	private Collection<StarRating> ratings;
 
+	@OneToMany(mappedBy = Comment.recipe_field_name)
+	@OrderBy("postedAt")
+	private List<Comment> comments;
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -105,6 +109,10 @@ public final class Recipe implements IRecipeMinimal {
 	public Double getAverageRating() {
 		var average = ratings.stream().mapToDouble(StarRating::getRating).average();
 		return average.isPresent() ? average.getAsDouble() : null;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
 	}
 
 	@Override
