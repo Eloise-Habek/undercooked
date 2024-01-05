@@ -39,7 +39,7 @@ public class ProfileController {
 	@GetMapping("/{username}")
 	public FollowersResponse profile(@PathVariable("username") String username, Principal principal) {
 		var person = personService.findByUsername(username);
-		return new FollowersResponse(person.getUsername(), followersService.numberOfFollowers(username),
+		return new FollowersResponse(person.getId(), person.getUsername(), followersService.numberOfFollowers(username),
 				followersService.numberOfFollowing(username), person.getRecipes(), person.getRatings(),
 				principal != null && followersService.isFollowing(principal.getName(), username));
 	}

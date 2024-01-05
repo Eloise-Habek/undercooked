@@ -6,6 +6,7 @@ import java.util.List;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.StarRating;
 
-public record FollowersResponse(String username, long followers, long following, List<Recipe> recipes, Collection<StarRating> ratings, boolean isFollowed) {
+// treba popraviti
+public record FollowersResponse(Long id, String username, long followers, long following, List<Recipe> recipes, Collection<StarRating> ratings, boolean isFollowed) {
 
 }
