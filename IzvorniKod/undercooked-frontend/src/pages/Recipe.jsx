@@ -40,6 +40,7 @@ export function Recipe() {
     let [details, setDetails] = useState([]);
     let { id } = useParams();
     let recipeService = new RecipeService();
+    const [saved, setSaved] = useState(0);
 
     useEffect(() => {
         const recipeService = new RecipeService();
@@ -49,6 +50,9 @@ export function Recipe() {
                 document.getElementById(star_id).checked = true;
             }
             setDetails([res]);
+            recipeService.isSaved(id).then(res => res.json()).then(res => {
+                setSaved(res);
+            })
         });
         console.log("useeffect")
     }, [id, setDetails])
@@ -127,7 +131,21 @@ export function Recipe() {
                     {details.length > 0 ? details[0].preparationDescription : "loading.."}
                 </div>
 
-                <div className={classes.save_recipe}>Save Recipe</div>
+                <button onClick={() => {
+                    setSaved(!saved);
+                    recipeService.isSaved(id).then(res => res.json()).then(saved => {
+                        recipeService.setSaved(id, !saved).then(res => {
+                            if (res.ok) {
+                                alert("set ", saved);
+                            } else {
+                                alert("not ok");
+                            }
+                        })
+                    })
+
+                }} className={classes.save_recipe}>
+                    {saved ? "Unsave Recipe" : "Save Recipe"}
+                </button>
 
                 <div className={classes.comments_and_rate}>
                     {details.length > 0 && details[0].averageRating !== null ?

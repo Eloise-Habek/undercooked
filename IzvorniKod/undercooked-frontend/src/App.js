@@ -26,6 +26,7 @@ import { UserList } from "./services/UserList";
 import { Search } from "./pages/Search";
 import { PleaseLogin } from "./pages/PleaseLogin";
 import { Settings } from "./pages/Settings";
+import { SavedRecipes } from "./pages/SavedRecipes";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -74,7 +75,7 @@ function App() {
         <Route path="recipe/:id" element={<Recipe />} />
         <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
         <Route path="recipe/edit/:id" element={<PostRecipePage />} action={recipeService.editAction}/>
-
+        <Route path="recipe/saved/:user" element={<SavedRecipes />} />
         <Route path="proba" element={<PostRecipePage />} />
         <Route path="*" element={<Search />}/>
       </Route>

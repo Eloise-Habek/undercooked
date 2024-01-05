@@ -119,6 +119,44 @@ class RecipeService {
             body: JSON.stringify({ "rating": parseInt(rating) })
         });
     }
+    setSaved(id, saved) {
+        return fetch(URL + "/" + id + "/saved", {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            },
+            body: saved
+        });
+    }
+    getSavedCount(username) {
+        return fetch(URL + "/" + username + "/savedCount", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        });
+    }
+    getAllSaved(username) {
+        return fetch(URL + "/" + username + "/allSaved", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        });
+    }
+    isSaved(id) {
+        return fetch(URL + "/" + id + "/saved", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        });
+    }
     async postAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);

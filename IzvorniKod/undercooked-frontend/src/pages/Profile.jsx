@@ -12,6 +12,7 @@ import { Footer } from "./wrapper/Footer";
 import { NavLink } from "react-router-dom";
 import { PageNav } from "../components/PageNav";
 import FollowService from '../services/FollowService';
+import RecipeService from '../services/RecipeService';
 
 export function Profile() {
     const [email, setEmail] = useState("");
@@ -22,6 +23,7 @@ export function Profile() {
     const [followers, setFollowers] = useState("");
     const [following, setFollowing] = useState("");
     const [isFollowing, setIsFollowing] = useState("");
+    const [savedCount, setSavedCount] = useState(0);
 
     let { user } = useParams();
     let [recipeArray, setRecipeArray] = useState([]);
@@ -40,7 +42,11 @@ export function Profile() {
                 setFollowers(data.followers);
                 setFollowing(data.following);
                 setIsFollowing(data.isFollowed);
+                let recipeService = new RecipeService();
+                recipeService.getSavedCount(data.username)
+                    .then(res => res.json()).then(res => setSavedCount(res));
             });
+
 
         } else {
             navigate("/login");
@@ -107,7 +113,9 @@ export function Profile() {
                             <span className={classes.statLabel}>Followers</span>
                         </div>
                         <div className={classes.statItem}>
-                            <span className={classes.statValue}>100</span>
+                            <span className={classes.statValue}>
+                                <NavLink to={"/recipe/saved/" + username}>{savedCount}</NavLink>
+                            </span>
                             <span className={classes.statLabel}>Recipes saved</span>
                         </div>
                     </div>
