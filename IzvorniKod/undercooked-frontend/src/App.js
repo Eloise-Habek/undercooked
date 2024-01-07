@@ -27,6 +27,7 @@ import { Search } from "./pages/Search";
 import { PleaseLogin } from "./pages/PleaseLogin";
 import { Settings } from "./pages/Settings";
 import { SavedRecipes } from "./pages/SavedRecipes";
+import CommentService from "./services/CommentService";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -48,6 +49,7 @@ function App() {
 
   let messageService = new MessageService();
   let recipeService = new RecipeService();
+  let commentService = new CommentService();
 
   setTimeout(() => {
     setHideMessage(1);    
@@ -76,7 +78,8 @@ function App() {
         <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
         <Route path="recipe/edit/:id" element={<PostRecipePage />} action={recipeService.editAction}/>
         <Route path="recipe/saved/:user" element={<SavedRecipes />} />
-        <Route path="proba" element={<PostRecipePage />} />
+        <Route path="recipe/:id/comment" action={commentService.postCommentAction} />
+        <Route path="recipe/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
         <Route path="*" element={<Search />}/>
       </Route>
     )

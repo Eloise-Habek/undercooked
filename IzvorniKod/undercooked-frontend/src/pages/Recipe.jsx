@@ -41,6 +41,7 @@ export function Recipe() {
     let { id } = useParams();
     let recipeService = new RecipeService();
     const [saved, setSaved] = useState(0);
+    let [comments, setComments] = useState([]);
 
     useEffect(() => {
         const recipeService = new RecipeService();
@@ -53,9 +54,13 @@ export function Recipe() {
             recipeService.isSaved(id).then(res => res.json()).then(res => {
                 setSaved(res);
             })
+            console.log("comments", res.comments);
+            setComments(res.comments.map((e) => <>
+                <Comment details={e} recipe_id={id} />
+            </>));
         });
         console.log("useeffect")
-    }, [id, setDetails])
+    }, [id, setDetails, setComments])
     return (
         <>
             <div className={classes.wrapper}>
@@ -244,12 +249,9 @@ export function Recipe() {
                         {comment ? "Close comment box" : "Write a comment"}
                     </button>
 
-                    {comment ? <CommentBox /> : null}
+                    {comment ? <CommentBox recipe_id={id} /> : null}
                     <div className={classes.comments}> Comments: </div>
-                    <Comment />
-                    <Comment />
-                    <Comment />
-                    <Comment />
+                    {comments.length > 0 ? [...comments].reverse() : ""}
                 </div>
             </div>
             <Footer sticky={1} />

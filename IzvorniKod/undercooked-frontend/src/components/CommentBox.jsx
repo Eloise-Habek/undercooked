@@ -1,10 +1,10 @@
 import { Form } from "react-router-dom";
 import classes from "../styles/comment/commentbox.module.css";
 
-export function CommentBox() {
+export function CommentBox({ recipe_id }) {
   return (
     <div className={classes.wrapper}>
-      <Form method="post" action="/postComment">
+      <Form method="post" action={"/recipe/" + recipe_id + "/comment"}>
         <div>
           <textarea
             className={classes.text_box}
@@ -12,10 +12,12 @@ export function CommentBox() {
             name="text"
             rows="4"
             cols="50"
+            placeholder="Enter text here..."
           >
-            Enter text here...
+
           </textarea>
         </div>
+        <input hidden type="text" name="recipe_id" value={recipe_id} />
         <button type="submit">Post comment</button>
       </Form>
     </div>

@@ -1,28 +1,34 @@
+import { NavLink } from "react-router-dom";
 import classes from "../styles/comment/comment.module.css";
+import secureLocalStorage from "react-secure-storage";
+import { useState } from "react";
+import { EditComment } from "./EditComment";
+export function Comment({ details, recipe_id }) {
+  const [edit, setEdit] = useState(0);
+  if (edit) {
+    return <EditComment details={details} recipe_id={recipe_id} />
+  } else {
+    return (
+      <div className={classes.wrapper}>
+        <div className={classes.img_and_username}>
+          <img src={require("../pages/images/chef.png")} alt="profile_icon" />
+          <div>{details !== undefined ? details.author.username : ""}</div>
+        </div>
 
-export function Comment() {
-  return (
-    <div className={classes.wrapper}>
-      <div className={classes.img_and_username}>
-        <img src={require("../pages/images/chef.png")} alt="profile_icon" />
-        <div>Username</div>
-      </div>
+        {details.postedAt.split('T')[0].split('-').reverse().join('.') + ", " +
+          details.postedAt.split('T')[1].split(':')[0] + ":" +
+          details.postedAt.split('T')[1].split(':')[1]
+        }
+        <div className={classes.comment_text}>
+          {details !== undefined ? details.text : ""}
+        </div>
+        {details.author.username === secureLocalStorage.getItem("username") ?
+          <button type="button" onClick={() => setEdit(!edit)}><i class="fa-solid fa-pen"></i></button>
+          : null
+        }
 
-      <div className={classes.comment_text}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum.
       </div>
-    </div>
-  );
+    );
+  }
+
 }
