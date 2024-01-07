@@ -2,6 +2,7 @@
 import secureLocalStorage from "react-secure-storage";
 import FollowService from "./FollowService";
 import MessageService from "./MessageService";
+import { redirect } from "react-router-dom";
 
 const URL = "/api/recipes";
 
@@ -10,6 +11,8 @@ class RecipeService {
         //this.setMessage = props.setMessage;
         this.postAction = this.postAction.bind(this);
         this.editAction = this.editAction.bind(this);
+        this.pullInputData = this.pullInputData.bind(this);
+
     }
 
     formatInput(data) {
@@ -157,6 +160,39 @@ class RecipeService {
             }
         });
     }
+
+    setImage(recipe_id, data) {
+        return fetch(URL + "/" + recipe_id + "/image", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken"),
+                // "Content-Type": "multipart/form-data"
+            },
+            body: data
+        })
+    }
+
+    getImage(recipe_id) {
+        return fetch(URL + "/" + recipe_id + "/image", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            }
+        })
+    }
+
+    pullInputData(recipe_id) {
+        var file = document.getElementById("recipe_image_input").files[0];
+        console.log(file);
+        if (file !== undefined) {
+            let data = new FormData()
+            data.append("file", file, file.name);
+            this.setImage(recipe_id, data);
+        }
+    }
+
     async postAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);
@@ -166,7 +202,8 @@ class RecipeService {
             } else {
                 alert("something went wrong")
             }
-        })
+            return res;
+        }).then(res => res.json()).then(data => this.pullInputData(data.id))
 
         let followService = new FollowService();
         let messageService = new MessageService();
@@ -194,7 +231,9 @@ class RecipeService {
             } else {
                 alert("something went wrong")
             }
-        })
+            return res;
+        }).then(res => res.json()).then(data => this.pullInputData(data.id))
+        //return redirect("/recipe/" + data.get("recipe_id"));
         return null;
     }
 }

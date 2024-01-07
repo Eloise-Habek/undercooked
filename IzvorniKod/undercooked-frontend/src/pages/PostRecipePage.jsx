@@ -53,6 +53,7 @@ function f(ref, setRef, i, len, data) {
 export function PostRecipePage() {
     const [author, setAuthor] = useState("");
     let { id } = useParams();
+    const [image, setImage] = useState(null);
 
     let [inputs, setInputs] = useState([getOption(0, null, null)]);
     useEffect(() => {
@@ -79,6 +80,8 @@ export function PostRecipePage() {
                 }
 
             });
+            recipeService.getImage(id).then(res => res.blob()).then(data => URL.createObjectURL(data))
+                .then(data => setImage(data))
         }
         let hour_input = document.getElementById("hour_input");
 
@@ -115,32 +118,20 @@ export function PostRecipePage() {
 
                 </div>
                 <div className={classes.image_container}>
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/6978255.png")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/test_slika.jpg")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/6978255.png")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/6978255.png")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/test_slika.jpg")}
-                        alt=""
-                    />
-                    <input id="image" type="file" name="image" />
+                    {image === null ?
+                        <img
+                            className={classes.images}
+                            src={require("../pages/images/6978255.png")}
+                            alt=""
+                        />
+                        :
+                        <img
+                            className={classes.images}
+                            src={image}
+                            alt=""
+                        />
+                    }
+                    <input id="recipe_image_input" type="file" name="image" />
                 </div>
 
                 <div className={classes.descriptions_wrapper}>
@@ -176,7 +167,7 @@ export function PostRecipePage() {
 
                     </textarea>
                 </div>
-                <button className={classes.save_recipe} type="submit" >{id !== undefined ? "Post changes" : "Post recipe"}</button>
+                <button className={classes.save_recipe} type="submit" >{id !== undefined ? "Save changes" : "Post recipe"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
                     let recipeService = new RecipeService();
                     recipeService.deleteRecipe(id).then(res => {

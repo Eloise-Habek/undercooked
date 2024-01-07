@@ -1,8 +1,17 @@
 import { useNavigate } from "react-router-dom"
 import classes from "../styles/recipe/recipe-mini.module.css"
+import { useEffect, useState } from "react";
+import RecipeService from "../services/RecipeService";
 
 export function RecipeMini({ details }) {
     let navigate = useNavigate();
+    const [image, setImage] = useState(null);
+    useEffect(() => {
+        let recipeService = new RecipeService();
+        recipeService.getImage(details.id).then(res => res.blob())
+            .then(data => URL.createObjectURL(data))
+            .then(data => setImage(data))
+    })
     return (
         <>
             <div className={classes.wrapper}>
@@ -21,9 +30,13 @@ export function RecipeMini({ details }) {
                         </div>
                     </div>
                     <div className={classes.image_and_desc_wrapper}>
-                        <div className={classes.food_image}>
-                            <img src={require("../pages/images/6978255.png")} alt="" />
-                        </div>
+                        {image === null ?
+                            <div className={classes.food_image}>
+                                <img src={require("../pages/images/6978255.png")} alt="" />
+                            </div> :
+                            <div className={classes.food_image}>
+                                <img src={image} alt="" />
+                            </div>}
                         <div className={classes.description}>
                             {details.description}
                         </div>

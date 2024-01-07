@@ -42,6 +42,7 @@ export function Recipe() {
     let recipeService = new RecipeService();
     const [saved, setSaved] = useState(0);
     let [comments, setComments] = useState([]);
+    const [image, setImage] = useState(null);
 
     useEffect(() => {
         const recipeService = new RecipeService();
@@ -58,6 +59,8 @@ export function Recipe() {
             setComments(res.comments.map((e) => <>
                 <Comment details={e} recipe_id={id} />
             </>));
+            recipeService.getImage(id).then(res => res.blob()).then(data => URL.createObjectURL(data))
+                .then(data => setImage(data))
         });
         console.log("useeffect")
     }, [id, setDetails, setComments])
@@ -86,32 +89,19 @@ export function Recipe() {
                     </div>
                 </div>
                 <div className={classes.image_container}>
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/6978255.png")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/test_slika.jpg")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/6978255.png")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/6978255.png")}
-                        alt=""
-                    />
-                    <img
-                        className={classes.images}
-                        src={require("../pages/images/test_slika.jpg")}
-                        alt=""
-                    />
-                    slike ili videi
+                    {image === null ?
+                        <img
+                            className={classes.images}
+                            src={require("../pages/images/6978255.png")}
+                            alt=""
+                        />
+                        :
+                        <img
+                            className={classes.images}
+                            src={image}
+                            alt=""
+                        />
+                    }
                 </div>
 
                 <div className={classes.descriptions_wrapper}>
