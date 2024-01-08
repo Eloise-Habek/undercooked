@@ -21,6 +21,25 @@ class LoginService {
       }
     });
   }
+  checkAdmin() {
+
+    return fetch("/api/profile/" + secureLocalStorage.getItem("username"), {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Authorization": secureLocalStorage.getItem("logInToken")
+      }
+    }).then(res => res.json())
+      .then(res => {
+        return fetch("/api/persons/" + res.id.toString() + "/admin", {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Authorization": secureLocalStorage.getItem("logInToken")
+          }
+        })
+      })
+  }
 
   // funkcija koja se pokreće kada radimo post request na /admin 
   // (to nije post reqest na backend nego post request na frontend)
@@ -52,18 +71,33 @@ class LoginService {
         if (response.loggedIn) {
           secureLocalStorage.setItem("logInToken", `Bearer ${response.token}`);
           secureLocalStorage.setItem("username", username);
-          if (response.admin) {
-            secureLocalStorage.setItem("isAdmin", true);
-            this.setIsAdmin(true);
-          } else {
-            secureLocalStorage.removeItem("isAdmin");
-            this.setIsAdmin(false);
-          }
+          // if (response.admin) {
+          //   secureLocalStorage.setItem("isAdmin", true);
+          //   this.setIsAdmin(true);
+          // } else {
+          //   secureLocalStorage.removeItem("isAdmin");
+          //   this.setIsAdmin(false);
+          // }
         } else {
           secureLocalStorage.removeItem("logInToken");
           secureLocalStorage.removeItem("username");
         }
         return response;
+      })
+      .then(response => {
+        if (secureLocalStorage.getItem("logInToken") !== null) {
+          this.checkAdmin().then(res => {
+            if (res.ok) {
+              secureLocalStorage.setItem("isAdmin", true);
+              this.setIsAdmin(true);
+            } else {
+              secureLocalStorage.removeItem("isAdmin");
+              this.setIsAdmin(false);
+            }
+          });
+        }
+
+        return response
       })
       .then((response) => {
         this.setMessage(response.message);

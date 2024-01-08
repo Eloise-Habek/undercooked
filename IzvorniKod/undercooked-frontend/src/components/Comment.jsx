@@ -22,7 +22,8 @@ export function Comment({ details, recipe_id, setRefresh }) {
         <div className={classes.comment_text}>
           {details !== undefined ? details.text : ""}
         </div>
-        {details.author.username === secureLocalStorage.getItem("username") ?
+        {details.author.username === secureLocalStorage.getItem("username")
+          || secureLocalStorage.getItem("isAdmin") ?
           <button type="button" onClick={() => setEdit(!edit)}><i class="fa-solid fa-pen"></i></button>
           : null
         }

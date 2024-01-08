@@ -105,7 +105,7 @@ export function Recipe() {
                     </div>
                     <div className={classes.edit_button_wrapper}>
                         {(username === secureLocalStorage.getItem("username") ||
-                            "admin" === secureLocalStorage.getItem("username"))
+                            secureLocalStorage.getItem("isAdmin"))
                             ? <NavLink className={classes.edit_button} to={"/recipe/edit/" + id}>
                                 <i class="fa-solid fa-pen"></i>
                             </NavLink> : null}

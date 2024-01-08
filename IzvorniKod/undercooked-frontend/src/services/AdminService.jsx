@@ -34,6 +34,18 @@ class AdminService {
       }
     })
   }
+
+  setAdmin(id, admin) {
+    return fetch(URL + "/" + id.toString() + "/admin", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Authorization": secureLocalStorage.getItem("logInToken"),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(admin)
+    })
+  }
 }
 
 export default new AdminService();

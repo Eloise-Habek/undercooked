@@ -115,16 +115,7 @@ export function PostRecipePage() {
                     </textarea>
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Post recipe"}</button>
-                <button className={classes.save_recipe} type="button" onClick={() => {
-                    let recipeService = new RecipeService();
-                    recipeService.deleteRecipe(id).then(res => {
-                        if (!res.ok) {
-                            alert("Something went wrong!");
-                        } else {
-                            alert("Deleted!");
-                        }
-                    })
-                }} >Delete recipe</button>
+
             </Form>
             {/* <Footer sticky={1} /> */}
         </>
