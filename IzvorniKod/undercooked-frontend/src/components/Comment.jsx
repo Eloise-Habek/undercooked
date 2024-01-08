@@ -11,7 +11,10 @@ export function Comment({ details, recipe_id, setRefresh }) {
     return (
       <div className={classes.wrapper}>
         <div className={classes.img_and_username}>
-          <img src={require("../pages/images/chef.png")} alt="profile_icon" />
+          <NavLink to={details !== undefined ? "/profile/" + details.author.username : ""}>
+            <img src={require("../pages/images/chef.png")} alt="profile_icon" />
+          </NavLink>
+
           <div>{details !== undefined ? details.author.username : ""}</div>
         </div>
 
