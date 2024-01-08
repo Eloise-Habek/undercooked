@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import classes from "../styles/message/message-box.module.css"
 import { Form } from 'react-router-dom'
 
-export function SendMessageBox({ username }) {
+export function SendMessageBox({ username, setReply }) {
 
     useEffect(() => {
         let inputF = document.getElementById("input1");
@@ -12,17 +12,25 @@ export function SendMessageBox({ username }) {
     })
     return (
         <div className={classes.message_box_wrapper}>
-            <Form method="post" action="/message">
+            <Form method="post" action="/message" onSubmit={() => {
+                if (setReply !== undefined) {
+                    setReply(0);
+                }
+            }}>
                 <div className={classes.reply_column}>
-                    <label htmlFor="" className="register_label">
-                        To:
-                    </label>
+                    {username === null ?
+                        <label htmlFor="" className="register_label">
+                            To:
+                        </label>
+                        : null
+                    }
+
                     {username !== null ?
-                        <input id="input1" required type="text" name="receiver" placeholder="username" readOnly /> :
+                        <input id="input1" required type="text" name="receiver" placeholder="username" readOnly hidden /> :
                         <input required type="text" name="receiver" placeholder="username" />}
                 </div>
                 <div className={classes.reply_column}>
-                    <textarea className={classes.text_fields} id="freeform" name="text" rows="4" cols="50" placeholder="Enter text here...">
+                    <textarea className={classes.text_fields} id="freeform" name="text" rows="4" cols="50" placeholder="Enter message here...">
 
                     </textarea>
                 </div>
