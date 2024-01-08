@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Comment } from "../components/Comment"
 import { CommentBox } from "../components/CommentBox"
 import classes from "../styles/recipe/recipe.module.css"
@@ -37,52 +37,75 @@ function getMyRating(ratings) {
 
 export function Recipe() {
     const [comment, setComment] = useState(0);
-    let [details, setDetails] = useState([]);
+
+    const [title, setTitle] = useState("");
+    const [username, setUsername] = useState("");
+    const [image, setImage] = useState(null);
+    const [desc, setDesc] = useState("");
+    const [prepTime, setPrepTime] = useState("");
+    const [ingredients, setIngredients] = useState([]);
+    const [prepDesc, setPrepDesc] = useState("");
+    const [avgRating, setAvgRating] = useState(null);
+
     let { id } = useParams();
-    let recipeService = new RecipeService();
+    const recipeService = useMemo(() => new RecipeService(), []);
     const [saved, setSaved] = useState(0);
     let [comments, setComments] = useState([]);
-    const [image, setImage] = useState(null);
+
+
+    const [refresh, setRefresh] = useState(0);
+
+    setInterval(() => {
+        if (refresh === -1) {
+            setRefresh(refresh + 1);
+        }
+    }, 500)
 
     useEffect(() => {
-        const recipeService = new RecipeService();
+
         recipeService.getRecipe(id).then(res => res.json()).then(res => {
+            console.log("evo tu sam u useefect", res.name)
+            setTitle(res.name);
+            setUsername(res.author.username);
+            setDesc(res.description);
+            setPrepTime(parseTime(res.preparationTime));
+            setIngredients(res.ingredients.map((e) => {
+                return <li>{e.ingredient.name + ": " + e.amount + e.unitOfMeasure}</li>
+            }))
+            setPrepDesc(res.preparationDescription);
+            setAvgRating(res.averageRating);
             var star_id = "stars-" + getMyRating(res.ratings).toString();
             if (star_id !== "stars-0") {
                 document.getElementById(star_id).checked = true;
             }
-            setDetails([res]);
             recipeService.isSaved(id).then(res => res.json()).then(res => {
                 setSaved(res);
             })
-            console.log("comments", res.comments);
             setComments(res.comments.map((e) => <>
-                <Comment details={e} recipe_id={id} />
+                <Comment details={e} recipe_id={id} setRefresh={setRefresh} />
             </>));
             recipeService.getImage(id).then(res => res.blob()).then(data => URL.createObjectURL(data))
                 .then(data => setImage(data))
         });
-        console.log("useeffect")
-    }, [id, setDetails, setComments])
+    }, [id, refresh, recipeService])
     return (
         <>
             <div className={classes.wrapper}>
                 <div className={classes.mini_wrapper}>
                     <div className={classes.name_and_image}>
                         <img src={require("./images/chef.png")} alt="" />
-                        <NavLink to={details.length > 0 ? "/profile/" + details[0].author.username : null}>
-                            <h2>{details.length > 0 ? details[0].author.username : "loading.."}</h2>
+                        <NavLink to={"/profile/" + username}>
+                            <h2>{username}</h2>
                         </NavLink>
 
 
                     </div>
                     <div>
-                        <h2 className={classes.title}>{details.length > 0 ? details[0].name : "loading.."}</h2>
+                        <h2 className={classes.title}>{title}</h2>
                     </div>
                     <div className={classes.edit_button_wrapper}>
-                        {details.length > 0 &&
-                            (details[0].author.username === secureLocalStorage.getItem("username") ||
-                                "admin" === secureLocalStorage.getItem("username"))
+                        {(username === secureLocalStorage.getItem("username") ||
+                            "admin" === secureLocalStorage.getItem("username"))
                             ? <NavLink className={classes.edit_button} to={"/recipe/edit/" + id}>
                                 <i class="fa-solid fa-pen"></i>
                             </NavLink> : null}
@@ -106,24 +129,22 @@ export function Recipe() {
 
                 <div className={classes.descriptions_wrapper}>
                     <div className={classes.mini_description}>
-                        {details.length > 0 ? details[0].description : "loading.."}
+                        {desc}
                     </div>
                     <div className={classes.prep_time}>
                         <h2>Preparation time:</h2>
-                        {details.length > 0 ? "Preparation time: " + parseTime(details[0].preparationTime) : "loading.."}
+                        {prepTime}
                     </div>
                     <div className={classes.ingredients}>
                         <h2>Ingredients:</h2>
                         <ul>
-                            {details.length > 0 ? details[0].ingredients.map((e) => {
-                                return <li>{e.ingredient.name + ": " + e.amount + e.unitOfMeasure}</li>
-                            }) : "loading.."}
+                            {ingredients}
                         </ul>
                     </div>
                 </div>
                 <div className={classes.description}>
                     <h1>Preparation:</h1>
-                    {details.length > 0 ? details[0].preparationDescription : "loading.."}
+                    {prepDesc}
                 </div>
 
                 <button onClick={() => {
@@ -143,9 +164,9 @@ export function Recipe() {
                 </button>
 
                 <div className={classes.comments_and_rate}>
-                    {details.length > 0 && details[0].averageRating !== null ?
+                    {avgRating !== null ?
                         <div>
-                            {details[0].averageRating.toFixed(1)}
+                            {avgRating.toFixed(1)}
                             <span className={"fa fa-star " + classes.checked}></span>
                         </div>
                         : null}
@@ -155,17 +176,17 @@ export function Recipe() {
                         <div>Rate: </div>
                         <div>
                             <form className={star_classes.rating} onChange={() => {
-                                if (details.length > 0) {
-                                    recipeService.setRating(details[0].id,
-                                        document.querySelector('input[name="stars"]:checked').value)
-                                        .then(res => {
-                                            if (res.ok) {
-                                                alert("rating set");
-                                            } else {
-                                                alert("something went wrong");
-                                            }
-                                        })
-                                }
+
+                                recipeService.setRating(id,
+                                    document.querySelector('input[name="stars"]:checked').value)
+                                    .then(res => {
+                                        if (res.ok) {
+                                            alert("rating set");
+                                        } else {
+                                            alert("something went wrong");
+                                        }
+                                    }).then(() => { setRefresh(refresh + 1) })
+
                             }}>
                                 <label>
                                     <input type="radio" name="stars" value="1" id="stars-1" />
@@ -231,15 +252,14 @@ export function Recipe() {
                         </div>
                     </div>
                     <div></div>
-                    <button
-                        onClick={() => {
-                            comment ? setComment(0) : setComment(1);
-                        }}
-                    >
+                    <button onClick={
+                        () => {
+                            comment ? setComment(0) : setComment(1)
+                        }}>
                         {comment ? "Close comment box" : "Write a comment"}
                     </button>
 
-                    {comment ? <CommentBox recipe_id={id} /> : null}
+                    {comment ? <CommentBox recipe_id={id} setRefresh={setRefresh} /> : null}
                     <div className={classes.comments}> Comments: </div>
                     {comments.length > 0 ? [...comments].reverse() : ""}
                 </div>

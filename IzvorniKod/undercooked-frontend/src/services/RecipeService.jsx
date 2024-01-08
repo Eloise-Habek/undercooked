@@ -196,45 +196,51 @@ class RecipeService {
     async postAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);
-        this.postRecipe(recipe).then(res => {
+        return this.postRecipe(recipe).then(res => {
             if (res.ok) {
                 alert("posted")
             } else {
                 alert("something went wrong")
             }
             return res;
-        }).then(res => res.json()).then(data => this.pullInputData(data.id))
-
-        let followService = new FollowService();
-        let messageService = new MessageService();
-        followService.getFollowers(secureLocalStorage.getItem("username"))
-            .then(res => res.json()).then(res => {
-                res.forEach(element => {
-                    let m = {
-                        "text": "I just posted a new recipe! Check it out!",
-                        "sender": secureLocalStorage.getItem("username"),
-                        "receiver": element.username
-                    }
-                    messageService.sendMessage(m);
+        }).then(res => res.json()).then(data => {
+            this.pullInputData(data.id)
+            return data.id;
+        }).then((recipe_id) => {
+            let followService = new FollowService();
+            let messageService = new MessageService();
+            return followService.getFollowers(secureLocalStorage.getItem("username"))
+                .then(res => res.json()).then(res => {
+                    res.forEach(element => {
+                        let m = {
+                            "text": "I just posted a new recipe! Check it out!",
+                            "sender": secureLocalStorage.getItem("username"),
+                            "receiver": element.username
+                        }
+                        messageService.sendMessage(m);
+                    });
+                    return redirect("/recipe/" + recipe_id);
                 });
-            });
+        })
 
-        return null;
     }
 
     async editAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);
-        this.updateRecipe(recipe, data.get("recipe_id")).then(res => {
+        let recipe_id = data.get("recipe_id")
+        return this.updateRecipe(recipe, recipe_id).then(res => {
             if (res.ok) {
                 alert("posted")
             } else {
                 alert("something went wrong")
             }
-            return res;
-        }).then(res => res.json()).then(data => this.pullInputData(data.id))
-        //return redirect("/recipe/" + data.get("recipe_id"));
-        return null;
+        }).then(() => {
+            this.pullInputData(recipe_id)
+            return redirect("/recipe/" + recipe_id);
+        })
+
+        //return null;
     }
 }
 

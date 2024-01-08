@@ -1,10 +1,14 @@
 import { Form } from "react-router-dom";
 import classes from "../styles/comment/commentbox.module.css";
 
-export function CommentBox({ recipe_id }) {
+export function CommentBox({ recipe_id, setRefresh }) {
   return (
     <div className={classes.wrapper}>
-      <Form method="post" action={"/recipe/" + recipe_id + "/comment"}>
+      <Form method="post" action={"/recipe/" + recipe_id + "/comment"} onSubmit={
+        () => {
+          setRefresh(-1);
+        }
+      }>
         <div>
           <textarea
             className={classes.text_box}

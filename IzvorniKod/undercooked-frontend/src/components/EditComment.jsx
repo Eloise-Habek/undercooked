@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Comment } from "./Comment";
 import CommentService from "../services/CommentService";
 
-export function EditComment({ details, recipe_id }) {
+export function EditComment({ details, recipe_id, setRefresh }) {
   const [edit, setEdit] = useState(1);
   const commentService = new CommentService();
   useEffect(() => {
@@ -17,7 +17,12 @@ export function EditComment({ details, recipe_id }) {
     return <Comment details={details} recipe_id={recipe_id} />
   }
   return (
-    <Form className={classes.wrapper} method="put" action={"/recipe/" + recipe_id + "/comment/" + details.id}>
+    <Form className={classes.wrapper} method="put" action={"/recipe/" + recipe_id + "/comment/" + details.id}
+      onSubmit={
+        () => {
+          setRefresh(-1);
+        }
+      }>
       <div className={classes.img_and_username}>
         <img src={require("../pages/images/chef.png")} alt="profile_icon" />
         <div>{details !== undefined ? details.author.username : ""}</div>
@@ -43,9 +48,12 @@ export function EditComment({ details, recipe_id }) {
           } else {
             alert("something went wrong")
           }
-        }).then(() => {
-          window.location.reload(false)
         })
+        if (setRefresh === undefined) {
+          window.location.reload(false)
+        } else {
+          setRefresh(-1);
+        }
       }}>Delete</button>
 
     </Form>

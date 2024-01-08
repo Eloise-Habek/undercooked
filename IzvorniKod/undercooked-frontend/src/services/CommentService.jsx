@@ -43,8 +43,8 @@ class CommentService {
     }
     async postCommentAction({ request }) {
         const data = await request.formData();
-        console.log(data.get("recipe_id"), data.get("text"));
-        this.postComment(data.get("recipe_id"), data.get("text"))
+        //console.log(data.get("recipe_id"), data.get("text"));
+        return this.postComment(data.get("recipe_id"), data.get("text"))
             .then(res => {
                 if (res.ok) {
                     alert("Posted!");
@@ -53,9 +53,13 @@ class CommentService {
                 }
             })
             .then(() => {
-                window.location.reload(false)
+                return redirect("/recipe/" + data.get("recipe_id"))
             })
-        return redirect("/recipe/" + data.get("recipe_id"))
+        // .then(() => {
+        //     window.location.reload(false)
+        // })
+        // return redirect("/recipe/" + data.get("recipe_id"))
+        //return null
     }
     async editCommentAction({ request }) {
         const data = await request.formData();
@@ -68,9 +72,9 @@ class CommentService {
                     alert("Something went wrong!");
                 }
             })
-            .then(() => {
-                window.location.reload(false)
-            })
+        // .then(() => {
+        //     window.location.reload(false)
+        // })
         return redirect("/recipe/" + data.get("recipe_id"))
     }
 }

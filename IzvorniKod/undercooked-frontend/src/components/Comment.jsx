@@ -3,10 +3,10 @@ import classes from "../styles/comment/comment.module.css";
 import secureLocalStorage from "react-secure-storage";
 import { useState } from "react";
 import { EditComment } from "./EditComment";
-export function Comment({ details, recipe_id }) {
+export function Comment({ details, recipe_id, setRefresh }) {
   const [edit, setEdit] = useState(0);
   if (edit) {
-    return <EditComment details={details} recipe_id={recipe_id} />
+    return <EditComment details={details} recipe_id={recipe_id} setRefresh={setRefresh} />
   } else {
     return (
       <div className={classes.wrapper}>

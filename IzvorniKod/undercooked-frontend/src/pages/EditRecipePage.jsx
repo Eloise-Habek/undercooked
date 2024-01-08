@@ -5,6 +5,22 @@ import { NavLink, redirect, useParams } from "react-router-dom";
 import RecipeService from "../services/RecipeService";
 import { Form } from 'react-router-dom'
 
+function parseTime(time) {
+    time = time.substring(2);
+    let hours = null;
+    if (time.includes("H")) {
+        hours = time.split("H")[0];
+    }
+    let mins = null;
+    if (time.includes("M") && time.includes("H")) {
+        mins = time.substring(time.indexOf("H") + 1, time.indexOf("M"));
+    }
+    if (time.includes("M") && !time.includes("H")) {
+        mins = time.substring(0, time.indexOf("M"));
+    }
+    return [(hours !== null ? hours : "0"), (mins !== null ? mins : "0")];
+}
+
 function getOption(index, setInputs, inputs) {
     return <div>
         <input required placeholder='ingredient' type="text" name={"ingredient " + index.toString()} id={"ingredient " + index.toString()} />
@@ -26,13 +42,48 @@ function getOption(index, setInputs, inputs) {
     </div>
 }
 
-export function PostRecipePage() {
+function f(ref, setRef, i, len, data) {
+    if (i < len) {
+        i === 0 ? ref.push(getOption(i, null, null)) :
+            ref.push(getOption(i, setRef, [...ref]));
+        i++;
+        f(ref, setRef, i, len, data);
+    }
+}
+
+export function EditRecipePage() {
     const [author, setAuthor] = useState("");
     let { id } = useParams();
     const [image, setImage] = useState(null);
     let [inputs, setInputs] = useState([getOption(0, null, null)]);
 
     useEffect(() => {
+
+        let recipeService = new RecipeService();
+        recipeService.getRecipe(id).then(res => res.json()).then(res => {
+            document.getElementById('title').value = res.name;
+            document.getElementById('description').value = res.description;
+            let [hours, mins] = parseTime(res.preparationTime);
+            document.getElementById('hour_input').value = hours;
+            document.getElementById('mins_input').value = mins;
+            document.getElementById('prep_desc').value = res.preparationDescription;
+
+            let temp = []
+            f(temp, setInputs, 0, res.ingredients.length, res.ingredients);
+            setInputs(temp);
+            setAuthor(res.author.username);
+        });
+        recipeService.getRecipe(id).then(res => res.json()).then(res => {
+            for (var i = 0; i < res.ingredients.length; i++) {
+                document.getElementById('ingredient ' + i.toString()).value = res.ingredients[i].ingredient.name;
+                document.getElementById('ingredient ' + i.toString() + " amount").value = res.ingredients[i].amount;
+                document.getElementById('ingredient ' + i.toString() + " unitOfMeasure").value = res.ingredients[i].unitOfMeasure;
+            }
+
+        });
+        recipeService.getImage(id).then(res => res.blob()).then(data => URL.createObjectURL(data))
+            .then(data => setImage(data))
+
         let hour_input = document.getElementById("hour_input");
 
         hour_input.setAttribute('value', 0);
@@ -40,7 +91,7 @@ export function PostRecipePage() {
     }, [id, setInputs, setAuthor])
     return (
         <>
-            <Form className={classes.wrapper} method={"post"} action={"/recipe/post"}>
+            <Form className={classes.wrapper} method={"put"} action={"/recipe/edit/" + id}>
                 <div className={classes.mini_wrapper}>
                     <div className={classes.name_and_image}>
                         <img src={require("./images/chef.png")} alt="" />
@@ -50,12 +101,11 @@ export function PostRecipePage() {
 
                     </div>
                     <div>
-                        {/* <h2 className={classes.title}>{details.length > 0 ? details[0].name : "loading.."}</h2> */}
-
                         <input className={classes.title} required id='title' type="text" name="title" placeholder="Title" />
                     </div>
+
                     <div className={classes.edit_button_wrapper}>
-                        <NavLink className={classes.edit_button} to={"/.."}>
+                        <NavLink className={classes.edit_button} to={"/recipe/" + id}>
                             <i class="fa-solid fa-xmark"></i>
                         </NavLink>
                     </div>
@@ -114,7 +164,7 @@ export function PostRecipePage() {
 
                     </textarea>
                 </div>
-                <button className={classes.save_recipe} type="submit" >{"Post recipe"}</button>
+                <button className={classes.save_recipe} type="submit" >{"Save changes"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
                     let recipeService = new RecipeService();
                     recipeService.deleteRecipe(id).then(res => {
@@ -125,6 +175,8 @@ export function PostRecipePage() {
                         }
                     })
                 }} >Delete recipe</button>
+                <input type="text" hidden={true} readOnly value={id} name='recipe_id' />
+
             </Form>
             {/* <Footer sticky={1} /> */}
         </>

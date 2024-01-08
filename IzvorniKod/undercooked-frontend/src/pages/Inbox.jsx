@@ -11,16 +11,19 @@ import MessageService from "../services/MessageService";
 export function Inbox() {
     const [showReplyBox, setShowReplyBox] = useState(0);
     let [messageArray, setMessageArray] = useState([]);
+    const [refresh, setRefresh] = useState(0);
 
     const arrayDataItems = messageArray.map((m) =>
         <MessageMini details={m} isReceiver={secureLocalStorage.getItem("username") === m.receiver} />);
 
-
+    setInterval(() => {
+        setRefresh(refresh + 1);
+    }, 1000)
 
     useEffect(() => {
         let messageService = new MessageService();
         messageService.getMessages().then(res => res.json()).then(res => setMessageArray(res));
-    }, [messageArray]) // ovo sam stavio da ga cijelo vrijeme refresha vjv nije najbolje riješenje
+    }, [refresh])
 
     return (
         <>
