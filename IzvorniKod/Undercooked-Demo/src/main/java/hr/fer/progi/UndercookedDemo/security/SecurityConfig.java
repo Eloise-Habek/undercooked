@@ -53,6 +53,8 @@ public class SecurityConfig {
 		return http
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> {
+					auth.requestMatchers("/online").permitAll();
+					auth.requestMatchers("/loginValid").hasAuthority("SCOPE_ROLE_USER");
 					auth.requestMatchers("/").permitAll();
 					auth.requestMatchers("/login").permitAll();
 					auth.requestMatchers("/register").permitAll();
