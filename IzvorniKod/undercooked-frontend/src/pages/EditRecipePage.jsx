@@ -106,7 +106,7 @@ export function EditRecipePage() {
 
                     <div className={classes.edit_button_wrapper}>
                         <NavLink className={classes.edit_button} to={"/recipe/" + id}>
-                            <i class="fa-solid fa-xmark"></i>
+                            <i className="fa-solid fa-xmark"></i>
                         </NavLink>
                     </div>
 

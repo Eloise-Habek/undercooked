@@ -1,5 +1,6 @@
 // import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
+import { myFetch } from "../functions/myFetch";
 
 const URL = "/api/message";
 
@@ -38,13 +39,13 @@ class MessageService {
         });
     }
     getUnread() {
-        return fetch(URL + "/getUnread", {
+        return myFetch(URL + "/getUnread", {
             method: "GET",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
     async sendAction({ request }) {
         const data = await request.formData();

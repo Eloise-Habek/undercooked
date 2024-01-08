@@ -12,7 +12,7 @@ import { Register } from "./pages/Register";
 //import Nav from "./pages/wrapper/Nav";
 import { AdminPage, getById } from "./pages/AdminPage";
 import {Header} from "./pages/wrapper/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import RegisterService from "./services/RegisterService";
 import LoginService from "./services/LoginService";
@@ -52,9 +52,14 @@ function App() {
   let recipeService = new RecipeService();
   let commentService = new CommentService();
 
-  setTimeout(() => {
-    setHideMessage(1);    
-  }, 4000);
+
+  useEffect(() => {
+        const interval = setInterval(() => {
+            setHideMessage(1);
+        }, 4000);
+ 
+        return () => clearInterval(interval);
+    }, []);
 
   // stvaramo router koji za dani url učitava pripadajuću komponentu
   const appRouter = createBrowserRouter(

@@ -8,19 +8,28 @@ import MessageService from "../../services/MessageService";
 
 export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmin, hide, setHideMessage }) {
     const [unread, setUnread] = useState(0);
-    // const [refresh, setRefresh] = useState(0);
-    // const messageService = useMemo(() => new MessageService(), []);
+    const [refresh, setRefresh] = useState(0);
+    const [refTime, setRefTime] = useState(1000);
+    const messageService = useMemo(() => new MessageService(), []);
 
-    // setInterval(() => {
-    //     setRefresh(refresh + 1);
-    // }, 1000)
+    setInterval(() => {
+        setRefresh(refresh + 1);
+    }, 1000)
 
-    // useEffect(() => {
-    //     if (secureLocalStorage.getItem("logInToken") !== null) {
-    //         messageService.getUnread().then(res => res.json()).then(data => setUnread(data))
-    //     }
+    useEffect(() => {
+        const interval = setInterval(() => {
+            messageService.getUnread().then(data => {
+                if (data === null) {
+                    setUnread(0)
+                } else {
+                    setUnread(data)
+                }
+            })
+        }, 1000);
 
-    // }, [messageService, refresh])
+        return () => clearInterval(interval);
+
+    }, [messageService])
 
     return (
         <>
