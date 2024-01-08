@@ -11,7 +11,7 @@ export function RecipeMini({ details }) {
         recipeService.getImage(details.id).then(res => res.blob())
             .then(data => URL.createObjectURL(data))
             .then(data => setImage(data))
-    })
+    }, [details.id])
     return (
         <>
             <div className={classes.wrapper}>

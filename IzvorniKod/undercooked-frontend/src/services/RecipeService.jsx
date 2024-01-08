@@ -16,6 +16,7 @@ class RecipeService {
     }
 
     formatInput(data) {
+        console.log(data);
         let input = {
             "name": "",
             "preparationTime": "",
