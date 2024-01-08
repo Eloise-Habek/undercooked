@@ -1,60 +1,27 @@
-// import { NavLink } from "react-router-dom";
-// import { Links } from "./Links";
-// import { Outlet } from "react-router-dom";
-// import { Footer } from "./Footer";
-// import "../../styles/nav.css"
-// import { Message } from "./Message";
-// import { useEffect, useState } from "react";
-// import MessageService from "../../services/MessageService";
-// import secureLocalStorage from "react-secure-storage";
-
-// export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmin, hide, setHideMessage }) {
-//     let [unread, setUnread] = useState(0);
-
-//     useEffect(() => {
-//         if (secureLocalStorage.getItem("logInToken") !== null) {
-//             let messageService = new MessageService();
-//             messageService.getUnread().then(res => res.json()).then(res => setUnread(res));
-//         } else {
-//             setUnread(0);
-//         }
-
-//     }, [])
-//     return (
-//         <>
-//             <header>
-//                 <nav className='navbar'>
-//                     <hr />
-//                     <div className='right'>
-//                         <div><NavLink className="izbornik" to={"/"}>HOME</NavLink></div>
-//                         <div><NavLink className="izbornik" to={"/login"}>LOGIN</NavLink></div>
-//                         <div><NavLink className="izbornik" to={"/register"}>REGISTER</NavLink></div>
-//                         <div><NavLink className="izbornik" to={"/inbox"}>{!unread ? "INBOX" : "INBOX " + unread}</NavLink></div>
-//                     </div>
-//                     <hr />
-//                 </nav>
-//             </header>
-//             <main>
-//                 <Message message={message} hide={hide} setHideMessage={setHideMessage} />
-//                 {loggedIn ? <Links setMessage={setMessage} changeIsLoggedIn={changeIsLoggedIn} isAdmin={isAdmin} /> : null}
-//                 <Outlet />
-
-//             </main>
-//             <footer>
-//                 <Footer sticky={0} />
-//             </footer>
-//         </>
-//     );
-// }
-
-
 import { NavLink } from "react-router-dom";
 import classes from "../../styles/header/header.module.css";
 import { Outlet } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { Message } from "./Message";
+import { useEffect, useMemo, useState } from "react";
+import MessageService from "../../services/MessageService";
 
 export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmin, hide, setHideMessage }) {
+    const [unread, setUnread] = useState(0);
+    const [refresh, setRefresh] = useState(0);
+    const messageService = useMemo(() => new MessageService(), []);
+
+    setInterval(() => {
+        setRefresh(refresh + 1);
+    }, 1000)
+
+    useEffect(() => {
+        if (secureLocalStorage.getItem("logInToken") !== null) {
+            messageService.getUnread().then(res => res.json()).then(data => setUnread(data))
+        }
+
+    }, [messageService, refresh])
+
     return (
         <>
             <header className={classes.two_headers_wrapper}>
@@ -100,6 +67,8 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
                     </div>
                     <div className={classes.nav_btn}>
                         <NavLink className="fa-solid fa-envelope" to={"/inbox"}></NavLink>
+                        {unread === 0 ? null : <div>{unread}</div>}
+
                     </div>
                 </div>
             </header>
