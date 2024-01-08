@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
+import { myFetch } from "../functions/myFetch";
 
 const URL = "/api/token";
 
@@ -13,32 +14,36 @@ class LoginService {
   // šalje post request na backend s headerom za basic auth
   // služi za log in
   login(user) {
-    return fetch(URL, {
+    return myFetch(URL, {
       method: "POST",
       mode: "cors",
       headers: {
         "Authorization": user
       }
-    });
+    }, false);
   }
-  checkAdmin() {
+  checkAdmin(username) {
 
-    return fetch("/api/profile/" + secureLocalStorage.getItem("username"), {
+    return myFetch("/api/profile/" + username, {
       method: "GET",
       mode: "cors",
       headers: {
         "Authorization": secureLocalStorage.getItem("logInToken")
       }
-    }).then(res => res.json())
-      .then(res => {
-        return fetch("/api/persons/" + res.id.toString() + "/admin", {
+    }, true).then(data => {
+      if (data !== null) {
+        return myFetch("/api/persons/" + data.id.toString() + "/admin", {
           method: "GET",
           mode: "cors",
           headers: {
             "Authorization": secureLocalStorage.getItem("logInToken")
           }
-        })
-      })
+        }, true)
+      }
+      return null;
+    })
+
+
   }
 
   // funkcija koja se pokreće kada radimo post request na /admin 
@@ -48,67 +53,27 @@ class LoginService {
     let username = data.get("username")
     let user = "Basic " + btoa(username + ":" + data.get("password"));
 
-    return this.login(user).then((response) => {
-      return response.json();
-    }).then((response) => {
-      let res = {
-        "loggedIn": false,
-        "admin": false,
-        "message": "Invalid credentials!",
-        "token": null
-      };
-      if (response.token) {
-        res.loggedIn = true;
-        res.message = "Logged in!";
-        res.token = response.token;
-        if (username === "admin") {
-          res.admin = true;
-        }
-      }
-      return res;
-    })
-      .then((response) => {
-        if (response.loggedIn) {
-          secureLocalStorage.setItem("logInToken", `Bearer ${response.token}`);
+    return this.login(user).then(data1 => {
+      if (data1 !== null) {
+        secureLocalStorage.setItem("logInToken", `Bearer ${data1.token}`);
+        return this.checkAdmin(username).then(res => {
+          console.log(res)
           secureLocalStorage.setItem("username", username);
-          // if (response.admin) {
-          //   secureLocalStorage.setItem("isAdmin", true);
-          //   this.setIsAdmin(true);
-          // } else {
-          //   secureLocalStorage.removeItem("isAdmin");
-          //   this.setIsAdmin(false);
-          // }
-        } else {
-          secureLocalStorage.removeItem("logInToken");
-          secureLocalStorage.removeItem("username");
-        }
-        return response;
-      })
-      .then(response => {
-        if (secureLocalStorage.getItem("logInToken") !== null) {
-          this.checkAdmin().then(res => {
-            if (res.ok) {
-              secureLocalStorage.setItem("isAdmin", true);
-              this.setIsAdmin(true);
-            } else {
-              secureLocalStorage.removeItem("isAdmin");
-              this.setIsAdmin(false);
-            }
-          });
-        }
-
-        return response
-      })
-      .then((response) => {
-        this.setMessage(response.message);
-        if (response.loggedIn) {
           this.setIsLoggedIn(true);
-          return redirect("/");
-        } else {
-          this.setIsLoggedIn(false);
-          return redirect("/login");
-        }
-      })
+          this.setMessage("Logged in!");
+          res ? this.setIsAdmin(true) : this.setIsAdmin(false);
+          res ? secureLocalStorage.setItem("isAdmin", true) : secureLocalStorage.setItem("isAdmin", false);
+          return redirect("/profile/" + username);
+        })
+      }
+      secureLocalStorage.removeItem("logInToken");
+      secureLocalStorage.removeItem("username");
+      secureLocalStorage.removeItem("isAdmin");
+      this.setIsAdmin(false);
+      this.setIsLoggedIn(false);
+      this.setMessage("Invalid credentials!");
+      return redirect("/login")
+    })
   }
 }
 
