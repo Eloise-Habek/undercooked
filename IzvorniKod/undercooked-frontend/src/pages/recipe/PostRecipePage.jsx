@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
-import classes from "../styles/recipe/recipe.module.css"
+import classes from "../../styles/recipe/recipe.module.css"
 import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
-import RecipeService from "../services/RecipeService";
 import { Form } from 'react-router-dom'
 
 function getOption(index, setInputs, inputs) {
@@ -43,7 +42,7 @@ export function PostRecipePage() {
             <Form className={classes.wrapper} method={"post"} action={"/recipe/post"}>
                 <div className={classes.mini_wrapper}>
                     <div className={classes.name_and_image}>
-                        <img src={require("./images/chef.png")} alt="" />
+                        <img src={require("../images/chef.png")} alt="" />
 
                         <h2>{author}</h2>
 
@@ -65,7 +64,7 @@ export function PostRecipePage() {
                     {image === null ?
                         <img
                             className={classes.images}
-                            src={require("../pages/images/6978255.png")}
+                            src={require("../../pages/images/6978255.png")}
                             alt=""
                         />
                         :

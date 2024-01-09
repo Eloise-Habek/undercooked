@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import ProfileService from '../services/ProfileService';
+import ProfileService from '../../services/ProfileService';
 import secureLocalStorage from 'react-secure-storage';
 import { useNavigate, useParams } from 'react-router-dom';
-import "../styles/profile.css"
+import "../../styles/profile.css"
 
 
-import { RecipeMini } from "../components/RecipeMini";
-import { SendMessageBox } from "../components/SendMessageBox";
-import classes from "../styles/profile/profile.module.css"
-import { Footer } from "./wrapper/Footer";
+import { RecipeMini } from "../../components/RecipeMini";
+import { SendMessageBox } from "../../components/SendMessageBox";
+import classes from "../../styles/profile/profile.module.css"
+import { Footer } from "../wrapper/Footer";
 import { NavLink } from "react-router-dom";
-import FollowService from '../services/FollowService';
-import RecipeService from '../services/RecipeService';
+import FollowService from '../../services/FollowService';
+import RecipeService from '../../services/RecipeService';
 
 export function Profile() {
     const [username, setUsername] = useState("");
@@ -59,7 +59,7 @@ export function Profile() {
                 <div className={classes.profileSection}>
                     <div className={classes.profileIntro}>
                         <img
-                            src={require("./images/chef.png")}
+                            src={require("../images/chef.png")}
                             alt=""
                             className={classes.profileImage}
                         />

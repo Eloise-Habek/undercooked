@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react"
-import classes from "../styles/recipe/recipe.module.css"
+import classes from "../../styles/recipe/recipe.module.css"
 import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
-import RecipeService from "../services/RecipeService";
+import RecipeService from "../../services/RecipeService";
 import { Form } from 'react-router-dom'
 
 function parseTime(time) {
@@ -94,7 +94,7 @@ export function EditRecipePage() {
             <Form className={classes.wrapper} method={"put"} action={"/recipe/edit/" + id}>
                 <div className={classes.mini_wrapper}>
                     <div className={classes.name_and_image}>
-                        <img src={require("./images/chef.png")} alt="" />
+                        <img src={require("../images/chef.png")} alt="" />
 
                         <h2>{author}</h2>
 
@@ -115,7 +115,7 @@ export function EditRecipePage() {
                     {image === null ?
                         <img
                             className={classes.images}
-                            src={require("../pages/images/6978255.png")}
+                            src={require("../../pages/images/6978255.png")}
                             alt=""
                         />
                         :

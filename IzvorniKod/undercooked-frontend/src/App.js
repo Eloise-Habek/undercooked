@@ -76,20 +76,16 @@ function App() {
         <Route path="following/:user" element={<UserList followers={0} following={1}/>} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />
         <Route path="register" element={<Register />} action={registerService.registerAction} />
-        <Route path="admin">
-          <Route index element={<AdminPage />} action={getById} />
-          <Route path="/:id" element={<AdminPage />} />
-        </Route>
+        <Route path="admin" element={<AdminPage />} action={getById} />
+        <Route path="admin/:id" element={<AdminPage />} />
         <Route path="inbox" element={isLoggedIn ? <Inbox /> : <PleaseLogin />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
-        <Route path="recipe">
-          <Route path="/:id" element={<Recipe />} />
-          <Route path="/post" element={<PostRecipePage />} action={recipeService.postAction}/>
-          <Route path="/edit/:id" element={<EditRecipePage />} action={recipeService.editAction}/>
-          <Route path="/saved/:user" element={<SavedRecipes />} />
-          <Route path="/:id/comment" action={commentService.postCommentAction} />
-          <Route path="/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
-        </Route>
+        <Route path="recipe/:id" element={<Recipe />} />
+        <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
+        <Route path="recipe/edit/:id" element={<EditRecipePage />} action={recipeService.editAction}/>
+        <Route path="recipe/saved/:user" element={<SavedRecipes />} />
+        <Route path="recipe/:id/comment" action={commentService.postCommentAction} />
+        <Route path="recipe/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
         <Route path="*" element={<Search />}/>
       </Route>
     )

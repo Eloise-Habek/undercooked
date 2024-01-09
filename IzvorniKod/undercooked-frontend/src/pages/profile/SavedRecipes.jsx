@@ -1,9 +1,9 @@
-import { PageNav } from "../components/PageNav";
-import { RecipeMini } from "../components/RecipeMini";
-import { Footer } from "./wrapper/Footer";
-import classes from "../styles/home/home.module.css";
+//import { PageNav } from "../components/PageNav";
+import { RecipeMini } from "../../components/RecipeMini";
+import { Footer } from "../wrapper/Footer";
+import classes from "../../styles/home/home.module.css";
 import { useEffect, useMemo, useState } from "react";
-import RecipeService from "../services/RecipeService";
+import RecipeService from "../../services/RecipeService";
 import { useParams } from "react-router-dom";
 
 export function SavedRecipes() {

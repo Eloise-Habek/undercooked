@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
-import { Comment } from "../components/Comment"
-import { CommentBox } from "../components/CommentBox"
-import classes from "../styles/recipe/recipe.module.css"
-import star_classes from "../styles/recipe/stars.module.css"
+import { Comment } from "../../components/Comment"
+import { CommentBox } from "../../components/CommentBox"
+import classes from "../../styles/recipe/recipe.module.css"
+import star_classes from "../../styles/recipe/stars.module.css"
 import { NavLink, useParams } from "react-router-dom";
-import { Footer } from "./wrapper/Footer";
-import RecipeService from "../services/RecipeService";
+import { Footer } from "../wrapper/Footer";
+import RecipeService from "../../services/RecipeService";
 import secureLocalStorage from "react-secure-storage";
 
 function parseTime(time) {
@@ -92,7 +92,7 @@ export function Recipe() {
             <div className={classes.wrapper}>
                 <div className={classes.mini_wrapper}>
                     <div className={classes.name_and_image}>
-                        <img src={require("./images/chef.png")} alt="" />
+                        <img src={require("../images/chef.png")} alt="" />
                         <NavLink to={"/profile/" + username}>
                             <h2>{username}</h2>
                         </NavLink>
@@ -114,7 +114,7 @@ export function Recipe() {
                     {image === null ?
                         <img
                             className={classes.images}
-                            src={require("../pages/images/6978255.png")}
+                            src={require("../../pages/images/6978255.png")}
                             alt=""
                         />
                         :

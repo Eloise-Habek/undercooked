@@ -1,5 +1,5 @@
 import { Form } from "react-router-dom";
-import classes from "../styles/settings/settings.module.css";
+import classes from "../../styles/settings/settings.module.css";
 
 export function Settings() {
   return (

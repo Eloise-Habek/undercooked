@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom"
-import FollowService from "../services/FollowService";
+import FollowService from "../../services/FollowService";
 
 export function UserList({ followers, following }) {
     let { user } = useParams();
