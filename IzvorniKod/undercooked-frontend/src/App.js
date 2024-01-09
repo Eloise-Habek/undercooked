@@ -6,10 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-//import Nav from "./pages/wrapper/Nav";
 import { AdminPage, getById } from "./pages/AdminPage";
 import {Header} from "./pages/wrapper/Header";
 import { useEffect, useState } from "react";
@@ -19,17 +17,18 @@ import LoginService from "./services/LoginService";
 
 import { Inbox } from "./pages/Inbox";
 import MessageService from "./services/MessageService";
-import { Recipe } from "./pages/Recipe";
-import { PostRecipePage } from "./pages/PostRecipePage";
 import RecipeService from "./services/RecipeService";
 
 import { Search } from "./pages/Search";
 import { PleaseLogin } from "./pages/PleaseLogin";
-import { Settings } from "./pages/Settings";
-import { SavedRecipes } from "./pages/SavedRecipes";
 import CommentService from "./services/CommentService";
-import { EditRecipePage } from "./pages/EditRecipePage";
-import { UserList } from "./pages/UserList";
+import { Recipe } from "./pages/recipe/Recipe";
+import { PostRecipePage } from "./pages/recipe/PostRecipePage";
+import { EditRecipePage } from "./pages/recipe/EditRecipePage";
+import { Profile } from "./pages/profile/Profile";
+import { SavedRecipes } from "./pages/profile/SavedRecipes";
+import { Settings } from "./pages/profile/Settings";
+import { UserList } from "./pages/profile/UserList";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -77,23 +76,25 @@ function App() {
         <Route path="following/:user" element={<UserList followers={0} following={1}/>} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />
         <Route path="register" element={<Register />} action={registerService.registerAction} />
-        <Route path="admin" element={<AdminPage />} action={getById} />
-        <Route path="admin/:id" element={<AdminPage />} />
+        <Route path="admin">
+          <Route index element={<AdminPage />} action={getById} />
+          <Route path="/:id" element={<AdminPage />} />
+        </Route>
         <Route path="inbox" element={isLoggedIn ? <Inbox /> : <PleaseLogin />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
-        <Route path="recipe/:id" element={<Recipe />} />
-        <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
-        <Route path="recipe/edit/:id" element={<EditRecipePage />} action={recipeService.editAction}/>
-        <Route path="recipe/saved/:user" element={<SavedRecipes />} />
-        <Route path="recipe/:id/comment" action={commentService.postCommentAction} />
-        <Route path="recipe/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
+        <Route path="recipe">
+          <Route path="/:id" element={<Recipe />} />
+          <Route path="/post" element={<PostRecipePage />} action={recipeService.postAction}/>
+          <Route path="/edit/:id" element={<EditRecipePage />} action={recipeService.editAction}/>
+          <Route path="/saved/:user" element={<SavedRecipes />} />
+          <Route path="/:id/comment" action={commentService.postCommentAction} />
+          <Route path="/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
+        </Route>
         <Route path="*" element={<Search />}/>
       </Route>
     )
   );
-  return <RouterProvider router={appRouter}></RouterProvider>;
-  
-  
+  return <RouterProvider router={appRouter}></RouterProvider>; 
 }
 
 export default App;
