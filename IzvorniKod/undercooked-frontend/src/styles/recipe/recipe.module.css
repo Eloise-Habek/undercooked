@@ -220,3 +220,7 @@ button {
   margin-top: 20px;
   font-weight: bold;
 }
+
+.no_bullets {
+    list-style-type: none;
+}

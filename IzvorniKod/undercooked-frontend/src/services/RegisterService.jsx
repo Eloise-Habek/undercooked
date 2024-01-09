@@ -1,4 +1,5 @@
 import { redirect } from 'react-router-dom'
+import { myFetch } from '../functions/myFetch';
 const URL = "/api/register";
 
 class RegisterService {
@@ -10,14 +11,14 @@ class RegisterService {
   // šalje post request na backend s podatcima za registraciju korisnika
   // služi za registraciju korisnika
   register(user) {
-    return fetch(URL, {
+    return myFetch(URL, {
       method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user)
-    });
+    }, false);
   }
 
   // funkcija koja se pokreće kada radimo post request na /register 
@@ -33,16 +34,13 @@ class RegisterService {
     }
     return this.register(user)
       .then((response) => {
-        return response.json()
-      })
-      .then((response) => {
         this.setMessage(response.message);
         if (response.message !== "User added") {
           return redirect("/register");
         } else {
           return redirect("/login");
         }
-      });
+      }, () => { return redirect("/register") });
   }
 }
 

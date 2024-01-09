@@ -63,14 +63,13 @@ export function Recipe() {
 
     useEffect(() => {
 
-        recipeService.getRecipe(id).then(res => res.json()).then(res => {
-            console.log("evo tu sam u useefect", res.name)
+        recipeService.getRecipe(id).then(res => {
             setTitle(res.name);
             setUsername(res.author.username);
             setDesc(res.description);
             setPrepTime(parseTime(res.preparationTime));
             setIngredients(res.ingredients.map((e) => {
-                return <li>{e.ingredient.name + ": " + e.amount + e.unitOfMeasure}</li>
+                return <li key={e.ingredient.id}>{e.ingredient.name + ": " + e.amount + e.unitOfMeasure}</li>
             }))
             setPrepDesc(res.preparationDescription);
             setAvgRating(res.averageRating);
@@ -78,15 +77,15 @@ export function Recipe() {
             if (star_id !== "stars-0") {
                 document.getElementById(star_id).checked = true;
             }
-            recipeService.isSaved(id).then(res => res.json()).then(res => {
+            recipeService.isSaved(id).then(res => {
                 setSaved(res);
-            })
-            setComments(res.comments.map((e) => <>
+            }, () => { setSaved(false) })
+            setComments(res.comments.map((e) => <li key={e.id}>
                 <Comment details={e} recipe_id={id} setRefresh={setRefresh} />
-            </>));
-            recipeService.getImage(id).then(res => res.blob()).then(data => URL.createObjectURL(data))
+            </li>));
+            recipeService.getImage(id).then(data => URL.createObjectURL(data), () => null)
                 .then(data => setImage(data))
-        });
+        }, () => { });
     }, [id, refresh, recipeService])
     return (
         <>
@@ -107,7 +106,7 @@ export function Recipe() {
                         {(username === secureLocalStorage.getItem("username") ||
                             secureLocalStorage.getItem("isAdmin"))
                             ? <NavLink className={classes.edit_button} to={"/recipe/edit/" + id}>
-                                <i class="fa-solid fa-pen"></i>
+                                <i className="fa-solid fa-pen"></i>
                             </NavLink> : null}
                     </div>
                 </div>
@@ -149,15 +148,9 @@ export function Recipe() {
 
                 <button onClick={() => {
                     setSaved(!saved);
-                    recipeService.isSaved(id).then(res => res.json()).then(saved => {
-                        recipeService.setSaved(id, !saved).then(res => {
-                            if (res.ok) {
-                                alert("set ", saved);
-                            } else {
-                                alert("not ok");
-                            }
-                        })
-                    })
+                    recipeService.isSaved(id).then(saved => {
+                        recipeService.setSaved(id, !saved).then(() => { }, () => { })
+                    }, () => { })
 
                 }} className={classes.save_recipe}>
                     {saved ? "Unsave Recipe" : "Save Recipe"}
@@ -179,13 +172,8 @@ export function Recipe() {
 
                                 recipeService.setRating(id,
                                     document.querySelector('input[name="stars"]:checked').value)
-                                    .then(res => {
-                                        if (res.ok) {
-                                            alert("rating set");
-                                        } else {
-                                            alert("something went wrong");
-                                        }
-                                    }).then(() => { setRefresh(refresh + 1) })
+                                    .then(() => { }, () => { })
+                                    .then(() => { setRefresh(refresh + 1) })
 
                             }}>
                                 <label>
@@ -261,7 +249,8 @@ export function Recipe() {
 
                     {comment ? <CommentBox recipe_id={id} setRefresh={setRefresh} /> : null}
                     <div className={classes.comments}> Comments: </div>
-                    {comments.length > 0 ? [...comments].reverse() : ""}
+                    <ul className={classes.no_bullets}>{comments.length > 0 ? [...comments].reverse() : ""}</ul>
+
                 </div>
             </div>
             <Footer sticky={1} />

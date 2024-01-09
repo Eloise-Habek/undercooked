@@ -1,13 +1,13 @@
 import { Form, NavLink } from "react-router-dom";
 import classes from "../styles/comment/comment.module.css";
 import secureLocalStorage from "react-secure-storage";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Comment } from "./Comment";
 import CommentService from "../services/CommentService";
 
 export function EditComment({ details, recipe_id, setRefresh }) {
   const [edit, setEdit] = useState(1);
-  const commentService = new CommentService();
+  const commentService = useMemo(() => new CommentService(), [])
   useEffect(() => {
     if (details !== undefined && edit) {
       document.getElementById("text_input_" + details.id).value = details.text
@@ -42,13 +42,7 @@ export function EditComment({ details, recipe_id, setRefresh }) {
       }} type="button">X</button>
       <button type="submit">Save changes</button>
       <button type="button" onClick={() => {
-        commentService.deleteComment(recipe_id, details.id).then(res => {
-          if (res.ok) {
-            alert("deleted")
-          } else {
-            alert("something went wrong")
-          }
-        })
+        commentService.deleteComment(recipe_id, details.id).then(() => { }, () => { })
         if (setRefresh === undefined) {
           window.location.reload(false)
         } else {

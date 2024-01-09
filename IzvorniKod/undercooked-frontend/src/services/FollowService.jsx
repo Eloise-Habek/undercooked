@@ -1,48 +1,44 @@
-// import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
+import { myFetch } from "../functions/myFetch";
 
 const URL = "/api/follow";
 
 class FollowService {
-    // constructor(props) {
-    //     //this.setMessage = props.setMessage;
-    //     this.postAction = this.postAction.bind(this);
-    // }
     follow(user) {
-        return fetch(URL + "/" + user, {
+        return myFetch(URL + "/" + user, {
             method: "POST",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
     unfollow(user) {
-        return fetch(URL + "/unfollow/" + user, {
+        return myFetch(URL + "/unfollow/" + user, {
             method: "POST",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
     getFollowers(user) {
-        return fetch(URL + "/followers/" + user, {
+        return myFetch(URL + "/followers/" + user, {
             method: "GET",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
     getFollowing(user) {
-        return fetch(URL + "/following/" + user, {
+        return myFetch(URL + "/following/" + user, {
             method: "GET",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
 }
 

@@ -1,5 +1,5 @@
 // import "../../styles/header.css"
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MessageMini } from "../components/MessageMini";
 // import { PageNav } from "../components/PageNav";
 import { SendMessageBox } from "../components/SendMessageBox";
@@ -11,19 +11,19 @@ import MessageService from "../services/MessageService";
 export function Inbox() {
     const [showReplyBox, setShowReplyBox] = useState(0);
     let [messageArray, setMessageArray] = useState([]);
-    const [refresh, setRefresh] = useState(0);
 
     const arrayDataItems = messageArray.map((m) =>
         <MessageMini details={m} isReceiver={secureLocalStorage.getItem("username") === m.receiver} />);
 
-    setInterval(() => {
-        setRefresh(refresh + 1);
-    }, 1000)
-
+    const messageService = useMemo(() => new MessageService(), [])
     useEffect(() => {
-        let messageService = new MessageService();
-        messageService.getMessages().then(res => res.json()).then(res => setMessageArray(res));
-    }, [refresh])
+        const interval = setInterval(() => {
+            messageService.getMessages().then(res => setMessageArray(res), () => { });
+        }, 1000);
+
+        return () => clearInterval(interval);
+
+    }, [messageService])
 
     return (
         <>

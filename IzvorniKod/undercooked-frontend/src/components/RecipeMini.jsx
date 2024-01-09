@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom"
 import classes from "../styles/recipe/recipe-mini.module.css"
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import RecipeService from "../services/RecipeService";
 
 export function RecipeMini({ details }) {
     let navigate = useNavigate();
     const [image, setImage] = useState(null);
+    const recipeService = useMemo(() => new RecipeService(), []);
     useEffect(() => {
-        let recipeService = new RecipeService();
-        recipeService.getImage(details.id).then(res => res.blob())
-            .then(data => URL.createObjectURL(data))
+        recipeService.getImage(details.id)
+            .then(data => URL.createObjectURL(data), () => { })
             .then(data => setImage(data))
-    }, [details.id])
+    }, [details.id, recipeService])
     return (
         <>
             <div className={classes.wrapper}>
@@ -43,10 +43,10 @@ export function RecipeMini({ details }) {
                     </div>
                     <div>
                         <div className={classes.categories}>
-                            <div class={classes.categories_label}>Categories:</div>
-                            <div class={classes.category_tag}>Cake</div>
-                            <div class={classes.category_tag}>Pizza</div>
-                            <div class={classes.category_tag}>Drinks</div>
+                            <div className={classes.categories_label}>Categories:</div>
+                            <div className={classes.category_tag}>Cake</div>
+                            <div className={classes.category_tag}>Pizza</div>
+                            <div className={classes.category_tag}>Drinks</div>
                         </div>
                     </div>
                 </button>

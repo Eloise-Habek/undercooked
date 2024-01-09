@@ -22,13 +22,14 @@ import MessageService from "./services/MessageService";
 import { Recipe } from "./pages/Recipe";
 import { PostRecipePage } from "./pages/PostRecipePage";
 import RecipeService from "./services/RecipeService";
-import { UserList } from "./services/UserList";
+
 import { Search } from "./pages/Search";
 import { PleaseLogin } from "./pages/PleaseLogin";
 import { Settings } from "./pages/Settings";
 import { SavedRecipes } from "./pages/SavedRecipes";
 import CommentService from "./services/CommentService";
 import { EditRecipePage } from "./pages/EditRecipePage";
+import { UserList } from "./pages/UserList";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);

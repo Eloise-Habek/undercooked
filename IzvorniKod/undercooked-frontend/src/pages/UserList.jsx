@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom"
-import FollowService from "./FollowService";
+import FollowService from "../services/FollowService";
 
 export function UserList({ followers, following }) {
     let { user } = useParams();
@@ -10,10 +10,10 @@ export function UserList({ followers, following }) {
     useEffect(() => {
         if (followers) {
             let followService = new FollowService();
-            followService.getFollowers(user).then(res => res.json()).then(res => setUserArray(res));
+            followService.getFollowers(user).then(res => setUserArray(res), () => { });
         } else if (following) {
             let followService = new FollowService();
-            followService.getFollowing(user).then(res => res.json()).then(res => setUserArray(res));
+            followService.getFollowing(user).then(res => setUserArray(res), () => { });
         }
     })
     return <>

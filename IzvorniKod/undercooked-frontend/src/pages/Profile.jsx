@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ProfileService from '../services/ProfileService';
 import secureLocalStorage from 'react-secure-storage';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,15 +10,11 @@ import { SendMessageBox } from "../components/SendMessageBox";
 import classes from "../styles/profile/profile.module.css"
 import { Footer } from "./wrapper/Footer";
 import { NavLink } from "react-router-dom";
-import { PageNav } from "../components/PageNav";
 import FollowService from '../services/FollowService';
 import RecipeService from '../services/RecipeService';
 
 export function Profile() {
-    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
     const navigate = useNavigate();
     const [followers, setFollowers] = useState("");
     const [following, setFollowing] = useState("");
@@ -29,31 +25,34 @@ export function Profile() {
     let [recipeArray, setRecipeArray] = useState([]);
 
     const arrayDataItems = recipeArray.map((r) =>
-        <RecipeMini details={r} isReceiver={true} />);
+        <li key={r.id}>
+            <RecipeMini details={r} isReceiver={true} />
+        </li>);
+
+
+    const profileService = useMemo(() => new ProfileService(), []);
+    const recipeService = useMemo(() => new RecipeService(), []);
+    const followService = useMemo(() => new FollowService(), []);
 
     useEffect(() => {
         if (secureLocalStorage.getItem("logInToken") != null) {
-            ProfileService.getProfile(user).then(res => res.json()).then(data => {
-                //setEmail(data.email);
+            profileService.getProfile(user).then(data => {
                 setUsername(data.username);
-                setName(data.name);
-                setSurname(data.surname);
                 setRecipeArray(data.recipes);
                 setFollowers(data.followers);
                 setFollowing(data.following);
                 setIsFollowing(data.isFollowed);
-                let recipeService = new RecipeService();
-                recipeService.getSavedCount(data.username)
-                    .then(res => res.json()).then(res => setSavedCount(res));
-            });
-
+                recipeService.getSavedCount(data.username).then(res => setSavedCount(res), () => { });
+            }, () => { navigate("/login") });
 
         } else {
             navigate("/login");
         }
 
-    }, [navigate, user]);
+    }, [navigate, user, recipeService, profileService]);
+
     const [showMessageBox, setShowMessageBox] = useState(0)
+
     return (
         <>
             <div className={classes.profileWrapper}>
@@ -80,19 +79,10 @@ export function Profile() {
 
                             <button className={classes.followButton} type='button' onClick={() => {
                                 setIsFollowing(!isFollowing);
-                                let followService = new FollowService();
                                 if (isFollowing) {
-                                    followService.unfollow(username).then(res => {
-                                        if (!res.ok) {
-                                            alert("Something went wrong!");
-                                        }
-                                    })
+                                    followService.unfollow(username).then(() => { }, () => { })
                                 } else {
-                                    followService.follow(username).then(res => {
-                                        if (!res.ok) {
-                                            alert("Something went wrong!");
-                                        }
-                                    })
+                                    followService.follow(username).then(() => { }, () => { })
                                 }
                             }}>{isFollowing ? "Following" : "Follow"}</button>
                             <button onClick={() => { showMessageBox ? setShowMessageBox(0) : setShowMessageBox(1) }
@@ -127,7 +117,8 @@ export function Profile() {
                     {arrayDataItems.length > 0 ? <>
                         <div className={classes.postedRecipes}>Posted recipes:</div>
                         <div className={classes.recipeContainer}>
-                            {arrayDataItems.reverse()}
+                            <ul className={classes.no_bullets}>{arrayDataItems.reverse()}</ul>
+
                         </div>
 
                     </> :
@@ -135,6 +126,7 @@ export function Profile() {
                 </div>
             </div>
             {/* <PageNav /> */}
+            <Footer sticky={1} />
         </>
     );
 

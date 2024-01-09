@@ -31,17 +31,16 @@ class LoginService {
         "Authorization": secureLocalStorage.getItem("logInToken")
       }
     }, true).then(data => {
-      if (data !== null) {
-        return myFetch("/api/persons/" + data.id.toString() + "/admin", {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Authorization": secureLocalStorage.getItem("logInToken")
-          }
-        }, true)
-      }
-      return null;
-    })
+
+      return myFetch("/api/persons/" + data.id.toString() + "/admin", {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Authorization": secureLocalStorage.getItem("logInToken")
+        }
+      }, true)
+
+    }, () => { return Promise.reject("Error") })
 
 
   }
@@ -53,19 +52,21 @@ class LoginService {
     let username = data.get("username")
     let user = "Basic " + btoa(username + ":" + data.get("password"));
 
-    return this.login(user).then(data1 => {
-      if (data1 !== null) {
-        secureLocalStorage.setItem("logInToken", `Bearer ${data1.token}`);
-        return this.checkAdmin(username).then(res => {
-          console.log(res)
-          secureLocalStorage.setItem("username", username);
-          this.setIsLoggedIn(true);
-          this.setMessage("Logged in!");
-          res ? this.setIsAdmin(true) : this.setIsAdmin(false);
-          res ? secureLocalStorage.setItem("isAdmin", true) : secureLocalStorage.setItem("isAdmin", false);
-          return redirect("/profile/" + username);
-        })
-      }
+    return this.login(user).then((data) => {
+      secureLocalStorage.setItem("logInToken", `Bearer ${data.token}`);
+      return this.checkAdmin(username).then(() => {
+        this.setIsAdmin(true)
+        secureLocalStorage.setItem("isAdmin", true)
+      }, () => {
+        this.setIsAdmin(false)
+        secureLocalStorage.setItem("isAdmin", false)
+      }).then(() => {
+        secureLocalStorage.setItem("username", username);
+        this.setIsLoggedIn(true);
+        this.setMessage("Logged in!");
+        return redirect("/profile/" + username)
+      })
+    }, () => {
       secureLocalStorage.removeItem("logInToken");
       secureLocalStorage.removeItem("username");
       secureLocalStorage.removeItem("isAdmin");

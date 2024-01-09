@@ -14,12 +14,8 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
         const interval = setInterval(() => {
             if (secureLocalStorage.getItem("logInToken") !== null) {
                 messageService.getUnread().then(data => {
-                    if (data === null) {
-                        setUnread(0)
-                    } else {
-                        setUnread(data)
-                    }
-                })
+                    setUnread(data)
+                }, () => { })
             }
         }, 1000);
 
@@ -47,6 +43,7 @@ export function Header({ message, setMessage, loggedIn, changeIsLoggedIn, isAdmi
                                     secureLocalStorage.removeItem("logInToken");
                                     changeIsLoggedIn(false);
                                     setMessage("Logged out!");
+                                    setUnread(0);
                                 }
                             }}>
                             {loggedIn ? " logout " : " login "}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import classes from "../styles/recipe/recipe.module.css"
 import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
@@ -57,10 +57,10 @@ export function EditRecipePage() {
     const [image, setImage] = useState(null);
     let [inputs, setInputs] = useState([getOption(0, null, null)]);
 
-    useEffect(() => {
+    const recipeService = useMemo(() => new RecipeService(), []);
 
-        let recipeService = new RecipeService();
-        recipeService.getRecipe(id).then(res => res.json()).then(res => {
+    useEffect(() => {
+        recipeService.getRecipe(id).then(res => {
             document.getElementById('title').value = res.name;
             document.getElementById('description').value = res.description;
             let [hours, mins] = parseTime(res.preparationTime);
@@ -72,23 +72,23 @@ export function EditRecipePage() {
             f(temp, setInputs, 0, res.ingredients.length, res.ingredients);
             setInputs(temp);
             setAuthor(res.author.username);
-        });
-        recipeService.getRecipe(id).then(res => res.json()).then(res => {
+        }, () => { });
+        recipeService.getRecipe(id).then(res => {
             for (var i = 0; i < res.ingredients.length; i++) {
                 document.getElementById('ingredient ' + i.toString()).value = res.ingredients[i].ingredient.name;
                 document.getElementById('ingredient ' + i.toString() + " amount").value = res.ingredients[i].amount;
                 document.getElementById('ingredient ' + i.toString() + " unitOfMeasure").value = res.ingredients[i].unitOfMeasure;
             }
 
-        });
-        recipeService.getImage(id).then(res => res.blob()).then(data => URL.createObjectURL(data))
+        }, () => { });
+        recipeService.getImage(id).then(data => URL.createObjectURL(data), data => null)
             .then(data => setImage(data))
 
         let hour_input = document.getElementById("hour_input");
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor])
+    }, [id, setInputs, setAuthor, recipeService])
     return (
         <>
             <Form className={classes.wrapper} method={"put"} action={"/recipe/edit/" + id}>
@@ -166,14 +166,7 @@ export function EditRecipePage() {
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Save changes"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
-                    let recipeService = new RecipeService();
-                    recipeService.deleteRecipe(id).then(res => {
-                        if (!res.ok) {
-                            alert("Something went wrong!");
-                        } else {
-                            alert("Deleted!");
-                        }
-                    })
+                    recipeService.deleteRecipe(id).then(() => { }, () => { })
                 }} >Delete recipe</button>
                 <input type="text" hidden={true} readOnly value={id} name='recipe_id' />
 

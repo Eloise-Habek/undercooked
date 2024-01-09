@@ -1,43 +1,31 @@
-import { useEffect, useState } from "react";
-import AdminService from "../services/AdminService";
+import { useEffect, useMemo, useState } from "react";
 import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
 import secureLocalStorage from 'react-secure-storage';
 import "../styles/adminpage.css"
+import AdminService from "../services/AdminService";
 
 export function AdminPage() {
     const [users, setUsers] = useState([]); // stanje funkcije -> analog atributa klase
+    const [refresh, setRefresh] = useState(0);
     let { id } = useParams(); // korištenje /:id
     const navigate = useNavigate(); //omogućuje preusmjeravanje na drugu rutu
+    const adminService = useMemo(() => new AdminService(), [])
 
     // funkcija koja se učitava pri prvom učitavanju komponente i pri update-u
     useEffect(() => {
-        // ako server ne pošalje 200 OK onda navigacija na home
-        const handleErrors = response => {
-            if (!response.ok) {
-                navigate("/");
-            }
-            return response;
-        }
-        // ako server ne pošalje 200 OK onda navigacija na admin
-        const handleErrors2 = response => {
-            if (!response.ok) {
-                navigate("/admin");
-            }
-            return response;
-        }
         // ako  nismo ulogirani (ne postoji log in token) onda navigacija na login
         if (secureLocalStorage.getItem("logInToken") != null) {
             // ako ne koristimo parametar /:id
             // šalji request na server za sve korisnike i promijeni stanje funkcije da sadrži server response
             if (id === undefined) {
-                AdminService.getUsers().then(handleErrors).then(res => res.json()).then(d => setUsers(d));
+                adminService.getUsers().then(d => setUsers(d), () => { navigate("/"); });
             } else { // inače šalji request za dobiti korisnika po id-u i promijeni stanje funkcije da sadrži server response
-                AdminService.getUserById(id).then(handleErrors2).then(res => res.json()).then(d => setUsers([d]));
+                adminService.getUserById(id).then(d => setUsers([d]), () => { navigate("/admin"); });
             }
         } else {
             navigate("/login");
         }
-    }, [id, navigate]); // variable o kojima funkcija ovisi (bitno da react zna kada ponovno učitati komponentu)
+    }, [id, navigate, adminService, refresh]); // variable o kojima funkcija ovisi (bitno da react zna kada ponovno učitati komponentu)
 
     return (
         <div>
@@ -76,9 +64,21 @@ export function AdminPage() {
                                         <td>{user.email}</td>
                                         <td>{user.name}</td>
                                         <td>{user.surname}</td>
-                                        <td><button className='btn btn-info' onClick={() => { AdminService.removeUser(user.id).then(() => { window.location.reload(false) }) }}>Remove</button></td>
+                                        <td><button className='btn btn-info'
+                                            onClick={() => {
+                                                adminService.removeUser(user.id)
+                                                .then(() => { setRefresh(refresh + 1) }, () => { setRefresh(refresh + 1) })
+                                            }}>
+                                            Remove
+                                        </button></td>
                                         <td>{user.admin.toString()}</td>
-                                        <td><button className='btn btn-info' onClick={() => { AdminService.setAdmin(user.id, !user.admin).then(() => { window.location.reload(false) }) }}>Change</button></td>
+                                        <td><button className='btn btn-info'
+                                            onClick={() => {
+                                                adminService.setAdmin(user.id, !user.admin)
+                                                .then(() => { setRefresh(refresh + 1) }, () => { setRefresh(refresh + 1) })
+                                            }}>
+                                            Change
+                                        </button></td>
                                     </tr>)
                             }
                         </tbody>

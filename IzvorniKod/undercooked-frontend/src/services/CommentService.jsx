@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
+import { myFetch } from "../functions/myFetch";
 
 const URL = "/api/recipes/";
 
@@ -11,7 +12,7 @@ class CommentService {
 
     }
     postComment(id, text) {
-        return fetch(URL + id + "/comments", {
+        return myFetch(URL + id + "/comments", {
             method: "POST",
             mode: "cors",
             headers: {
@@ -19,10 +20,10 @@ class CommentService {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             },
             body: JSON.stringify({ "text": text })
-        });
+        }, true);
     }
     editComment(id, comment_id, text) {
-        return fetch(URL + id + "/comments/" + comment_id, {
+        return myFetch(URL + id + "/comments/" + comment_id, {
             method: "PUT",
             mode: "cors",
             headers: {
@@ -30,28 +31,22 @@ class CommentService {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             },
             body: JSON.stringify({ "text": text })
-        });
+        }, true);
     }
     deleteComment(id, comment_id) {
-        return fetch(URL + id + "/comments/" + comment_id, {
+        return myFetch(URL + id + "/comments/" + comment_id, {
             method: "DELETE",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
     async postCommentAction({ request }) {
         const data = await request.formData();
         //console.log(data.get("recipe_id"), data.get("text"));
         return this.postComment(data.get("recipe_id"), data.get("text"))
-            .then(res => {
-                if (res.ok) {
-                    alert("Posted!");
-                } else {
-                    alert("Something went wrong!");
-                }
-            })
+            .then(() => { }, () => { })
             .then(() => {
                 return redirect("/recipe/" + data.get("recipe_id"))
             })
@@ -65,13 +60,7 @@ class CommentService {
         const data = await request.formData();
         console.log(data.get("recipe_id"), data.get("comment_id"), data.get("text"));
         this.editComment(data.get("recipe_id"), data.get("comment_id"), data.get("text"))
-            .then(res => {
-                if (res.ok) {
-                    alert("Changed!");
-                } else {
-                    alert("Something went wrong!");
-                }
-            })
+            .then(() => { }, () => { })
         // .then(() => {
         //     window.location.reload(false)
         // })

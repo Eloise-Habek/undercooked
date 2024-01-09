@@ -21,7 +21,7 @@ export function CommentBox({ recipe_id, setRefresh }) {
 
           </textarea>
         </div>
-        <input hidden type="text" name="recipe_id" value={recipe_id} />
+        <input hidden type="text" name="recipe_id" value={recipe_id} readOnly />
         <button type="submit">Post comment</button>
       </Form>
     </div>

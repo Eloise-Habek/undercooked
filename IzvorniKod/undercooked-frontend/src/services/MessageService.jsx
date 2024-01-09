@@ -10,16 +10,16 @@ class MessageService {
         this.sendAction = this.sendAction.bind(this);
     }
     getMessages() {
-        return fetch(URL + "/getMessages", {
+        return myFetch(URL + "/getMessages", {
             method: "GET",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        })
+        }, true)
     }
     sendMessage(message) {
-        return fetch(URL, {
+        return myFetch(URL, {
             method: "POST",
             mode: "cors",
             headers: {
@@ -27,16 +27,16 @@ class MessageService {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             },
             body: JSON.stringify(message)
-        });
+        }, true);
     }
     setRead(id) {
-        return fetch(URL + "/read/" + id.toString(), {
+        return myFetch(URL + "/read/" + id.toString(), {
             method: "POST",
             mode: "cors",
             headers: {
                 "Authorization": secureLocalStorage.getItem("logInToken")
             }
-        });
+        }, true);
     }
     getUnread() {
         return myFetch(URL + "/getUnread", {
@@ -55,12 +55,7 @@ class MessageService {
             "sender": secureLocalStorage.getItem("username"),
             "receiver": data.get("receiver")
         }
-        this.sendMessage(mess).then(res => {
-            if (!res.ok) {
-                alert("something went wrong");
-            }
-        })
-        return null;
+        return this.sendMessage(mess).then(() => { }, () => { }).then(() => null);
     }
 }
 

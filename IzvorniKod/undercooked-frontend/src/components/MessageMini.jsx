@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import classes from "../styles/message/message-mini.module.css"
 import { SendMessageBox } from "./SendMessageBox";
 import MessageService from "../services/MessageService";
@@ -7,7 +7,8 @@ import { NavLink } from "react-router-dom";
 export function MessageMini({ details, isReceiver }) {
     const [expand, setExpand] = useState(0);
     const [reply, setReply] = useState(0);
-    const messageService = new MessageService();
+    const messageService = useMemo(() => new MessageService(), []);
+
     if (!expand) {
         return (
             <div className={classes.wrapper}>
@@ -18,7 +19,7 @@ export function MessageMini({ details, isReceiver }) {
                         {/* <div>{"From: " + details.sender + " To: " + details.receiver}</div> */}
                         <div>{details.sender}</div>
                         <div>
-                            {!isReceiver && details.read ? <i class="fa-solid fa-check"></i> : null}
+                            {!isReceiver && details.read ? <i className="fa-solid fa-check"></i> : null}
                         </div>
                     </div>
                     <div className={classes.message_text}>
@@ -33,7 +34,7 @@ export function MessageMini({ details, isReceiver }) {
                         onClick={() => {
                             setExpand(1);
                             if (isReceiver) {
-                                messageService.setRead(details.id);
+                                messageService.setRead(details.id).then(() => { }, () => { });
                             }
                         }}
                     >
@@ -59,7 +60,7 @@ export function MessageMini({ details, isReceiver }) {
                 {details.text}
             </div>
             <div className={classes.message_text}>
-                {!isReceiver && details.read ? <i class="fa-solid fa-check"></i> : null}
+                {!isReceiver && details.read ? <i className="fa-solid fa-check"></i> : null}
             </div>
 
             {isReceiver ? <div className={classes.btns_wrapper}><button onClick={() => {

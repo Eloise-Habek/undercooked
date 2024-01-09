@@ -2,19 +2,20 @@ import { PageNav } from "../components/PageNav";
 import { RecipeMini } from "../components/RecipeMini";
 import { Footer } from "./wrapper/Footer";
 import classes from "../styles/home/home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import RecipeService from "../services/RecipeService";
 import { useParams } from "react-router-dom";
 
 export function SavedRecipes() {
     const [recipeArray, setRecipeArray] = useState([]);
     let { user } = useParams();
+    const recipeService = useMemo(() => new RecipeService(), [])
+
     useEffect(() => {
-        let recipeService = new RecipeService();
-        recipeService.getAllSaved(user).then(res => res.json()).then(res => {
+        recipeService.getAllSaved(user).then(res => {
             setRecipeArray(res.map((e) => <RecipeMini details={e} />))
-        });
-    })
+        }, () => { });
+    }, [recipeService, user])
     return (
         <>
             {/* <div className="main_div">
