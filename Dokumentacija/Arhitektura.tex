@@ -55,7 +55,7 @@
 			 \subsection{Opis tablica}
 			 
  
-				 \textbf{Korisnik} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: Korisničko ime, lozinku, ime, prezime, broj mobitela korisnika, razinu ovlasti korisnika i e-mail korisnika. Ovaj entitet u vezi je \textit{One-to-Many} s entitetima Recept, Komentar i Ocjena te je s entitetom poruka u ulozi primatelj i pošiljatelj isto u \textit{One-to-Many} vezi, sve preko ID-a korisnika.
+				 \textbf{Korisnik} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: Korisničko ime, lozinku, ime, prezime, razinu ovlasti korisnika i e-mail korisnika. Ovaj entitet u vezi je \textit{One-to-Many} s entitetima Recept, Komentar i Ocjena te je s entitetom poruka u ulozi primatelj i pošiljatelj isto u \textit{One-to-Many} vezi, sve preko ID-a korisnika.
 				 
 				 
 				 \begin{longtblr}[
@@ -72,9 +72,24 @@
 						 Korisničko ime & VARCHAR	&  korisničko ime	\\ \hline 
 						 Ime & VARCHAR	& ime korisnika\\ \hline 
 					 Prezime & VARCHAR &  prezime korisnika \\ \hline 
-						 Broj mobitela & VARCHAR	& telefonski broj korisnika\\ \hline 
 						 Razina Ovlasti & VARCHAR &  razina ovlasti korisnika \\ \hline 
 					 Email & VARCHAR & e-mail adresa korisnika 	\\ \hline 
+				 \end{longtblr}
+				 
+				 \textbf{Pretplata} Ovaj entitet sadrži informacije vezane za praćenje korisnika. Njegovi atributi su: ID korisnika kojeg se prati (praćenik), ID pratitelja i ID pretplate. Entitet je u \textit{Many-to-Many} vezi s korisnikom preko ID-a pratitelja i praćenika.
+				 
+				 \begin{longtblr}[
+				 	label=none,
+				 	entry=none
+				 	]{
+				 		width = \textwidth,
+				 		colspec={|X[8,l]|X[8, l]|X[18, l]|},
+				 		rowhead=1
+				 	}
+				 		\hline \SetCell[c=3]{c}{\textbf{Pretplata}}	 \\ \hline[3pt]
+				 		\SetCell{LightGreen} IDpretplata	& INT &  jedinstveni identifikator pretplate \\ \hline 
+				 		ID pratitelj & INT	&  ID korisnika koji prati	\\ \hline 
+				 		ID praćenik & INT	&  ID korisnika kojeg se prati	\\ \hline 
 				 \end{longtblr}
 				 
 				 \textbf{Recept} Ovaj entitet sadržava sve važne informacije o receptu. Sadrži atribute: ID recepta, naziv recepta, vrijeme pripreme, postupak pripreme, opis recepta, sliku recepta, datum recepta  i vrijeme objave recepta i prosječnu ocjenu recepta. Recept je u vezi \textit{Many-to-One} s korisnikom koji ga je objavio, u vezi \textit{One-to-Many} s ocjenom, sastojkom u receptu i komentarom preko ID-a recepta te u \textit{Many-to-Many} s oznakom recepta preko ID-a oznake.
@@ -207,10 +222,10 @@
 			 
 			 \subsection{Dijagram baze podataka}
 			 \begin{figure}[H]
-				 \includegraphics[scale=0.10]{slike/ER dijagram baze podataka.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				 \includegraphics[scale=0.50]{slike/dijagram_baze_v2.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 				 \centering
-				 \caption{ER dijagram baze podataka}
-				 \label{fig:ER dijagram baze podataka}
+				 \caption{Relacijski dijagram baze podataka}
+				 \label{fig:Relacijski dijagram baze podataka}
 			 \end{figure}
 		 
 			 \eject
