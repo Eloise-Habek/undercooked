@@ -32,7 +32,8 @@ public class FollowersService {
 		Person f1 = personRepo.findByUsername(following).get(); // osoba koju se prati
 		Person f2 = personRepo.findByUsername(follower).get(); // osoba koja prati
 		if (followersRepo.findAll().contains(new Followers(f2, f1))) {
-			followersRepo.delete(new Followers(f2, f1));
+			Followers f = followersRepo.findByFromAndTo(f2, f1).get();
+			followersRepo.deleteById(f.getId());
 		}
 	}
 
