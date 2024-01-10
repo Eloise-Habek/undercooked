@@ -27,6 +27,7 @@ public class FeedController {
 		for(Person p : following) {
 			recipes.addAll(p.getRecipes());
 		}
+		recipes.sort((r1, r2) -> Long.compare(r2.getId(), r1.getId()));
 		return recipes;
 	}
 	
