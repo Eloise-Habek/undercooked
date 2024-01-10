@@ -37,10 +37,10 @@ public final class Recipe implements IRecipeMinimal {
 	@OrderColumn
 	private List<IngredientWithAmount> ingredients;
 
-	@OneToMany(mappedBy = StarRating.recipe_field_name)
+	@OneToMany(mappedBy = StarRating.recipe_field_name, cascade = CascadeType.REMOVE)
 	private Collection<StarRating> ratings;
 
-	@OneToMany(mappedBy = Comment.recipe_field_name)
+	@OneToMany(mappedBy = Comment.recipe_field_name, cascade = CascadeType.REMOVE)
 	@OrderBy("postedAt")
 	private List<Comment> comments;
 

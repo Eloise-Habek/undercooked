@@ -33,11 +33,15 @@ public final class Person implements IPersonPublic, IPersonMinimal {
 	/**
 	 * Recipes that this person authored.
 	 */
-	@OneToMany(mappedBy = Recipe.author_field_name)
+	@OneToMany(mappedBy = Recipe.author_field_name, cascade = CascadeType.REMOVE)
 	private List<Recipe> recipes;
 
-	@OneToMany(mappedBy = StarRating.person_field_name)
+	@OneToMany(mappedBy = StarRating.person_field_name, cascade = CascadeType.REMOVE)
 	private Collection<StarRating> ratings;
+
+	// added so removing the person will also remove all their comments.
+	@OneToMany(mappedBy = Comment.author_field_name, cascade = CascadeType.REMOVE)
+	private Collection<Comment> comments;
 
 	/**
 	 * Recipes that this person has saved for later.

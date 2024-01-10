@@ -64,10 +64,9 @@ public class PersonService {
 		return PersonRepo.save(newPerson);
 	}
 
-	public Person deletePerson(long PersonId) {
+	public void deletePerson(long PersonId) {
 		Person Person = fetch(PersonId);
 		PersonRepo.delete(Person);
-		return Person;
 	}
 
 	public Person fromPrincipal(Principal principal) {

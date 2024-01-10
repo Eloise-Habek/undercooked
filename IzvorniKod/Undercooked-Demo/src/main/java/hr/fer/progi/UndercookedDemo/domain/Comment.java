@@ -14,6 +14,7 @@ import java.util.Date;
 public class Comment implements Comparable<Comment> {
 
 	public static final String recipe_field_name = "recipe";
+	public static final String author_field_name = "author";
 
 	@Id
 	@GeneratedValue

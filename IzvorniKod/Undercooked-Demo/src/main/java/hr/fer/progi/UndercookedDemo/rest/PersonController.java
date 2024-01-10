@@ -27,8 +27,8 @@ public class PersonController {
 
 
 	@DeleteMapping("/{id}")
-	public Person deletePerson(@PathVariable("id") long PersonId) {
-		return personService.deletePerson(PersonId);
+	public void deletePerson(@PathVariable("id") long PersonId) {
+		personService.deletePerson(PersonId);
 	}
 
 	@GetMapping("/{id}/admin")
