@@ -54,6 +54,7 @@ export function Recipe() {
 
 
     const [refresh, setRefresh] = useState(0);
+    const [category, setCategory] = useState("");
 
     setInterval(() => {
         if (refresh === -1) {
@@ -85,6 +86,7 @@ export function Recipe() {
             </li>));
             recipeService.getImage(id).then(data => URL.createObjectURL(data), () => null)
                 .then(data => setImage(data))
+            setCategory(res.category)
         }, () => { });
     }, [id, refresh, recipeService])
     return (
@@ -144,6 +146,15 @@ export function Recipe() {
                 <div className={classes.description}>
                     <h1>Preparation:</h1>
                     {prepDesc}
+                </div>
+                <div className={classes.ingredients}>
+                    <h2>Category:</h2>
+                    {category}
+                    <h2>Tags:</h2>
+                    <ul>
+                        <li>vegetarijansko</li>
+                        <li>bezglutensko</li>
+                    </ul>
                 </div>
 
                 <button onClick={() => {

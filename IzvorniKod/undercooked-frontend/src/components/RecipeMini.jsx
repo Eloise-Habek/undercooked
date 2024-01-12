@@ -44,9 +44,7 @@ export function RecipeMini({ details }) {
                     <div>
                         <div className={classes.categories}>
                             <div className={classes.categories_label}>Categories:</div>
-                            <div className={classes.category_tag}>Cake</div>
-                            <div className={classes.category_tag}>Pizza</div>
-                            <div className={classes.category_tag}>Drinks</div>
+                            <div className={classes.category_tag}>{details.category}</div>
                         </div>
                     </div>
                 </button>

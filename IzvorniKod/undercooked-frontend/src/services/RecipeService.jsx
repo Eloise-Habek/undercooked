@@ -23,6 +23,7 @@ class RecipeService {
             "preparationTime": "",
             "description": "",
             "preparationDescription": "",
+            "category": "",
             "ingredients": []
         }
         let ingredient = {
@@ -41,6 +42,7 @@ class RecipeService {
 
         input.description = data.get("description");
         input.preparationDescription = data.get("prep_desc");
+        input.category = data.get("category")
 
         let iter = data.entries();
         let result = iter.next();
@@ -231,7 +233,7 @@ class RecipeService {
     async editAction({ request }) {
         const data = await request.formData();
         let recipe = this.formatInput(data);
-        let recipe_id = data.get("recipe_id")
+        let recipe_id = data.get("recipe_id");
         return this.updateRecipe(recipe, recipe_id).then(() => {
             this.pullInputData(recipe_id).then(() => { }, () => { })
             return redirect("/recipe/" + recipe_id);

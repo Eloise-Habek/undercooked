@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import classes from "../../styles/recipe/recipe.module.css"
 import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
 import { Form } from 'react-router-dom'
+import CategoryService from "../../services/CategoryService";
 
 function getOption(index, setInputs, inputs) {
     return <div>
@@ -30,13 +31,19 @@ export function PostRecipePage() {
     let { id } = useParams();
     const [image, setImage] = useState(null);
     let [inputs, setInputs] = useState([getOption(0, null, null)]);
+    const [catList, setCatList] = useState([]);
+    const categoryService = useMemo(() => new CategoryService(), []);
 
     useEffect(() => {
+        var i = 0;
+        setCatList(categoryService.getCategories().map((e) => {
+            return <option key={i++} value={e}>{e}</option>
+        }))
         let hour_input = document.getElementById("hour_input");
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor])
+    }, [id, setInputs, setAuthor, categoryService])
     return (
         <>
             <Form className={classes.wrapper} method={"post"} action={"/recipe/post"}>
@@ -112,6 +119,17 @@ export function PostRecipePage() {
                     <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
 
                     </textarea>
+                </div>
+                <div className={classes.ingredients}>
+                    <h2>Category:</h2>
+                    <select name="category">
+                        {catList}
+                    </select>
+                    <h2>Tags:</h2>
+                    <ul>
+                        <li>vegetarijansko</li>
+                        <li>bezglutensko</li>
+                    </ul>
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Post recipe"}</button>
 

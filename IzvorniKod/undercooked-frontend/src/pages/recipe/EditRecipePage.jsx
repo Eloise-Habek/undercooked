@@ -4,6 +4,7 @@ import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
 import RecipeService from "../../services/RecipeService";
 import { Form } from 'react-router-dom'
+import CategoryService from "../../services/CategoryService";
 
 function parseTime(time) {
     time = time.substring(2);
@@ -58,8 +59,14 @@ export function EditRecipePage() {
     let [inputs, setInputs] = useState([getOption(0, null, null)]);
 
     const recipeService = useMemo(() => new RecipeService(), []);
+    const [catList, setCatList] = useState([]);
+    const categoryService = useMemo(() => new CategoryService(), []);
 
     useEffect(() => {
+        var i = 0;
+        setCatList(categoryService.getCategories().map((e) => {
+            return <option key={i++} value={e}>{e}</option>
+        }))
         recipeService.getRecipe(id).then(res => {
             document.getElementById('title').value = res.name;
             document.getElementById('description').value = res.description;
@@ -67,7 +74,7 @@ export function EditRecipePage() {
             document.getElementById('hour_input').value = hours;
             document.getElementById('mins_input').value = mins;
             document.getElementById('prep_desc').value = res.preparationDescription;
-
+            document.getElementById('category').value = res.category;
             let temp = []
             f(temp, setInputs, 0, res.ingredients.length, res.ingredients);
             setInputs(temp);
@@ -88,7 +95,7 @@ export function EditRecipePage() {
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor, recipeService])
+    }, [id, setInputs, setAuthor, recipeService, categoryService])
     return (
         <>
             <Form className={classes.wrapper} method={"put"} action={"/recipe/edit/" + id}>
@@ -163,6 +170,17 @@ export function EditRecipePage() {
                     <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
 
                     </textarea>
+                </div>
+                <div className={classes.ingredients}>
+                    <h2>Category:</h2>
+                    <select id="category" name="category">
+                        {catList}
+                    </select>
+                    <h2>Tags:</h2>
+                    <ul>
+                        <li>vegetarijansko</li>
+                        <li>bezglutensko</li>
+                    </ul>
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Save changes"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
