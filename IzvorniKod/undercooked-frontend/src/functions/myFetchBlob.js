@@ -24,7 +24,7 @@ async function tokenValid() {
     }
     secureLocalStorage.removeItem("logInToken");
     secureLocalStorage.removeItem("isAdmin");
-    alert("Login token expired");
+    //alert("Login token expired");
     return await Promise.reject("Token expired!");
 }
 

@@ -19,7 +19,7 @@ import { Inbox } from "./pages/Inbox";
 import MessageService from "./services/MessageService";
 import RecipeService from "./services/RecipeService";
 
-import { Search } from "./pages/Search";
+import { Search } from "./pages/search/Search";
 import { PleaseLogin } from "./pages/PleaseLogin";
 import CommentService from "./services/CommentService";
 import { Recipe } from "./pages/recipe/Recipe";
