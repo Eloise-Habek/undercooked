@@ -1,0 +1,95 @@
+package hr.fer.progi.UndercookedDemo.service;
+
+import hr.fer.progi.UndercookedDemo.dao.RecipeRepository;
+import hr.fer.progi.UndercookedDemo.domain.Recipe;
+import hr.fer.progi.UndercookedDemo.domain.RecipeCategory;
+import org.springframework.data.domain.Example;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+@Service
+public class SearchService {
+
+	private final RecipeRepository recipeRepository;
+
+	public SearchService(RecipeRepository recipeRepository) {
+		this.recipeRepository = recipeRepository;
+	}
+
+	public List<Recipe> findAll(RecipeCategory category, List<String> tags) {
+		var probe = new Recipe();
+		if (category != null) probe.setCategory(category);
+		var example = Example.of(probe);
+
+		return recipeRepository.findAll(example);
+	}
+
+	public List<Recipe> searchByKeywords(String[] keywords, RecipeCategory category, List<String> tags) {
+		// filter out the bad ones, and give rankings to the good ones
+		Map<Recipe, MatchWeightCalculator> recipes = new HashMap<>();
+
+		for (var recipe : findAll(category, tags)) {
+			recipes.put(recipe, new MatchWeightCalculator());
+		}
+
+		var locale = new Locale("hr", "HR");
+		for (int i = 0; i < keywords.length; i++) {
+			keywords[i] = keywords[i].toLowerCase(locale);
+		}
+
+		for (var e : recipes.entrySet()) {
+			var r = e.getKey();
+			var c = e.getValue();
+
+			var name = r.getName().toLowerCase();
+			var description = r.getDescription().toLowerCase();
+
+			for (var keyword : keywords) {
+				if (name.contains(keyword)) c.increaseNameMatches();
+
+				if (description.contains(keyword)) c.increaseDescriptionMatches();
+			}
+		}
+
+		for (var calc : recipes.values()) {
+			calc.calculateSimilarity();
+		}
+
+		return recipes.entrySet().stream().filter(e -> e.getValue().getSimilarity() > 0).sorted((l, r) -> Double.compare(r.getValue().getSimilarity(), l.getValue().getSimilarity())) // inverse sort so the first entries have the highest match similarity.
+				.map(Map.Entry::getKey).toList();
+	}
+
+	public static class MatchWeightCalculator {
+		private static final double name_weight = 4;
+		private static final double description_weight = 1;
+
+		private int nameMatches = 0;
+		private int descriptionMatches = 0;
+
+		public void increaseNameMatches() {
+			nameMatches++;
+		}
+
+		public void increaseDescriptionMatches() {
+			descriptionMatches++;
+		}
+
+		public static double pow(double d) {
+			return 2 - Math.pow(2, 1 - d);
+		}
+
+		public void calculateSimilarity() {
+			similarity = pow(nameMatches) * name_weight + pow(descriptionMatches) * description_weight;
+		}
+
+		private double similarity;
+
+		public double getSimilarity() {
+			return similarity;
+		}
+	}
+}

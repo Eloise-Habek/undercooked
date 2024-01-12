@@ -1,0 +1,74 @@
+@api = http://localhost:8080/api
+
+### Samo ime
+GET {{api}}/recipes/search?q=kruh
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Ime i opis, "+"
+GET {{api}}/recipes/search?q=slatki+kruh
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Ime i opis, url-encoded razmak
+GET {{api}}/recipes/search?q=slatki%20kruh
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+
+### Ime, opis i katagorija
+GET {{api}}/recipes/search?q=slatki+kruh&category=GlavnoJelo
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Kriva kategorija
+GET {{api}}/recipes/search?q=slatki+kruh&category=Desert
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length == 0);
+%}
+
+### Tagovi // NIJE JOŠ IMPLEMENTIRANO!!
+GET {{api}}/recipes/search?q=kruh&tags=BezGlutena,Vegansko
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Tagovi, drukčija sintaksa
+GET {{api}}/recipes/search?q=kruh&tags=BezGlutena&tags=Vegansko
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Prazni rezultati
+GET {{api}}/recipes/search?q=nePostoji
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length == 0);
+%}
+
+### Samo kategorija
+GET {{api}}/recipes/search?category=GlavnoJelo
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
