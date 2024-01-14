@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RateRecepieTest {
+public class RateRecipeTest {
 
 	private String baseUrl = "http://localhost:3000";
 	private String validUname = "pero";
