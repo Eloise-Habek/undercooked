@@ -143,6 +143,10 @@ public final class Recipe implements IRecipeMinimal {
 		return comments;
 	}
 
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	@JsonIgnore
 	public ImageData getImage() {
 		return image;

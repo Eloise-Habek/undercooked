@@ -29,6 +29,8 @@ public class RecipeService {
 	public Recipe createRecipe(Recipe recipe, Person author) {
 		recipe.setRatings(Collections.emptyList());
 		recipe.setAuthor(author);
+		recipe.setRatings(Collections.emptyList());
+		recipe.setComments(Collections.emptyList());
 
 		for (var ingredientWithAmount : recipe.getIngredients()) {
 			ingredientService.fillInformation(ingredientWithAmount.getIngredient());
