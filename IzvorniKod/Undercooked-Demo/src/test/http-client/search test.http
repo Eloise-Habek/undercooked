@@ -41,7 +41,7 @@ GET {{api}}/recipes/search?q=slatki+kruh&category=Desert
     client.assert(response.body.length == 0);
 %}
 
-### Tagovi // NIJE JOŠ IMPLEMENTIRANO!!
+### Tagovi
 GET {{api}}/recipes/search?q=kruh&tags=BezGlutena,Vegansko
 
 > {%
@@ -59,6 +59,14 @@ GET {{api}}/recipes/search?q=kruh&tags=BezGlutena&tags=Vegansko
 
 ### Prazni rezultati
 GET {{api}}/recipes/search?q=nePostoji
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length == 0);
+%}
+
+### Prazni rezultati - nekorišteni tagovi
+GET {{api}}/recipes/search?tags=Posno
 
 > {%
     client.assert(response.status == 200);

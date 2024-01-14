@@ -4,12 +4,13 @@ import hr.fer.progi.UndercookedDemo.dao.RecipeRepository;
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.RecipeCategory;
+import hr.fer.progi.UndercookedDemo.domain.RecipeTag;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -60,6 +61,7 @@ public class RecipeService {
 		existing.setPreparationDescription(requestRecipe.getPreparationDescription());
 		existing.setIngredients(requestRecipe.getIngredients());
 		existing.setCategory(requestRecipe.getCategory());
+		existing.setTags(requestRecipe.getTags());
 		repo.save(existing);
 		return existing;
 	}
@@ -73,6 +75,7 @@ public class RecipeService {
 		recipe.setPreparationDescription("1. stavi sastojke\n2. ???\n3. Profit");
 		recipe.setIngredients(new ArrayList<>());
 		recipe.setCategory(RecipeCategory.GlavnoJelo);
+		recipe.setTags(new HashSet<>(List.of(RecipeTag.Vegetarijansko, RecipeTag.Vegansko, RecipeTag.BezGlutena)));
 		createRecipe(recipe, pero);
 	}
 }

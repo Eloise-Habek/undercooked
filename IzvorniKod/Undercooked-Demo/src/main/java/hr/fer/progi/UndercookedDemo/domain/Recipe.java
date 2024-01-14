@@ -7,9 +7,7 @@ import hr.fer.progi.UndercookedDemo.dto.IRecipeMinimal;
 import jakarta.persistence.*;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public final class Recipe implements IRecipeMinimal {
@@ -32,6 +30,9 @@ public final class Recipe implements IRecipeMinimal {
 	private Person author;
 
 	private RecipeCategory category;
+
+	@ElementCollection
+	private Set<RecipeTag> tags = Collections.emptySet();
 
 	@ElementCollection
 	@OrderColumn
@@ -102,6 +103,19 @@ public final class Recipe implements IRecipeMinimal {
 
 	public void setCategory(RecipeCategory category) {
 		this.category = category;
+	}
+
+	public Set<RecipeTag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<RecipeTag> tags) {
+		if (tags == null) {
+			this.tags = Collections.emptySet();
+			return;
+		}
+
+		this.tags = tags;
 	}
 
 	public List<IngredientWithAmount> getIngredients() {
