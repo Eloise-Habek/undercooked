@@ -20,6 +20,7 @@ export function EditComment({ details, recipe_id, setRefresh }) {
     <Form className={classes.wrapper} method="put" action={"/recipe/" + recipe_id + "/comment/" + details.id}
       onSubmit={
         () => {
+          setEdit(!edit)
           setRefresh(-1);
         }
       }>
@@ -43,11 +44,14 @@ export function EditComment({ details, recipe_id, setRefresh }) {
       <button type="submit">Save changes</button>
       <button type="button" onClick={() => {
         commentService.deleteComment(recipe_id, details.id).then(() => { }, () => { })
-        if (setRefresh === undefined) {
-          window.location.reload(false)
-        } else {
-          setRefresh(-1);
-        }
+          .then(() => {
+            if (setRefresh === undefined) {
+              window.location.reload(false)
+            } else {
+              setRefresh(-1);
+            }
+          })
+
       }}>Delete</button>
 
     </Form>
