@@ -1,4 +1,4 @@
-package hr.fer.progi.UndercookedDemo;
+package hr.fer.progi.UndercookedDemo.Selenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

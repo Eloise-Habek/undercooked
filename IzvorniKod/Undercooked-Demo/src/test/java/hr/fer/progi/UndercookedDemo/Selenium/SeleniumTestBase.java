@@ -1,4 +1,4 @@
-package hr.fer.progi.UndercookedDemo;
+package hr.fer.progi.UndercookedDemo.Selenium;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

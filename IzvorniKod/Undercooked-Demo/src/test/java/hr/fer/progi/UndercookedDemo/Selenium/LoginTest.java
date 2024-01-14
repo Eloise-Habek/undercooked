@@ -1,4 +1,4 @@
-package hr.fer.progi.UndercookedDemo;
+package hr.fer.progi.UndercookedDemo.Selenium;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
