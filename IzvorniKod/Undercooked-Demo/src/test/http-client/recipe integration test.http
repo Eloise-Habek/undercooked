@@ -279,6 +279,7 @@ Content-Type: application/json
   "preparationTime": "PT3H14M",
   "description": "klasičnu krug sa r=1",
   "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
+  "category" : "Desert",
   "ingredients": [
     {
       "amount": 1,
@@ -292,6 +293,7 @@ Content-Type: application/json
 > {%
     client.assert(response.body.id == client.global.get("recipe_id"));
     client.assert(response.body.ingredients[0].amount == 1);
+    client.assert(response.body.category == "Desert");
 %}
 
 ### Provjeri je li se recept zaista updateao

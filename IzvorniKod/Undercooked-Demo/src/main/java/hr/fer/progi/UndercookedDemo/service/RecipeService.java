@@ -59,6 +59,7 @@ public class RecipeService {
 		existing.setDescription(requestRecipe.getDescription());
 		existing.setPreparationDescription(requestRecipe.getPreparationDescription());
 		existing.setIngredients(requestRecipe.getIngredients());
+		existing.setCategory(requestRecipe.getCategory());
 		repo.save(existing);
 		return existing;
 	}
