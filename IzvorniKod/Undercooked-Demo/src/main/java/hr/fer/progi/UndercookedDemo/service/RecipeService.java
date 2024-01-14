@@ -64,6 +64,7 @@ public class RecipeService {
 		existing.setIngredients(requestRecipe.getIngredients());
 		existing.setCategory(requestRecipe.getCategory());
 		existing.setTags(requestRecipe.getTags());
+		existing.setYoutubeEmbedId(requestRecipe.getYoutubeEmbedId());
 		repo.save(existing);
 		return existing;
 	}
@@ -78,6 +79,7 @@ public class RecipeService {
 		recipe.setIngredients(new ArrayList<>());
 		recipe.setCategory(RecipeCategory.GlavnoJelo);
 		recipe.setTags(new HashSet<>(List.of(RecipeTag.Vegetarijansko, RecipeTag.Vegansko, RecipeTag.BezGlutena)));
+		recipe.setYoutubeEmbedId("B7UmUX68KtE");
 		createRecipe(recipe, pero);
 	}
 }

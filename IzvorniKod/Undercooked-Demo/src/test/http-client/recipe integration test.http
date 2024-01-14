@@ -76,6 +76,7 @@ Content-Type: application/json
   "description": "neobičan bijeli kruh",
   "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
   "category": "GlavnoJelo",
+  "youtubeId": "wZ1gEDquuyQ",
   "ingredients": [
     {
       "amount": 250,

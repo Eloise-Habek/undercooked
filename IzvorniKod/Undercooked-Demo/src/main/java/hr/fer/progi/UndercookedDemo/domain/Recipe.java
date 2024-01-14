@@ -48,6 +48,8 @@ public final class Recipe implements IRecipeMinimal {
 	@Embedded
 	private ImageData image;
 
+	private String youtubeEmbedId;
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -155,6 +157,20 @@ public final class Recipe implements IRecipeMinimal {
 	@JsonIgnore
 	public void setImage(ImageData image) {
 		this.image = image;
+	}
+
+	public String getYoutubeEmbedId() {
+		return youtubeEmbedId;
+	}
+
+	public void setYoutubeEmbedId(String youtubeEmbedId) {
+		if (youtubeEmbedId != null) {
+			if (!youtubeEmbedId.matches("[0-9A-Za-z-_]{11}")) {
+				throw new IllegalArgumentException("Invalid youtube id: " + youtubeEmbedId);
+			}
+		}
+
+		this.youtubeEmbedId = youtubeEmbedId;
 	}
 
 	@Override
