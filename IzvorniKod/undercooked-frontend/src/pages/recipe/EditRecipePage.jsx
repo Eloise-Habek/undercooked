@@ -95,6 +95,7 @@ export function EditRecipePage() {
             document.getElementById('mins_input').value = mins;
             document.getElementById('prep_desc').value = res.preparationDescription;
             document.getElementById('category').value = res.category;
+            document.getElementById("youtube_id").value = res.youtubeEmbedId;
             let temp = []
             f(temp, setInputs, 0, res.ingredients.length, res.ingredients);
             setInputs(temp);
@@ -102,9 +103,12 @@ export function EditRecipePage() {
         }, () => { });
         recipeService.getRecipe(id).then(res => {
             for (var i = 0; i < res.ingredients.length; i++) {
-                document.getElementById('ingredient ' + i.toString()).value = res.ingredients[i].ingredient.name;
-                document.getElementById('ingredient ' + i.toString() + " amount").value = res.ingredients[i].amount;
-                document.getElementById('ingredient ' + i.toString() + " unitOfMeasure").value = res.ingredients[i].unitOfMeasure;
+                if (document.getElementById('ingredient ' + i.toString()) !== null) {
+                    document.getElementById('ingredient ' + i.toString()).value = res.ingredients[i].ingredient.name;
+                    document.getElementById('ingredient ' + i.toString() + " amount").value = res.ingredients[i].amount;
+                    document.getElementById('ingredient ' + i.toString() + " unitOfMeasure").value = res.ingredients[i].unitOfMeasure;
+                }
+
             }
 
         }, () => { });
@@ -190,6 +194,8 @@ export function EditRecipePage() {
                     <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
 
                     </textarea>
+                    <h1>Video:</h1>
+                    <input name="youtube_id" id="youtube_id" placeholder="Paste youtube video id"></input>
                 </div>
                 <div className={classes.ingredients}>
                     <h2>Category:</h2>

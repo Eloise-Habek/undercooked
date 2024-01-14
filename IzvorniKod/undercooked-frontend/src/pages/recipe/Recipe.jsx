@@ -7,6 +7,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { Footer } from "../wrapper/Footer";
 import RecipeService from "../../services/RecipeService";
 import secureLocalStorage from "react-secure-storage";
+import YoutubeEmbed from "../../components/YoutubeEmbed"
 
 function parseTime(time) {
     time = time.substring(2);
@@ -46,6 +47,7 @@ export function Recipe() {
     const [ingredients, setIngredients] = useState([]);
     const [prepDesc, setPrepDesc] = useState("");
     const [avgRating, setAvgRating] = useState(null);
+    const [embedId, setEmbedId] = useState("");
 
     let { id } = useParams();
     const recipeService = useMemo(() => new RecipeService(), []);
@@ -74,6 +76,7 @@ export function Recipe() {
             }))
             setPrepDesc(res.preparationDescription);
             setAvgRating(res.averageRating);
+            setEmbedId(res.youtubeEmbedId);
             var star_id = "stars-" + getMyRating(res.ratings).toString();
             if (star_id !== "stars-0") {
                 document.getElementById(star_id).checked = true;
@@ -146,6 +149,13 @@ export function Recipe() {
                 <div className={classes.description}>
                     <h1>Preparation:</h1>
                     {prepDesc}
+
+                    {embedId !== "" && embedId !== null && embedId !== undefined ?
+                        <>
+                            <h1>Video:</h1>
+                            <YoutubeEmbed embedId={embedId} />
+                        </>
+                        : null}
                 </div>
                 <div className={classes.ingredients}>
                     <h2>Category:</h2>

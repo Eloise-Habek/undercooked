@@ -142,6 +142,8 @@ export function PostRecipePage() {
                     <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
 
                     </textarea>
+                    <h1>Video:</h1>
+                    <input name="youtube_id" placeholder="Paste youtube video id"></input>
                 </div>
                 <div className={classes.ingredients}>
                     <h2>Category:</h2>

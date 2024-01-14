@@ -23,15 +23,9 @@ class RecipeService {
             "preparationTime": "",
             "description": "",
             "preparationDescription": "",
-            "category": "",
+            "category": null,
+            "youtubeEmbedId": null,
             "ingredients": []
-        }
-        let ingredient = {
-            "amount": null,
-            "unitOfMeasure": "",
-            "ingredient": {
-                "name": ""
-            }
         }
         input.name = data.get("title");
         if (data.get("time_h") === "0") {
@@ -42,39 +36,23 @@ class RecipeService {
 
         input.description = data.get("description");
         input.preparationDescription = data.get("prep_desc");
-        input.category = data.get("category")
-
-        let iter = data.entries();
-        let result = iter.next();
+        input.category = data.get("category");
+        input.youtubeEmbedId = data.get("youtube_id");
+        if (input.youtubeEmbedId === "") {
+            input.youtubeEmbedId = null;
+        }
         let i = 0;
-        let j = 0;
-        while (!result.done) {
-            let value = result.value;
-            if (i >= 5 && value[0] !== "prep_desc") {
-                if (j === 0) {
-                    ingredient.ingredient.name = value[1];
-                } else if (j === 1) {
-                    ingredient.amount = value[1];
-                } else if (j === 2) {
-                    ingredient.unitOfMeasure = value[1];
-                }
-                j++;
-                if (j === 3) {
-                    let ing = {
-                        "amount": ingredient.amount,
-                        "unitOfMeasure": ingredient.unitOfMeasure,
-                        "ingredient": {
-                            "name": ingredient.ingredient.name
-                        }
-                    }
-                    input.ingredients.push(ing);
-                    j = 0;
+        while (data.get("ingredient " + i.toString())) {
+            let ing = {
+                "amount": data.get("ingredient " + i.toString() + " amount"),
+                "unitOfMeasure": data.get("ingredient " + i.toString() + " unitOfMeasure"),
+                "ingredient": {
+                    "name": data.get("ingredient " + i.toString())
                 }
             }
-            i++
-            result = iter.next();
+            input.ingredients.push(ing);
+            i++;
         }
-
         return input;
     }
 
