@@ -5,7 +5,8 @@ import { NavLink, redirect, useParams } from "react-router-dom";
 import { Form } from 'react-router-dom'
 import CategoryService from "../../services/CategoryService";
 
-function getOption(index, setInputs, inputs) {
+function Option({ id, set }) {
+    var index = id;
     return <div>
         <input required placeholder='ingredient' type="text" name={"ingredient " + index.toString()} id={"ingredient " + index.toString()} />
         <input placeholder='amount' type="number" name={"ingredient " + index.toString() + " amount"} id={"ingredient " + index.toString() + " amount"} />
@@ -19,20 +20,42 @@ function getOption(index, setInputs, inputs) {
             <option value="Tbsp">Tablespoon</option>
             <option value="Tsp">Teaspoon</option>
         </select>
-        {inputs !== null ? <button onClick={() => {
-            setInputs(inputs);
-        }} type='button'>X</button> : null}
-
+        <button onClick={() => {
+            var elements = document.getElementById("ing_options").childNodes;
+            for (let i = id; i < elements.length - 1; i++) {
+                let e = elements[i].childNodes;
+                let nextE = elements[i + 1].childNodes;
+                e[0].value = nextE[0].value;
+                e[1].value = nextE[1].value;
+                e[2].value = nextE[2].value;
+            }
+            let a = []
+            let flag = false;
+            for (let i = 0; i < elements.length; i++) {
+                if (i !== id) {
+                    if (!flag) {
+                        a.push(<Option id={i} set={set} />)
+                    } else {
+                        a.push(<Option id={i - 1} set={set} />)
+                    }
+                } else {
+                    flag = true;
+                }
+            }
+            set([...a]);
+        }} type='button'>X</button>
     </div>
 }
+
 
 export function PostRecipePage() {
     const [author, setAuthor] = useState("");
     let { id } = useParams();
     const [image, setImage] = useState(null);
-    let [inputs, setInputs] = useState([getOption(0, null, null)]);
+
     const [catList, setCatList] = useState([]);
     const categoryService = useMemo(() => new CategoryService(), []);
+    const [inputs, setInputs] = useState([]);
 
     useEffect(() => {
         var i = 0;
@@ -104,11 +127,11 @@ export function PostRecipePage() {
                     </div>
                     <div className={classes.ingredients}>
                         <h2>Ingredients:</h2>
-                        <ul>{inputs}</ul>
+                        <ul id="ing_options">{inputs}</ul>
                         <button type='button' onClick={() => {
                             let inputs2 = [...inputs];
                             inputs2.push(
-                                getOption(inputs.length, setInputs, inputs)
+                                <Option id={inputs.length} set={setInputs} />
                             );
                             setInputs(inputs2);
                         }}>Add ingredient</button>
