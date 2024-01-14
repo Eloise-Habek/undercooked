@@ -126,12 +126,12 @@ public final class Recipe implements IRecipeMinimal {
 		this.ingredients = ingredients;
 	}
 
-	public void setRatings(Collection<StarRating> ratings) {
-		this.ratings = ratings;
-	}
-
 	public Collection<StarRating> getRatings() {
 		return ratings;
+	}
+
+	public void setRatings(Collection<StarRating> ratings) {
+		this.ratings = ratings;
 	}
 
 	public Double getAverageRating() {
