@@ -1,0 +1,15 @@
+@api = http://localhost:8080/api
+
+### tagovi/oznake
+GET {{api}}/recipes/tags
+
+> {%
+    client.assert(response.body.includes("Vegansko"));
+%}
+
+### kategorije
+GET {{api}}/recipes/categories
+
+> {%
+    client.assert(response.body.includes("Desert"));
+%}
