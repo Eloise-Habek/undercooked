@@ -5,6 +5,7 @@ import { NavLink, redirect, useParams } from "react-router-dom";
 import RecipeService from "../../services/RecipeService";
 import { Form } from 'react-router-dom'
 import CategoryService from "../../services/CategoryService";
+import TagService from "../../services/TagService";
 
 function parseTime(time) {
     time = time.substring(2);
@@ -72,6 +73,38 @@ function f(ref, setRef, i, len, data) {
     }
 }
 
+function Tag({ tag_id, tagList, set }) {
+    var id = tag_id;
+
+    return <div>
+        <select name={"tag " + id.toString()} id={"tag " + id.toString()}>
+            {tagList}
+        </select>
+        <button type="button" onClick={() => {
+            var elements = document.getElementById("tags").childNodes;
+            for (let i = id; i < elements.length - 1; i++) {
+                let e = elements[i].childNodes;
+                let nextE = elements[i + 1].childNodes;
+                e[0].value = nextE[0].value;
+            }
+            let a = []
+            let flag = false;
+            for (let i = 0; i < elements.length; i++) {
+                if (i !== id) {
+                    if (!flag) {
+                        a.push(<Tag tag_id={i} set={set} tagList={tagList} />)
+                    } else {
+                        a.push(<Tag tag_id={i - 1} set={set} tagList={tagList} />)
+                    }
+                } else {
+                    flag = true;
+                }
+            }
+            set([...a]);
+        }}>X</button>
+    </div>
+}
+
 export function EditRecipePage() {
     const [author, setAuthor] = useState("");
     let { id } = useParams();
@@ -81,6 +114,9 @@ export function EditRecipePage() {
     const recipeService = useMemo(() => new RecipeService(), []);
     const [catList, setCatList] = useState([]);
     const categoryService = useMemo(() => new CategoryService(), []);
+    const tagService = useMemo(() => new TagService(), []);
+    const [tagList, setTagList] = useState([]);
+    const [tagArray, setTagArray] = useState([]);
 
     useEffect(() => {
         var i = 1;
@@ -89,6 +125,33 @@ export function EditRecipePage() {
                 return <option key={i++} value={e}>{e}</option>
             }))
         }, () => { })
+        i = 1;
+        tagService.get().then((data) => {
+            setTagList(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            }))
+            return data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            })
+        }, () => { }).then((res) => {
+            return recipeService.getRecipe(id).then((data2) => {
+                let tempTags = []
+                for (var i = 0; i < data2.tags.length; i++) {
+                    tempTags.push(<Tag tag_id={i} set={setTagArray} tagList={res} />)
+                }
+                setTagArray(tempTags)
+                return data2.tags
+            }, () => { })
+        }).then((tag_res) => {
+            let children = document.getElementById("tags").childNodes
+            if (children[0] !== undefined) {
+                for (var i = 0; i < tag_res.length; i++) {
+                    children[i].firstChild.value = tag_res[i];
+                }
+            }
+
+
+        })
         recipeService.getRecipe(id).then(res => {
             document.getElementById('title').value = res.name;
             document.getElementById('description').value = res.description;
@@ -100,6 +163,9 @@ export function EditRecipePage() {
             document.getElementById("youtube_id").value = res.youtubeEmbedId;
             let temp = []
             f(temp, setInputs, 0, res.ingredients.length, res.ingredients);
+
+
+
             setInputs(temp);
             setAuthor(res.author.username);
         }, () => { });
@@ -121,7 +187,7 @@ export function EditRecipePage() {
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor, recipeService, categoryService])
+    }, [id, setInputs, setAuthor, recipeService, categoryService, tagService])
     return (
         <>
             <Form className={classes.wrapper} method={"put"} action={"/recipe/edit/" + id}>
@@ -159,7 +225,6 @@ export function EditRecipePage() {
                         />
                     }
                     <input id="recipe_image_input" type="file" name="image" onChange={(e) => {
-                        console.log(e.target.files);
                         setImage(URL.createObjectURL(e.target.files[0]));
                     }} />
                 </div>
@@ -205,10 +270,12 @@ export function EditRecipePage() {
                         {catList}
                     </select>
                     <h2>Tags:</h2>
-                    <ul>
-                        <li>vegetarijansko</li>
-                        <li>bezglutensko</li>
+                    <ul id="tags">
+                        {tagArray}
                     </ul>
+                    <button type='button' onClick={() => {
+                        setTagArray(tagArray.concat([<Tag tag_id={tagArray.length} set={setTagArray} tagList={tagList} />]))
+                    }}>Add tag</button>
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Save changes"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
