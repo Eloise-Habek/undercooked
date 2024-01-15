@@ -1,8 +1,6 @@
 package hr.fer.progi.UndercookedDemo.Selenium;
 
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,6 +22,14 @@ public class LoginTest extends SeleniumTestBase {
 	public void loginTestInvalid() {
 
 		login(invalidUname, invalidPass);
+
+		String url = driver.getCurrentUrl();
+		assertEquals(baseUrl + "/login", url);
+	}
+	
+	@Test
+	public void loginTestInvalidPass() {
+		login(validUname, invalidPass);
 
 		String url = driver.getCurrentUrl();
 		assertEquals(baseUrl + "/login", url);
