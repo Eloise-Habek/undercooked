@@ -83,10 +83,12 @@ export function EditRecipePage() {
     const categoryService = useMemo(() => new CategoryService(), []);
 
     useEffect(() => {
-        var i = 0;
-        setCatList(categoryService.getCategories().map((e) => {
-            return <option key={i++} value={e}>{e}</option>
-        }))
+        var i = 1;
+        categoryService.get().then((data) => {
+            setCatList(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            }))
+        }, () => { })
         recipeService.getRecipe(id).then(res => {
             document.getElementById('title').value = res.name;
             document.getElementById('description').value = res.description;

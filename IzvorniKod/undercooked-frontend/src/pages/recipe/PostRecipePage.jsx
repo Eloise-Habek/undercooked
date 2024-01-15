@@ -4,6 +4,7 @@ import { NavLink, redirect, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
 import { Form } from 'react-router-dom'
 import CategoryService from "../../services/CategoryService";
+import TagService from "../../services/TagService";
 
 function Option({ id, set }) {
     var index = id;
@@ -47,6 +48,37 @@ function Option({ id, set }) {
     </div>
 }
 
+function Tag({ tag_id, tagList, set }) {
+    var id = tag_id;
+
+    return <div>
+        <select name={"tag " + id.toString()} id={"tag " + id.toString()}>
+            {tagList}
+        </select>
+        <button type="button" onClick={() => {
+            var elements = document.getElementById("tags").childNodes;
+            for (let i = id; i < elements.length - 1; i++) {
+                let e = elements[i].childNodes;
+                let nextE = elements[i + 1].childNodes;
+                e[0].value = nextE[0].value;
+            }
+            let a = []
+            let flag = false;
+            for (let i = 0; i < elements.length; i++) {
+                if (i !== id) {
+                    if (!flag) {
+                        a.push(<Tag tag_id={i} set={set} tagList={tagList} />)
+                    } else {
+                        a.push(<Tag tag_id={i - 1} set={set} tagList={tagList} />)
+                    }
+                } else {
+                    flag = true;
+                }
+            }
+            set([...a]);
+        }}>X</button>
+    </div>
+}
 
 export function PostRecipePage() {
     const [author, setAuthor] = useState("");
@@ -55,18 +87,33 @@ export function PostRecipePage() {
 
     const [catList, setCatList] = useState([]);
     const categoryService = useMemo(() => new CategoryService(), []);
+    const [tagList, setTagList] = useState([]);
+    const tagService = useMemo(() => new TagService(), []);
     const [inputs, setInputs] = useState([]);
 
+    const [tagArray, setTagArray] = useState([]);
+
     useEffect(() => {
-        var i = 0;
-        setCatList(categoryService.getCategories().map((e) => {
-            return <option key={i++} value={e}>{e}</option>
-        }))
+        var i = 1;
+        categoryService.get().then((data) => {
+            setCatList(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            }))
+        }, () => { })
+
+
+        i = 1;
+        tagService.get().then((data) => {
+            setTagList(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            }))
+        }, () => { })
+
         let hour_input = document.getElementById("hour_input");
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor, categoryService])
+    }, [id, setInputs, setAuthor, categoryService, tagService])
     return (
         <>
             <Form className={classes.wrapper} method={"post"} action={"/recipe/post"}>
@@ -151,10 +198,12 @@ export function PostRecipePage() {
                         {catList}
                     </select>
                     <h2>Tags:</h2>
-                    <ul>
-                        <li>vegetarijansko</li>
-                        <li>bezglutensko</li>
+                    <ul id="tags">
+                        {tagArray}
                     </ul>
+                    <button type='button' onClick={() => {
+                        setTagArray(tagArray.concat([<Tag tag_id={tagArray.length} set={setTagArray} tagList={tagList} />]))
+                    }}>Add tag</button>
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Post recipe"}</button>
 

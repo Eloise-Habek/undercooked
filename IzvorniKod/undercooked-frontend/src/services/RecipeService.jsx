@@ -25,6 +25,7 @@ class RecipeService {
             "preparationDescription": "",
             "category": null,
             "youtubeEmbedId": null,
+            "tags": [],
             "ingredients": []
         }
         input.name = data.get("title");
@@ -53,6 +54,13 @@ class RecipeService {
             input.ingredients.push(ing);
             i++;
         }
+        i = 0;
+        let tagArray = [];
+        while (data.get("tag " + i.toString())) {
+            tagArray.push(data.get("tag " + i.toString()));
+            i++;
+        }
+        input.tags = [...tagArray];
         return input;
     }
 

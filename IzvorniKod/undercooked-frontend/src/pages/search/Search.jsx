@@ -15,10 +15,13 @@ export function Search() {
     const [recipeArray, setRecipeArray] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        var i = 0;
-        setCatList(categoryService.getCategories().map((e) => {
-            return <option key={i++} value={e}>{e}</option>
-        }))
+        var i = 1;
+        categoryService.get().then((data) => {
+            let cat = [<option key={0} value={"All"}>{"All"}</option>]
+            setCatList(cat.concat(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            })))
+        }, () => { })
         if (searchParams.size > 0) {
             var params = searchParams.toString();
             if (params.startsWith("q=&")) {

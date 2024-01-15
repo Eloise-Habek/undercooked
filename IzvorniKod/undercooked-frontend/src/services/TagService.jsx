@@ -1,12 +1,11 @@
 import { myFetch } from "../functions/myFetch";
 
-const URL = "/api/recipes/categories";
+const URL = "/api/recipes/tags";
 
-class CategoryService {
+class TagService {
     constructor(props) {
         //this.setMessage = props.setMessage;
         this.get = this.get.bind(this);
-
     }
     get() {
         return myFetch(URL, {
@@ -16,4 +15,4 @@ class CategoryService {
     }
 }
 
-export default CategoryService;
+export default TagService;

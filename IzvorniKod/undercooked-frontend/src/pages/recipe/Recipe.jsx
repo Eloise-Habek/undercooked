@@ -57,6 +57,7 @@ export function Recipe() {
 
     const [refresh, setRefresh] = useState(0);
     const [category, setCategory] = useState("");
+    const [tagArray, setTagArray] = useState([]);
 
     setInterval(() => {
         if (refresh === -1) {
@@ -73,6 +74,10 @@ export function Recipe() {
             setPrepTime(parseTime(res.preparationTime));
             setIngredients(res.ingredients.map((e) => {
                 return <li key={e.ingredient.id}>{e.ingredient.name + ": " + e.amount + e.unitOfMeasure}</li>
+            }))
+            var i = 0;
+            setTagArray(res.tags.map(e => {
+                return <li key={i++}>{e}</li>
             }))
             setPrepDesc(res.preparationDescription);
             setAvgRating(res.averageRating);
@@ -160,10 +165,9 @@ export function Recipe() {
                 <div className={classes.ingredients}>
                     <h2>Category:</h2>
                     {category}
-                    <h2>Tags:</h2>
+                    {tagArray.length > 0 ? <h2>Tags:</h2> : null}
                     <ul>
-                        <li>vegetarijansko</li>
-                        <li>bezglutensko</li>
+                        {tagArray}
                     </ul>
                 </div>
 
