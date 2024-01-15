@@ -40,5 +40,10 @@ public class FollowController {
 	public List<Person> following(@PathVariable("username") String username) {
 		return followersService.getFollowing(username);
 	}
+	
+	@GetMapping("/isFollowing/{username}")
+	public boolean isFollowing(@PathVariable("username") String username, Principal principal) {
+		return followersService.isFollowing(principal.getName(), username);
+	}
 
 }
