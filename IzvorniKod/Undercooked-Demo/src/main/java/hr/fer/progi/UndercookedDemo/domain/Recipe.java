@@ -45,6 +45,9 @@ public final class Recipe implements IRecipeMinimal {
 	@OrderBy("postedAt")
 	private List<Comment> comments;
 
+	@ManyToMany(mappedBy = Person.saved_recipes_field_name)
+	private List<Person> savedBy = Collections.emptyList();
+
 	@Embedded
 	private ImageData image;
 
@@ -147,6 +150,16 @@ public final class Recipe implements IRecipeMinimal {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	@JsonIgnore
+	public List<Person> getSavedBy() {
+		return savedBy;
+	}
+
+	@JsonIgnore
+	public void setSavedBy(List<Person> savedBy) {
+		this.savedBy = savedBy;
 	}
 
 	@JsonIgnore

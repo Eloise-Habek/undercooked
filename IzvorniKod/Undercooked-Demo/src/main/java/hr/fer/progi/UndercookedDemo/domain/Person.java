@@ -12,6 +12,8 @@ import java.util.List;
 @JsonSerialize(as = IPersonPublic.class)
 public final class Person implements IPersonPublic, IPersonMinimal {
 
+	public static final String saved_recipes_field_name = "savedRecipes";
+
 	@Id
 	@GeneratedValue
 	private Long id;

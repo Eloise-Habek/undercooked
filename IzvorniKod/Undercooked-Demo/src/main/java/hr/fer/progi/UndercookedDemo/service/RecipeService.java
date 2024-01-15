@@ -45,7 +45,13 @@ public class RecipeService {
 	}
 
 	public void deleteById(Long id) {
-		repo.deleteById(id);
+		var existing = repo.findById(id).orElseThrow(() -> new EntityMissingException(Recipe.class, id));
+
+		for (var p : existing.getSavedBy()) {
+			p.getSavedRecipes().remove(existing);
+		}
+
+		repo.delete(existing);
 	}
 
 	public Recipe findById(Long id) {
