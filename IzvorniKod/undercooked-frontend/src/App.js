@@ -29,6 +29,7 @@ import { Profile } from "./pages/profile/Profile";
 import { SavedRecipes } from "./pages/profile/SavedRecipes";
 import { Settings } from "./pages/profile/Settings";
 import { UserList } from "./pages/profile/UserList";
+import { Stats } from "./pages/Stats";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -78,6 +79,7 @@ function App() {
         <Route path="register" element={<Register />} action={registerService.registerAction} />
         <Route path="admin" element={<AdminPage />} action={getById} />
         <Route path="admin/:id" element={<AdminPage />} />
+        <Route path="admin/stats" element={<Stats />} />
         <Route path="inbox" element={isLoggedIn ? <Inbox /> : <PleaseLogin />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
         <Route path="recipe/:id" element={<Recipe />} />

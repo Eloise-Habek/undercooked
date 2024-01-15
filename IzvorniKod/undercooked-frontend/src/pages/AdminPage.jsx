@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
+import { Form, NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 import secureLocalStorage from 'react-secure-storage';
 import "../styles/adminpage.css"
 import AdminService from "../services/AdminService";
@@ -29,6 +29,15 @@ export function AdminPage() {
 
     return (
         <div>
+            <header>
+                <div>
+                    <NavLink to={"/admin"}>Users</NavLink>
+                </div>
+                <div>
+                    <NavLink to={"/admin/stats"}>Stats</NavLink>
+                </div>
+            </header>
+
             <div className="container">
                 {/*Form šalje post request na /admin s podatkom o id*/}
                 <Form method="post" action="/admin" className='container'>
@@ -67,7 +76,7 @@ export function AdminPage() {
                                         <td><button className='btn btn-info'
                                             onClick={() => {
                                                 adminService.removeUser(user.id)
-                                                .then(() => { setRefresh(refresh + 1) }, () => { setRefresh(refresh + 1) })
+                                                    .then(() => { setRefresh(refresh + 1) }, () => { setRefresh(refresh + 1) })
                                             }}>
                                             Remove
                                         </button></td>
@@ -75,7 +84,7 @@ export function AdminPage() {
                                         <td><button className='btn btn-info'
                                             onClick={() => {
                                                 adminService.setAdmin(user.id, !user.admin)
-                                                .then(() => { setRefresh(refresh + 1) }, () => { setRefresh(refresh + 1) })
+                                                    .then(() => { setRefresh(refresh + 1) }, () => { setRefresh(refresh + 1) })
                                             }}>
                                             Change
                                         </button></td>
