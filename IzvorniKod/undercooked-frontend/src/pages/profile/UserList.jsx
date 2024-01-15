@@ -1,25 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink, useParams } from "react-router-dom"
 import FollowService from "../../services/FollowService";
+import { ProfileMini } from "../../components/ProfileMini";
+import classes from "../../styles/profile/userlist.module.css"
+import { Footer } from "../wrapper/Footer";
 
 export function UserList({ followers, following }) {
     let { user } = useParams();
     const [userArray, setUserArray] = useState([]);
+    const followService = useMemo(() => new FollowService(), []);
     const arrayDataItems = userArray.map((e) =>
-        <li><NavLink to={"/profile/" + e.username}>{e.username}</NavLink></li>);
+        <li><ProfileMini username={e.username} followService={followService} /></li>);
     useEffect(() => {
         if (followers) {
-            let followService = new FollowService();
             followService.getFollowers(user).then(res => setUserArray(res), () => { });
         } else if (following) {
-            let followService = new FollowService();
             followService.getFollowing(user).then(res => setUserArray(res), () => { });
         }
-    })
-    return <>
-        <div>{followers ? "Followers:" : "Following:"}</div>
-        <ul>
+    }, [followService, followers, following, user])
+    return <div>
+        <div><h3>{followers ? "Followers:" : "Following:"}</h3></div>
+        <ul className={classes.no_bullets}>
             {arrayDataItems}
         </ul>
-    </>
+        <Footer sticky={1} />
+    </div>
 }

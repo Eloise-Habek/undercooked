@@ -109,16 +109,16 @@ export function Profile() {
 
                     <div className={classes.profileStats}>
                         <div className={classes.statItem}>
-                            <span className={classes.statValue}><NavLink to={"/following/" + username}>{following}</NavLink></span>
+                            <span className={classes.statValue}><NavLink to={following > 0 ? "/following/" + username : ""}>{following}</NavLink></span>
                             <span className={classes.statLabel}>Following</span>
                         </div>
                         <div className={classes.statItem}>
-                            <span className={classes.statValue}><NavLink to={"/followers/" + username}>{followers}</NavLink></span>
+                            <span className={classes.statValue}><NavLink to={followers > 0 ? "/followers/" + username : ""}>{followers}</NavLink></span>
                             <span className={classes.statLabel}>Followers</span>
                         </div>
                         <div className={classes.statItem}>
                             <span className={classes.statValue}>
-                                <NavLink to={"/recipe/saved/" + username}>{savedCount}</NavLink>
+                                <NavLink to={savedCount > 0 ? "/recipe/saved/" + username : ""}>{savedCount}</NavLink>
                             </span>
                             <span className={classes.statLabel}>Recipes saved</span>
                         </div>
