@@ -11,9 +11,6 @@ import org.junit.jupiter.api.Test;
 
 public class RateRecipeTest extends SeleniumTestBase {
 
-	private String validUname = "pero";
-	private String validPass = "zdero123";
-
 	@Test
 	public void rateRecipeNoLogin() {
 
@@ -34,15 +31,7 @@ public class RateRecipeTest extends SeleniumTestBase {
 	@Test
 	public void rateRecipeLogin() {
 
-		driver.get(baseUrl + "/login");
-
-		WebElement usernameInput = driver.findElement(By.name("username"));
-		WebElement passwordInput = driver.findElement(By.name("password"));
-		WebElement loginButton = driver.findElement(By.className("login_button"));
-
-		usernameInput.sendKeys(validUname);
-		passwordInput.sendKeys(validPass);
-		loginButton.click();
+		login(validUname, validPass);
 
 		driver.get(baseUrl + "/recipe/1");
 
