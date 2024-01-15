@@ -12,6 +12,7 @@ import { Footer } from "../wrapper/Footer";
 import { NavLink } from "react-router-dom";
 import FollowService from '../../services/FollowService';
 import RecipeService from '../../services/RecipeService';
+import MessageService from '../../services/MessageService';
 
 export function Profile() {
     const [username, setUsername] = useState("");
@@ -33,6 +34,7 @@ export function Profile() {
     const profileService = useMemo(() => new ProfileService(), []);
     const recipeService = useMemo(() => new RecipeService(), []);
     const followService = useMemo(() => new FollowService(), []);
+    const messageService = useMemo(() => new MessageService(), []);
 
     useEffect(() => {
         if (secureLocalStorage.getItem("logInToken") != null) {
@@ -89,6 +91,18 @@ export function Profile() {
                             }>
                                 {showMessageBox ? "Close message box" : "Message"}
                             </button>
+                            <button type="button" className="fa-solid fa-video" onClick={() => {
+                                window.open(
+                                    'https://undercooked.daily.co/VideoRoom',
+                                    '_blank' // <- This is what makes it open in a new window.
+                                );
+                                let message = {
+                                    "sender": secureLocalStorage.getItem("username"),
+                                    "receiver": username,
+                                    "text": secureLocalStorage.getItem("username") + " is calling you on video chat! Join link: https://undercooked.daily.co/VideoRoom"
+                                }
+                                messageService.sendMessage(message).then(() => { }, () => { });
+                            }}></button>
                         </div>
                     }
 
