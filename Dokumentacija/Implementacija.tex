@@ -56,12 +56,61 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			 %\textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
 			
 			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			 %\textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, %\href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			\subsection{Instalacija potrebne programske potpore}
+			Kako bi se aplikacija ispravno pokrenula potrebno je preuzeti sljedeće programske pakete:
+			\begin{itemize}
+				\item \href{https://nodejs.org}{\textit{NodeJS}\footnote{https://nodejs.org}} i \href{https://www.npmjs.com}{\textit{npm}\footnote{https://www.npmjs.com}} za pokretanje front-enda
+				\item \href{https://www.oracle.com/java/technologies/downloads/\#java17}{\textit{Java development kit} (Verzija 17)\footnote{https://www.oracle.com/java/technologies/downloads/\#java17}} i \href{https://maven.apache.org}{\textit{Maven}\footnote{https://maven.apache.org}} za back-end i bazu podataka.
+			\end{itemize}
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/instalacija_1.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Instalacija potrebne programske potpore na Linuxu}
+				\label{fig:Instalacija potrebne programske potpore na Linuxu}
+			\end{figure}
+			Alternativno, back-end i baza podataka mogu se jednostavnije pokrenuti u \href{https://www.docker.com}{\textit{Docker}\footnote{https://www.docker.com}} kontejneru.
 			
-			
+			Nakon instalacije navedenih programa, potrebno je klonirati repozitorij aplikacije na proizvoljnu lokaciju ili ga preuzeti kao arhivu i raspakirati.
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{slike/instalacija_2.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Kloniranje repozitorija}
+				\label{fig:Kloniranje repozitorija}
+			\end{figure}
+			\subsection{Pokretanje front-enda}
+			Kako bi se pokrenuo front-end aplikacije, potrebno je pozicionirati se u direktorij \textit{IzvorniKod/undercooked-frontend} i pokrenuti \textit{npm install} kako bi se instalirale potrebne biblioteke.
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/instalacija_3.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Instalacija NodeJS biblioteka}
+				\label{fig:Instalacija NodeJS biblioteka}
+			\end{figure}
+			Nakon toga, front-end aplikacije može se pokrenuti s \textit{npm start}. \textit{React} front-end pokreće se na vratima 3000, osim ako nije postavljena varijabla okruženja PORT.
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/instalacija_4.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Pokretanje front-enda}
+				\label{fig:Pokretanje front-enda}
+			\end{figure}
+			\subsection{Pokretanje back-enda i baze podataka}
+			Kako bi se pokrenuli back-end aplikacije i baza podataka, potrebno je pozicionirati se u direktorij \textit{IzvorniKod/Undercooked-Demo} i pokrenuti \textit{mvn install} čime se instalira sve što je potrebno za pokretanje back-enda i baze podataka te se gradi sama aplikacija.
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{slike/instalacija_5.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Instalacija uz pomoć Mavena}
+				\label{fig:Instalacija uz pomoć Mavena}
+			\end{figure}
+			Ova naredba će također pokrenuti i testove, no svi ispitni slučajevi koji koriste \textit{Selenium} će pasti jer se oslanjaju na to da back-end radi, a pokreću se prije nego što se on pokrene. Testovi se mogu izvršiti naknadno, na primjer iz IDE-a. Nakon što je izgrađena, aplikacija se može pokrenuti navigiranjem u novonastali direktorij \textit{target} i izvršavanjem naredbe \textit{java -jar Undercooked-Demo-0.0.1-SNAPSHOT.jar}. Back-end aplikacije sluša na vratima 8080, a pokretanjem back-enda pokreće se i baza podataka.
+			\begin{figure}[H]
+				\includegraphics[scale=0.55]{slike/instalacija_6.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Pokretanje back-enda i baze podataka}
+				\label{fig:Pokretanje back-enda i baze podataka}
+			\end{figure}
 			\eject 
