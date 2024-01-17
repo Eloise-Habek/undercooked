@@ -83,8 +83,8 @@ public class RecipeService {
 		recipe.setDescription("slatki kruh");
 		recipe.setPreparationDescription("1. stavi sastojke\n2. ???\n3. Profit");
 		recipe.setIngredients(new ArrayList<>());
-		recipe.setCategory(RecipeCategory.GlavnoJelo);
-		recipe.setTags(new HashSet<>(List.of(RecipeTag.Vegetarijansko, RecipeTag.Vegansko, RecipeTag.BezGlutena)));
+		recipe.setCategory(RecipeCategory.MainCourse);
+		recipe.setTags(new HashSet<>(List.of(RecipeTag.Vegetarian, RecipeTag.Vegan, RecipeTag.GlutenFree)));
 		recipe.setYoutubeEmbedId("B7UmUX68KtE");
 		createRecipe(recipe, pero);
 	}

@@ -1,7 +1,9 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
 public enum RecipeCategory {
-	Predjelo,
-	GlavnoJelo,
-	Desert,
+	Appetizer,
+	MainCourse,
+	Dessert,
+	Italian,
+	Chinese
 }
