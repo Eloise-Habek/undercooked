@@ -7,11 +7,12 @@ class TagService {
         //this.setMessage = props.setMessage;
         this.get = this.get.bind(this);
     }
-    get() {
-        return myFetch(URL, {
+    async get() {
+        const res = await fetch(URL, {
             method: "GET",
             mode: "cors"
-        }, false);
+        });
+        return await await res.json();
     }
 }
 
