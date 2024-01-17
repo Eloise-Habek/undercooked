@@ -26,15 +26,100 @@
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
+			% \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
 			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+			 %\textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
+			 %\begin{itemize}
+			 	%\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
+			 	%\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
+			 %\end{itemize}
+		 	%\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+		 	
+		 	Svi testovi provedeni su automatski uz pomoć radnog okvira \href{https://www.seleniumhq.org}{\textit{Selenium}\footnote{\url{https://www.seleniumhq.org/}}}. Ispitane su neke od ključnih funkcionalnosti sustava:
+		 	\begin{itemize}
+		 		\item UC6 - Prijava
+		 		\item UC8 - Objava recepta
+		 		\item UC16 - Ocjenjivanje objave
+		 	\end{itemize}
+		 	
+		 	\noindent\textbf{Ispitni slučaj 1: Prijava s ispravnim korisničkim imenom i lozinkom}
+		 	
+			\noindent\textbf{Ulaz:}
+			\begin{packed_enum}
+				\item Otvaranje stranice za prijavu u web pregledniku
+				\item Unos ispravnog korisničkog imena i lozinke
+				\item Kliktanje na gumb za prijavu
+			\end{packed_enum}
+			\textbf{Očekivani rezultat:} Korisnika se prebacuje na stranicu njegovog profila (\textit{/profile/[korisničko ime]}).
 			
+			\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen čime je aplikacija prošla ovaj test.\linebreak
+			
+			\noindent\textbf{Ispitni slučaj 2: Prijava s ispravnim korisničkim imenom i neispravnom lozinkom}
+			
+			\noindent\textbf{Ulaz:}
+			\begin{packed_enum}
+				\item Otvaranje stranice za prijavu u web pregledniku
+				\item Unos ispravnog korisničkog imena i neispravne lozinke
+				\item Kliktanje na gumb za prijavu
+			\end{packed_enum}
+			\textbf{Očekivani rezultat:} Korisnika se ostavlja na stranici za prijavu (\textit{/login}) i šalje se poruka o neispravnom korisničkom imenu ili lozinki.
+			
+			\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen čime je aplikacija prošla ovaj test.\linebreak
+			
+			\noindent\textbf{Ispitni slučaj 3: Ocjenjivanje recepta uz ispravnu prijavu}
+			
+			\noindent\textbf{Ulaz:}
+			\begin{packed_enum}
+				\item Otvaranje stranice za prijavu u web pregledniku
+				\item Unos ispravnog korisničkog imena i neispravne lozinke
+				\item Kliktanje na gumb za prijavu
+				\item Navigiranje do stranice nekog recepta, u ovom slučaju \textit{/recipe/1}
+				\item Kliktanje na gumb ocjenu recepta
+			\end{packed_enum}
+			\textbf{Očekivani rezultat:} Na stranici se mijenja broj žuto obojenih zvjezdica kako bi se označilo uspješno ocjenjivanje recepta.
+			
+			\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen čime je aplikacija prošla ovaj test.\linebreak
+			
+			\noindent\textbf{Ispitni slučaj 4: Ocjenjivanje recepta bez prijave}
+			
+			\noindent\textbf{Ulaz:}
+			\begin{packed_enum}
+				\item Navigiranje do stranice nekog recepta, u ovom slučaju \textit{/recipe/1}
+				\item Kliktanje na gumb ocjenu recepta
+			\end{packed_enum}
+			\textbf{Očekivani rezultat:} Na stranici se ne mijenja broj žuto obojenih zvjezdica koje označavaju ocjenu recepta.
+			
+			\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen čime je aplikacija prošla ovaj test. Valja napomenuti da pri ovome testu, poslužitelj također vraća odgovor sa šifrom 401, međutim Selenium ne omogućava čitanje zaprimljenih odgovora pa se pri testiranju moramo oslanjati na CSS vrijednosti odgovarajućih elemenata stranice.\linebreak
+			
+			\noindent\textbf{Ispitni slučaj 5: Objava recepta}
+			
+			\noindent\textbf{Ulaz:}
+			\begin{packed_enum}
+				\item Otvaranje stranice za prijavu u web pregledniku
+				\item Unos ispravnog korisničkog imena i neispravne lozinke
+				\item Kliktanje na gumb za prijavu
+				\item Navigiranje do stranice za objavu recepta - \textit{/recipe/post}
+				\item Popunjavanje polja s informacijama o receptu - naslov, opis, sastojci...
+				\item Kliktanje na gumb za objavu recepta
+			\end{packed_enum}
+ 			\textbf{Očekivani rezultat:} Korisnika se prebacuje na novonastalu stranicu na kojoj se vidi objavljeni recept (\textit{/recipe/[id recepta]}).
+			
+			\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen čime je aplikacija prošla ovaj test.\linebreak
+			
+			\noindent\textbf{Ispitni slučaj 6: Objava recepta bez navođenja uputa za pripremu}
+			
+			\noindent\textbf{Ulaz:}
+			\begin{packed_enum}
+				\item Otvaranje stranice za prijavu u web pregledniku
+				\item Unos ispravnog korisničkog imena i neispravne lozinke
+				\item Kliktanje na gumb za prijavu
+				\item Navigiranje do stranice za objavu recepta - \textit{/recipe/post}
+				\item Popunjavanje polja s informacijama o receptu osim onog s uputama
+				\item Kliktanje na gumb za objavu recepta
+			\end{packed_enum}
+			\textbf{Očekivani rezultat:} Korisnik ostaje na stranici za objavu recepta i dobiva obavijest da je potrebno popuniti opis pripreme.
+			
+			\noindent\textbf{Rezultat:} Recept se objavljuje bez uputa za pripremu i korisnika se prebacuje na stranicu s novim receptom. Ova funkcionalnost nije implementirana pa aplikacija pada ovaj test, ali dalje nastavlja raditi normalno unatoč tome.\linebreak
 			\eject 
 		
 		
