@@ -7,7 +7,7 @@ import CategoryService from "../../services/CategoryService";
 import SearchService from "../../services/SearchService";
 import { RecipeMini } from "../../components/RecipeMini";
 
-export function Search() {
+export function Search({ setMessage }) {
     let [searchParams] = useSearchParams();
     const categoryService = useMemo(() => new CategoryService(), []);
     const searchService = useMemo(() => new SearchService(), [])
@@ -31,12 +31,17 @@ export function Search() {
                 params = params.slice(0, params.lastIndexOf("&"));
             }
             searchService.getResults(params).then((data) => {
+                var count = 0;
                 setRecipeArray(data.map((e) => {
+                    count++;
                     return <li key={e.id}><RecipeMini details={e} /></li>
                 }));
-            }, () => { console.log("search error") })
+                if (count === 0) {
+                    setMessage("No results!")
+                }
+            }, () => { setMessage("search error") })
         }
-    }, [searchParams, categoryService, searchService])
+    }, [searchParams, categoryService, searchService, setMessage])
 
     if (recipeArray.length > 0) {
         return <>

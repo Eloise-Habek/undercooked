@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import classes from "../../styles/recipe/recipe.module.css"
-import { NavLink, redirect, useParams } from "react-router-dom";
+import { NavLink, redirect, useNavigate, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
 import RecipeService from "../../services/RecipeService";
 import { Form } from 'react-router-dom'
@@ -105,7 +105,8 @@ function Tag({ tag_id, tagList, set }) {
     </div>
 }
 
-export function EditRecipePage() {
+export function EditRecipePage({ setMessage }) {
+    let navigate = useNavigate();
     const [author, setAuthor] = useState("");
     let { id } = useParams();
     const [image, setImage] = useState(null);
@@ -279,7 +280,8 @@ export function EditRecipePage() {
                 </div>
                 <button className={classes.save_recipe} type="submit" >{"Save changes"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
-                    recipeService.deleteRecipe(id).then(() => { }, () => { })
+                    recipeService.deleteRecipe(id).then(() => { setMessage("Deleted!") }, () => { setMessage("Not deleted!") })
+                        .then(() => { navigate("/profile/" + author) });
                 }} >Delete recipe</button>
                 <input type="text" hidden={true} readOnly value={id} name='recipe_id' />
 

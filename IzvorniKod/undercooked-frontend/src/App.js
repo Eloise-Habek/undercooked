@@ -17,7 +17,6 @@ import LoginService from "./services/LoginService";
 
 import { Inbox } from "./pages/Inbox";
 import MessageService from "./services/MessageService";
-import RecipeService from "./services/RecipeService";
 
 import { Search } from "./pages/search/Search";
 import { PleaseLogin } from "./pages/PleaseLogin";
@@ -30,6 +29,7 @@ import { SavedRecipes } from "./pages/profile/SavedRecipes";
 import { Settings } from "./pages/profile/Settings";
 import { UserList } from "./pages/profile/UserList";
 import { Stats } from "./pages/Stats";
+import PostRecipeService from "./services/PostRecipeService";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -50,7 +50,7 @@ function App() {
   })
 
   let messageService = new MessageService();
-  let recipeService = new RecipeService();
+  let postRecipeService = new PostRecipeService({ "setMessage": messageHandler });
   let commentService = new CommentService();
 
 
@@ -69,7 +69,7 @@ function App() {
       setHideMessage={setHideMessage}
       hide={hideMessage} loggedIn={isLoggedIn} changeIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin}/>}>
         <Route index element={<Search />} />
-        <Route path="search" element={<Search />} />
+        <Route path="search" element={<Search setMessage={messageHandler}/>} />
         <Route path="feed" element={isLoggedIn ? <Home /> : <PleaseLogin />} />
         <Route path="profile/:user" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
@@ -83,8 +83,8 @@ function App() {
         <Route path="inbox" element={isLoggedIn ? <Inbox /> : <PleaseLogin />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
         <Route path="recipe/:id" element={<Recipe />} />
-        <Route path="recipe/post" element={<PostRecipePage />} action={recipeService.postAction}/>
-        <Route path="recipe/edit/:id" element={<EditRecipePage />} action={recipeService.editAction}/>
+        <Route path="recipe/post" element={<PostRecipePage />} action={postRecipeService.postAction}/>
+        <Route path="recipe/edit/:id" element={<EditRecipePage setMessage={messageHandler}/>} action={postRecipeService.editAction}/>
         <Route path="recipe/saved/:user" element={<SavedRecipes />} />
         <Route path="recipe/:id/comment" action={commentService.postCommentAction} />
         <Route path="recipe/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />

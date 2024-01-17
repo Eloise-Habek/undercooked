@@ -28,20 +28,13 @@ async function tokenValid() {
     return await Promise.reject("Token expired!");
 }
 
-export async function myFetch(apiUrl, reqDetails, needToken, isJson = true, isBlob = false) {
+export async function myFetch2(apiUrl, reqDetails, needToken) {
     return serverOnline().then(async () => {
         if (needToken) {
             return tokenValid().then(async () => {
                 return fetch(apiUrl, reqDetails).then(res => {
                     if (res.status < 400) {
-                        if (isJson) {
-                            return res.json();
-                        } else if (isBlob) {
-                            return res.blob();
-                        } else {
-                            return res;
-                        }
-                        
+                        return res;
                     }
                     return Promise.reject("Error");
                 })
@@ -49,14 +42,7 @@ export async function myFetch(apiUrl, reqDetails, needToken, isJson = true, isBl
         }
         const res_1 = await fetch(apiUrl, reqDetails);
         if (res_1.status < 400) {
-            if (isJson) {
-                return res_1.json();
-            } else if (isBlob) {
-                return res_1.blob();
-            } else {
-                return res_1;
-            }
-            
+            return res_1;
         }
         return await Promise.reject("Error");
     }, () => {return Promise.reject("Server down!")})
