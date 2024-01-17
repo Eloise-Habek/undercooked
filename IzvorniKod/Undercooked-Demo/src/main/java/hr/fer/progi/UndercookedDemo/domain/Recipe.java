@@ -30,6 +30,8 @@ public final class Recipe implements IRecipeMinimal {
 	private Person author;
 
 	private RecipeCategory category;
+	
+	private RecipeCuisine cuisine;
 
 	@ElementCollection
 	private Set<RecipeTag> tags = Collections.emptySet();
@@ -108,6 +110,14 @@ public final class Recipe implements IRecipeMinimal {
 
 	public void setCategory(RecipeCategory category) {
 		this.category = category;
+	}
+	
+	public RecipeCuisine getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(RecipeCuisine cuisine) {
+		this.cuisine = cuisine;
 	}
 
 	public Set<RecipeTag> getTags() {

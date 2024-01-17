@@ -4,6 +4,4 @@ public enum RecipeCategory {
 	Appetizer,
 	MainCourse,
 	Dessert,
-	Italian,
-	Chinese
 }

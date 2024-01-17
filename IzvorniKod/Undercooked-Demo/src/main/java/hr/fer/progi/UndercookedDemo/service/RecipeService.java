@@ -4,6 +4,7 @@ import hr.fer.progi.UndercookedDemo.dao.RecipeRepository;
 import hr.fer.progi.UndercookedDemo.domain.Person;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.RecipeCategory;
+import hr.fer.progi.UndercookedDemo.domain.RecipeCuisine;
 import hr.fer.progi.UndercookedDemo.domain.RecipeTag;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +70,7 @@ public class RecipeService {
 		existing.setPreparationDescription(requestRecipe.getPreparationDescription());
 		existing.setIngredients(requestRecipe.getIngredients());
 		existing.setCategory(requestRecipe.getCategory());
+		existing.setCuisine(requestRecipe.getCuisine());
 		existing.setTags(requestRecipe.getTags());
 		existing.setYoutubeEmbedId(requestRecipe.getYoutubeEmbedId());
 		repo.save(existing);
@@ -84,6 +86,7 @@ public class RecipeService {
 		recipe.setPreparationDescription("1. stavi sastojke\n2. ???\n3. Profit");
 		recipe.setIngredients(new ArrayList<>());
 		recipe.setCategory(RecipeCategory.MainCourse);
+		recipe.setCuisine(RecipeCuisine.Italian);
 		recipe.setTags(new HashSet<>(List.of(RecipeTag.Vegetarian, RecipeTag.Vegan, RecipeTag.GlutenFree)));
 		recipe.setYoutubeEmbedId("B7UmUX68KtE");
 		createRecipe(recipe, pero);
