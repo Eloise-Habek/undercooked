@@ -5,6 +5,7 @@ import { NavLink, redirect, useParams } from "react-router-dom";
 import { Form } from 'react-router-dom'
 import CategoryService from "../../services/CategoryService";
 import TagService from "../../services/TagService";
+import CuisineService from "../../services/CuisineService";
 
 function Option({ id, set }) {
     var index = id;
@@ -87,8 +88,13 @@ export function PostRecipePage() {
 
     const [catList, setCatList] = useState([]);
     const categoryService = useMemo(() => new CategoryService(), []);
+
+    const [cuisineList, setCuisineList] = useState([]);
+    const cuisineService = useMemo(() => new CuisineService(), []);
+
     const [tagList, setTagList] = useState([]);
     const tagService = useMemo(() => new TagService(), []);
+
     const [inputs, setInputs] = useState([]);
 
     const [tagArray, setTagArray] = useState([]);
@@ -97,6 +103,13 @@ export function PostRecipePage() {
         var i = 1;
         categoryService.get().then((data) => {
             setCatList(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            }))
+        }, () => { })
+
+        i = 1;
+        cuisineService.get().then((data) => {
+            setCuisineList(data.map(e => {
                 return <option key={i++} value={e}>{e}</option>
             }))
         }, () => { })
@@ -113,7 +126,7 @@ export function PostRecipePage() {
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor, categoryService, tagService])
+    }, [id, setInputs, setAuthor, categoryService, tagService, cuisineService])
     return (
         <>
             <Form className={classes.wrapper} method={"post"} action={"/recipe/post"}>
@@ -196,6 +209,10 @@ export function PostRecipePage() {
                     <h2>Category:</h2>
                     <select name="category">
                         {catList}
+                    </select>
+                    <h2>Type of cuisine:</h2>
+                    <select name="cuisine">
+                        {cuisineList}
                     </select>
                     <h2>Tags:</h2>
                     <ul id="tags">

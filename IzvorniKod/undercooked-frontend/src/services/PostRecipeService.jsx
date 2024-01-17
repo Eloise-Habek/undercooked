@@ -23,6 +23,7 @@ class PostRecipeService {
             "description": "",
             "preparationDescription": "",
             "category": null,
+            "cuisine": null,
             "youtubeEmbedId": null,
             "tags": [],
             "ingredients": []
@@ -37,6 +38,7 @@ class PostRecipeService {
         input.description = data.get("description");
         input.preparationDescription = data.get("prep_desc");
         input.category = data.get("category");
+        input.cuisine = data.get("cuisine");
         input.youtubeEmbedId = data.get("youtube_id");
         if (input.youtubeEmbedId === "") {
             input.youtubeEmbedId = null;

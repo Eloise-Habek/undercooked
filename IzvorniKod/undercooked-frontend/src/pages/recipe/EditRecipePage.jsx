@@ -6,6 +6,7 @@ import RecipeService from "../../services/RecipeService";
 import { Form } from 'react-router-dom'
 import CategoryService from "../../services/CategoryService";
 import TagService from "../../services/TagService";
+import CuisineService from "../../services/CuisineService";
 
 function parseTime(time) {
     time = time.substring(2);
@@ -113,8 +114,13 @@ export function EditRecipePage({ setMessage }) {
     let [inputs, setInputs] = useState([]);
 
     const recipeService = useMemo(() => new RecipeService(), []);
+
     const [catList, setCatList] = useState([]);
     const categoryService = useMemo(() => new CategoryService(), []);
+
+    const [cuisineList, setCuisineList] = useState([]);
+    const cuisineService = useMemo(() => new CuisineService(), []);
+
     const tagService = useMemo(() => new TagService(), []);
     const [tagList, setTagList] = useState([]);
     const [tagArray, setTagArray] = useState([]);
@@ -126,6 +132,14 @@ export function EditRecipePage({ setMessage }) {
                 return <option key={i++} value={e}>{e}</option>
             }))
         }, () => { })
+
+        i = 1;
+        cuisineService.get().then((data) => {
+            setCuisineList(data.map(e => {
+                return <option key={i++} value={e}>{e}</option>
+            }))
+        }, () => { })
+
         i = 1;
         tagService.get().then((data) => {
             setTagList(data.map(e => {
@@ -161,6 +175,7 @@ export function EditRecipePage({ setMessage }) {
             document.getElementById('mins_input').value = mins;
             document.getElementById('prep_desc').value = res.preparationDescription;
             document.getElementById('category').value = res.category;
+            document.getElementById('cuisine').value = res.cuisine;
             document.getElementById("youtube_id").value = res.youtubeEmbedId;
             let temp = []
             f(temp, setInputs, 0, res.ingredients.length, res.ingredients);
@@ -188,7 +203,7 @@ export function EditRecipePage({ setMessage }) {
 
         hour_input.setAttribute('value', 0);
 
-    }, [id, setInputs, setAuthor, recipeService, categoryService, tagService])
+    }, [id, setInputs, setAuthor, recipeService, categoryService, tagService, cuisineService])
     return (
         <>
             <Form className={classes.wrapper} method={"put"} action={"/recipe/edit/" + id}>
@@ -269,6 +284,10 @@ export function EditRecipePage({ setMessage }) {
                     <h2>Category:</h2>
                     <select id="category" name="category">
                         {catList}
+                    </select>
+                    <h2>Type of cuisine:</h2>
+                    <select id="cuisine" name="cuisine">
+                        {cuisineList}
                     </select>
                     <h2>Tags:</h2>
                     <ul id="tags">

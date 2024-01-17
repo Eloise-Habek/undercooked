@@ -57,6 +57,7 @@ export function Recipe() {
 
     const [refresh, setRefresh] = useState(0);
     const [category, setCategory] = useState("");
+    const [cuisine, setCuisine] = useState("");
     const [tagArray, setTagArray] = useState([]);
 
     setInterval(() => {
@@ -94,7 +95,8 @@ export function Recipe() {
             </li>));
             recipeService.getImage(id).then(data => URL.createObjectURL(data), () => null)
                 .then(data => setImage(data))
-            setCategory(res.category)
+            setCategory(res.category);
+            setCuisine(res.cuisine);
         }, () => { });
     }, [id, refresh, recipeService])
     return (
@@ -165,6 +167,8 @@ export function Recipe() {
                 <div className={classes.ingredients}>
                     <h2>Category:</h2>
                     {category}
+                    <h2>Type of cuisine:</h2>
+                    {cuisine}
                     {tagArray.length > 0 ? <h2>Tags:</h2> : null}
                     <ul>
                         {tagArray}
