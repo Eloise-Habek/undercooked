@@ -83,11 +83,16 @@ function App() {
         <Route path="inbox" element={isLoggedIn ? <Inbox /> : <PleaseLogin />} />
         <Route path="message" element={<Inbox />} action={messageService.sendAction}/>
         <Route path="recipe/:id" element={<Recipe />} />
-        <Route path="recipe/post" element={<PostRecipePage />} action={postRecipeService.postAction}/>
-        <Route path="recipe/edit/:id" element={<EditRecipePage setMessage={messageHandler}/>} action={postRecipeService.editAction}/>
-        <Route path="recipe/saved/:user" element={<SavedRecipes />} />
-        <Route path="recipe/:id/comment" action={commentService.postCommentAction} />
-        <Route path="recipe/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
+        {isLoggedIn ?
+          <>
+          <Route path="recipe/post" element={<PostRecipePage />} action={postRecipeService.postAction}/>
+          <Route path="recipe/edit/:id" element={<EditRecipePage setMessage={messageHandler}/>} action={postRecipeService.editAction}/>
+          <Route path="recipe/saved/:user" element={<SavedRecipes />} />
+          <Route path="recipe/:id/comment" action={commentService.postCommentAction} />
+          <Route path="recipe/:recipe_id/comment/:comment_id" action={commentService.editCommentAction} />
+          </>
+        : null}
+        
         <Route path="*" element={<Search />}/>
       </Route>
     )

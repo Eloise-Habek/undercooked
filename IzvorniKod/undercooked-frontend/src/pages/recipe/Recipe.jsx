@@ -37,6 +37,8 @@ function getMyRating(ratings) {
 }
 
 export function Recipe() {
+    const [isLoggedIn, setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") !== null);
+
     const [comment, setComment] = useState(0);
 
     const [title, setTitle] = useState("");
@@ -83,9 +85,11 @@ export function Recipe() {
             setPrepDesc(res.preparationDescription);
             setAvgRating(res.averageRating);
             setEmbedId(res.youtubeEmbedId);
-            var star_id = "stars-" + getMyRating(res.ratings).toString();
-            if (star_id !== "stars-0") {
-                document.getElementById(star_id).checked = true;
+            if (isLoggedIn) {
+                var star_id = "stars-" + getMyRating(res.ratings).toString();
+                if (star_id !== "stars-0") {
+                    document.getElementById(star_id).checked = true;
+                }
             }
             recipeService.isSaved(id).then(res => {
                 setSaved(res);
@@ -115,7 +119,7 @@ export function Recipe() {
                         <h2 className={classes.title}>{title}</h2>
                     </div>
                     <div className={classes.edit_button_wrapper}>
-                        {(username === secureLocalStorage.getItem("username") ||
+                        {username !== null && (username === secureLocalStorage.getItem("username") ||
                             secureLocalStorage.getItem("isAdmin"))
                             ? <NavLink className={classes.edit_button} to={"/recipe/edit/" + id}>
                                 <i className="fa-solid fa-pen"></i>
@@ -174,16 +178,19 @@ export function Recipe() {
                         {tagArray}
                     </ul>
                 </div>
+                {isLoggedIn ?
+                    <button onClick={() => {
+                        setSaved(!saved);
+                        recipeService.isSaved(id).then(saved => {
+                            recipeService.setSaved(id, !saved).then(() => { }, () => { })
+                        }, () => { })
 
-                <button onClick={() => {
-                    setSaved(!saved);
-                    recipeService.isSaved(id).then(saved => {
-                        recipeService.setSaved(id, !saved).then(() => { }, () => { })
-                    }, () => { })
+                    }} className={classes.save_recipe}>
+                        {saved ? "Unsave Recipe" : "Save Recipe"}
+                    </button>
+                    : null
+                }
 
-                }} className={classes.save_recipe}>
-                    {saved ? "Unsave Recipe" : "Save Recipe"}
-                </button>
 
                 <div className={classes.comments_and_rate}>
                     {avgRating !== null ?
@@ -193,92 +200,96 @@ export function Recipe() {
                         </div>
                         : null}
 
-                    <div className={classes.rate_stars}>
+                    {isLoggedIn ?
+                        <div className={classes.rate_stars}>
 
-                        <div>Rate: </div>
-                        <div>
-                            <form className={star_classes.rating} onChange={() => {
+                            <div>Rate: </div>
+                            <div>
+                                <form className={star_classes.rating} onChange={() => {
 
-                                recipeService.setRating(id,
-                                    document.querySelector('input[name="stars"]:checked').value)
-                                    .then(() => { }, () => { })
-                                    .then(() => { setRefresh(refresh + 1) })
+                                    recipeService.setRating(id,
+                                        document.querySelector('input[name="stars"]:checked').value)
+                                        .then(() => { }, () => { })
+                                        .then(() => { setRefresh(refresh + 1) })
 
-                            }}>
-                                <label>
-                                    <input type="radio" name="stars" value="1" id="stars-1" />
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="stars" value="2" id="stars-2" />
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="stars" value="3" id="stars-3" />
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="stars" value="4" id="stars-4" />
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="stars" value="5" id="stars-5" />
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                    <span className={star_classes.icon}>
-                                        <span className={"fa fa-star"}></span>
-                                    </span>
-                                </label>
-                            </form>
-                        </div>
-                    </div>
+                                }}>
+                                    <label>
+                                        <input type="radio" name="stars" value="1" id="stars-1" />
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="stars" value="2" id="stars-2" />
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="stars" value="3" id="stars-3" />
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="stars" value="4" id="stars-4" />
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="stars" value="5" id="stars-5" />
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                        <span className={star_classes.icon}>
+                                            <span className={"fa fa-star"}></span>
+                                        </span>
+                                    </label>
+                                </form>
+                            </div>
+                        </div> : null}
                     <div></div>
-                    <button onClick={
-                        () => {
-                            comment ? setComment(0) : setComment(1)
-                        }}>
-                        {comment ? "Close comment box" : "Write a comment"}
-                    </button>
+                    {isLoggedIn ?
+                        <button onClick={
+                            () => {
+                                comment ? setComment(0) : setComment(1)
+                            }}>
+                            {comment ? "Close comment box" : "Write a comment"}
+                        </button>
+                        : null}
+
 
                     {comment ? <CommentBox recipe_id={id} setRefresh={setRefresh} /> : null}
                     <div className={classes.comments}> Comments: </div>
-                    <ul className={classes.no_bullets}>{comments.length > 0 ? [...comments].reverse() : ""}</ul>
+                    <ul className={classes.no_bullets}>{comments.length > 0 ? [...comments].reverse() : "No comments!"}</ul>
 
                 </div>
             </div>
