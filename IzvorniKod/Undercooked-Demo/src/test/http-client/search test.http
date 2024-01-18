@@ -25,8 +25,8 @@ GET {{api}}/recipes/search?q=slatki%20kruh
 %}
 
 
-### Ime, opis i katagorija
-GET {{api}}/recipes/search?q=slatki+kruh&category=GlavnoJelo
+### Ime, opis, kategorija i vrsta kuhinje
+GET {{api}}/recipes/search?q=slatki+kruh&category=GlavnoJelo&cuisine=Italian
 
 > {%
     client.assert(response.status == 200);

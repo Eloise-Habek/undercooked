@@ -3,6 +3,7 @@ package hr.fer.progi.UndercookedDemo.service;
 import hr.fer.progi.UndercookedDemo.dao.RecipeRepository;
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.RecipeCategory;
+import hr.fer.progi.UndercookedDemo.domain.RecipeCuisine;
 import hr.fer.progi.UndercookedDemo.domain.RecipeTag;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,10 @@ public class SearchService {
 		this.recipeRepository = recipeRepository;
 	}
 
-	public List<Recipe> findAll(RecipeCategory category, Set<RecipeTag> tags) {
+	public List<Recipe> findAll(RecipeCategory category, Set<RecipeTag> tags, RecipeCuisine cuisine) {
 		var probe = new Recipe();
 		if (category != null) probe.setCategory(category);
+		if (cuisine != null) probe.setCuisine(cuisine);
 		var example = Example.of(probe);
 
 		var list = recipeRepository.findAll(example);
@@ -32,11 +34,11 @@ public class SearchService {
 		return list.stream().filter(r -> r.getTags().containsAll(tags)).toList();
 	}
 
-	public List<Recipe> searchByKeywords(String[] keywords, RecipeCategory category, Set<RecipeTag> tags) {
+	public List<Recipe> searchByKeywords(String[] keywords, RecipeCategory category, Set<RecipeTag> tags, RecipeCuisine cuisine) {
 		// filter out the bad ones, and give rankings to the good ones
 		Map<Recipe, MatchWeightCalculator> recipes = new HashMap<>();
 
-		for (var recipe : findAll(category, tags)) {
+		for (var recipe : findAll(category, tags, cuisine)) {
 			recipes.put(recipe, new MatchWeightCalculator());
 		}
 

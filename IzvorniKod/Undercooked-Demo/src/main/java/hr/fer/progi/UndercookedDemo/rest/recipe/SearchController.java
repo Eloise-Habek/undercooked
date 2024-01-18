@@ -2,6 +2,7 @@ package hr.fer.progi.UndercookedDemo.rest.recipe;
 
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.RecipeCategory;
+import hr.fer.progi.UndercookedDemo.domain.RecipeCuisine;
 import hr.fer.progi.UndercookedDemo.domain.RecipeTag;
 import hr.fer.progi.UndercookedDemo.service.RequestDeniedException;
 import hr.fer.progi.UndercookedDemo.service.SearchService;
@@ -27,7 +28,8 @@ public class SearchController {
 	public List<Recipe> search(
 			@RequestParam(value = "q", required = false) String query,
 			@RequestParam(value = "category", required = false) RecipeCategory category,
-			@RequestParam(value = "tags", required = false) Set<RecipeTag> tags
+			@RequestParam(value = "tags", required = false) Set<RecipeTag> tags,
+			@RequestParam(value = "cuisine", required = false) RecipeCuisine cuisine
 	) {
 		if (query != null) {
 			var keywords = query.split(" ");
@@ -35,9 +37,9 @@ public class SearchController {
 			if (keywords.length == 0)
 				throw new RequestDeniedException("Include non-empty `q` parameters");
 
-			return searchService.searchByKeywords(keywords, category, tags);
+			return searchService.searchByKeywords(keywords, category, tags, cuisine);
 		}
 
-		return searchService.findAll(category, tags);
+		return searchService.findAll(category, tags, cuisine);
 	}
 }
