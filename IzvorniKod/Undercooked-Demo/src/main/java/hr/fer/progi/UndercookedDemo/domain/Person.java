@@ -131,8 +131,11 @@ public final class Person implements IPersonPublic, IPersonMinimal {
 		this.availability = availability;
 	}
 
-	public boolean isAvailable(){
-		return getAvailability().isAvailable();
+	public boolean isAvailable() {
+		if (getAvailability() != null)
+			return getAvailability().isAvailable();
+
+		return false;
 	}
 
 	@Override
