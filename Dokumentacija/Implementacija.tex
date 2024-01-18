@@ -14,16 +14,189 @@
 	
 		\section{Ispitivanje programskog rješenja}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			%\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
+			 %\textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
 	
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+			%\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+			Ispitivanje jedinica provedeno je uz pomoć okvira za ispitivanje \href{https://junit.org/junit5/}{JUnit 5}\footnote{\url{https://junit.org/junit5/}}. Provedeno je ispitivanje za važne elemente klasa SearchService, PersonService, Recipe i StarRating te sučelja PersonRepository. Rezultat pokretanja testova prikazan je na slici, a sami testovi opisani su u nastavku.
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/unit_test_screenshot.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+				\centering
+				\caption{Rezultati unit testova}
+				\label{fig:Rezultati unit testova}
+			\end{figure}
 			
+			\noindent\textbf{Ispitivanje klase SearchService}
 			
+			Klasa SearchService omogućava pretraživanje recepata prema ključnim riječima naslova i opisa. Za ispravan rad pretraživanja važna je ugniježđena klasa MatchWeightCalculator koja računa sličnost između argumenata pretrage i rezultata. Metoda pow kao parametar uzima decimalni broj i vraća decimalni broj koji asimptotski raste prema dva za veću vrijednost parametra.
+			\begin{lstlisting}
+public class MatchWeightCalculatorTest {
+	@Test
+	public void TestBasics() {
+		Assert.isTrue(SearchService.MatchWeightCalculator.pow(0) == 0, ""); // Nula u nuli,
+		Assert.isTrue(SearchService.MatchWeightCalculator.pow(1) == 1, ""); // jedan u jedan,
+		Assert.isTrue(SearchService.MatchWeightCalculator.pow(2) == 1.5, ""); // raste
+		Assert.isTrue(SearchService.MatchWeightCalculator.pow(3) == 1.75, ""); // i raste
+		Assert.isTrue(SearchService.MatchWeightCalculator.pow(Double.POSITIVE_INFINITY) == 2, ""); // asimptotski prema dva.
+	}
+}
+			\end{lstlisting}
 			
+			\noindent\textbf{Ispitivanje klase PersonService}
+			
+			Klasa PersonService služi za upravljanje podatcima vezanim uz korisnike stranice. Ispitano je kako se sustav ponaša pri neispravnom dodavanje osobe u bazu podataka.
+			\begin{lstlisting}
+@SpringBootTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+public class PersonServiceTest {
+	
+	@Autowired
+	PersonService personService;
+	
+	@Test
+	public void TestCreatePersonNull() {
+		Person person = null;
+		String expected = "Person object must be given";
+		
+		Exception e = assertThrows(IllegalArgumentException.class,
+		() -> personService.createPerson(person));
+		assertEquals(expected, e.getMessage());
+	}
+	
+	@Test
+	public void TestCreatePersonWithId() {
+		Person person = new Person();
+		person.setUsername("RMS");
+		person.setEmail("rms@gnu.org");
+		person.setName("Richard");
+		person.setSurname("Stallman");
+		person.setPassword(new BCryptPasswordEncoder().encode("superSecretPassword123"));
+		person.setAdmin(false);
+		person.setId((long) 1337);
+		String expected = "Person ID must be null, not: 1337";
+		
+		Exception e = assertThrows(IllegalArgumentException.class,
+		() -> personService.createPerson(person));
+		assertEquals(expected, e.getMessage());
+	}
+}
+			\end{lstlisting}
+			
+			\noindent\textbf{Ispitivanje klase Recipe}
+			
+			Klasa Recipe služi za modeliranje sadržaja recepta. Metoda koja se ovdje testira služi za provjeru je li ID YouTube videa povezanog s receptom valjan.
+			\begin{lstlisting}
+public class RecipeYoutubeIdTest {
+	private Recipe recipe;
+	
+	@BeforeEach
+	public void beforeEach() {
+		this.recipe = new Recipe();
+	}
+	
+	@ParameterizedTest
+	@NullSource
+	@ValueSource(strings = {"gocwRvLhDf8", "dQw4w9WgXcQ", "_POWKV-6G9M"})
+	public void testValidRegex(String youtubeId) {
+		recipe.setYoutubeEmbedId(youtubeId);
+		Assertions.assertEquals(youtubeId, recipe.getYoutubeEmbedId());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = {
+		"https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+		"https://youtu.be/dQw4w9WgXcQ",
+		"sm3504435",
+		"",
+	})
+	public void testInvalidRegex(String invalidId) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> recipe.setYoutubeEmbedId(invalidId));
+	}
+}
+			\end{lstlisting}
+			
+			\noindent\textbf{Ispitivanje klase StarRating}
+			
+			Klasa StarRating služi za modeliranje ocjene recepta. Metoda koja se ovdje testira provjerava je li dana ocjena između 1 i 5.
+			
+			\begin{lstlisting}
+public class StarRatingTest {
+	
+	private StarRating rating;
+	
+	@BeforeEach
+	public void setup() {
+		this.rating = new StarRating();
+	}
+	
+	@ParameterizedTest
+	@ValueSource(doubles = {Double.NEGATIVE_INFINITY, Double.MIN_VALUE, Double.MIN_NORMAL, -1, 0, 6, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NaN})
+	public void TestSetRatingInvalid(double number) {
+		String expected = "Invalid rating: " + number + ". Must be in range 1-5.";
+		
+		Throwable exception = assertThrows(IllegalArgumentException.class,
+		() -> rating.setRating(number)
+		);
+		assertEquals(expected, exception.getMessage());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(doubles = {1, 2.72, 3.14, 4.20, 5})
+	public void TestSetRatingExceptionValid(double number) {
+		assertDoesNotThrow(() -> rating.setRating(number));
+	}
+}
+			\end{lstlisting}
+			
+			\noindent\textbf{Ispitivanje sučelja PersonRepository}
+			
+			Sučelje PersonRepository modelira sadržaj baze podataka vezan uz korisnike stranice. Testirano je dodavanje nove osobe, a nakon toga dodavanje osobe koja je već upisana u bazu podataka.
+			
+			\begin{lstlisting}
+@SpringBootTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+public class PersonRepositoryTest {
+	
+	@Autowired
+	private PersonRepository personRepository;
+	
+	@Test
+	public void TestAddPerson() {
+		
+		Person person = new Person();
+		person.setUsername("RMS");
+		person.setEmail("rms@gnu.org");
+		person.setName("Richard");
+		person.setSurname("Stallman");
+		person.setPassword(new BCryptPasswordEncoder().encode("superSecretPassword123"));
+		person.setAdmin(false);
+		
+		Person savedPerson = personRepository.save(person);
+		
+		assertEquals(person.getUsername(), savedPerson.getUsername());
+		assertNotNull(savedPerson.getId());
+	}
+	
+	@Test
+	public void TestAddExistingPerson() {
+		//Vazno je da se ovaj test pokrene nakon prethodnog kako bi se ista osoba dvaput pokusala dodati u bazu
+		Person person = new Person();
+		person.setUsername("RMS");
+		person.setEmail("rms@gnu.org");
+		person.setName("Richard");
+		person.setSurname("Stallman");
+		person.setPassword(new BCryptPasswordEncoder().encode("superSecretPassword123"));
+		person.setAdmin(false);
+		
+		assertThrows(DataIntegrityViolationException.class,
+		() -> personRepository.save(person)
+		);
+	}
+}
+			\end{lstlisting}
 			\subsection{Ispitivanje sustava}
 			
 			% \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
