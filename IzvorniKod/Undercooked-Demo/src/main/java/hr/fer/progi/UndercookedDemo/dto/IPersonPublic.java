@@ -2,6 +2,7 @@ package hr.fer.progi.UndercookedDemo.dto;
 
 import hr.fer.progi.UndercookedDemo.domain.Recipe;
 import hr.fer.progi.UndercookedDemo.domain.StarRating;
+import hr.fer.progi.UndercookedDemo.domain.WeekdayAvailability;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,4 +17,6 @@ public interface IPersonPublic extends IPersonMinimal {
 	Collection<StarRating> getRatings();
 
 	List<Recipe> getSavedRecipes();
+
+	WeekdayAvailability getAvailability();
 }

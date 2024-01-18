@@ -52,6 +52,9 @@ public final class Person implements IPersonPublic, IPersonMinimal {
 	@OrderColumn
 	private List<Recipe> savedRecipes;
 
+	@Embedded
+	private WeekdayAvailability availability = new WeekdayAvailability();
+
 	public Long getId() {
 		return id;
 	}
@@ -118,6 +121,18 @@ public final class Person implements IPersonPublic, IPersonMinimal {
 
 	public List<Recipe> getSavedRecipes() {
 		return savedRecipes;
+	}
+
+	public WeekdayAvailability getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(WeekdayAvailability availability) {
+		this.availability = availability;
+	}
+
+	public boolean isAvailable(){
+		return getAvailability().isAvailable();
 	}
 
 	@Override

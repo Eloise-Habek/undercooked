@@ -64,6 +64,31 @@ public class PersonService {
 		return PersonRepo.save(newPerson);
 	}
 
+	public Person patchPerson(Person existing, Person requested) {
+//		if (requested.getUsername() != null) {
+//			existing.setUsername(requested.getUsername());
+//			tokenService.revokeTokens(existing);
+//		}
+
+		if (requested.getEmail() != null)
+			existing.setEmail(requested.getEmail());
+
+		if (requested.getPassword() != null)
+			existing.setPassword(new BCryptPasswordEncoder().encode(requested.getPassword()));
+
+		if (requested.getName() != null)
+			existing.setName(requested.getName());
+
+		if (requested.getSurname() != null)
+			existing.setSurname(requested.getSurname());
+
+		if (requested.getAvailability() != null)
+			existing.setAvailability(requested.getAvailability());
+
+		PersonRepo.save(existing);
+		return existing;
+	}
+
 	public void deletePerson(long PersonId) {
 		Person Person = fetch(PersonId);
 		PersonRepo.delete(Person);

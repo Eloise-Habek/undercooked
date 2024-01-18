@@ -14,4 +14,6 @@ public interface IPersonMinimal {
 	String getSurname();
 
 	Boolean getAdmin();
+
+	boolean isAvailable();
 }

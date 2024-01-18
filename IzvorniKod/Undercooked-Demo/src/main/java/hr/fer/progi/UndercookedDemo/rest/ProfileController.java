@@ -6,10 +6,7 @@ import hr.fer.progi.UndercookedDemo.service.FollowersService;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -28,6 +25,13 @@ public class ProfileController {
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
 	public Person myProfile(Principal principal) {
 		return personService.fromPrincipal(principal);
+	}
+
+	@PatchMapping
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public Person editMyProfile(Principal principal, @RequestBody Person requestPerson) {
+		var person = personService.fromPrincipal(principal);
+		return personService.patchPerson(person, requestPerson);
 	}
 
 //	@GetMapping("/{username}")
