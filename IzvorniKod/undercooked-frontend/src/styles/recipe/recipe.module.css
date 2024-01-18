@@ -23,6 +23,7 @@
   margin: 2em;
   width: 20%;
 }
+
 .title {
   font-size: 3em;
   flex: 2;
@@ -76,12 +77,10 @@
   flex-wrap: wrap;
   justify-content: left;
   margin: 3em;
-  border-style: solid;
-  background-color: white;
 }
 
 .images {
-  max-height: 200px;
+  max-height: 300px;
   width: auto;
   color: #fff;
   padding: 10px;
@@ -106,6 +105,8 @@
   width: calc(33.33% - 3em);
   box-sizing: border-box;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
 .mini_description:hover,
@@ -115,6 +116,15 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+.prep_time h4 {
+  margin: 0;
+}
+
+.ingredients h4 {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
 .description {
   margin-top: 2em;
   margin-bottom: 4em;
@@ -122,11 +132,28 @@
   height: auto;
   margin-left: auto;
   margin-right: auto;
+  gap: 1em;
+}
+
+.description h1 {
+  font-size: medium;
+  margin-top: 0;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.description h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .ingredients {
   display: flex;
   flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
 }
 
 .ingredients div {
@@ -222,5 +249,22 @@ button {
 }
 
 .no_bullets {
-    list-style-type: none;
+  list-style-type: none;
+}
+
+i {
+  color: black;
+}
+
+textarea {
+  border-radius: 5px;
+  font-size: large;
+}
+
+input {
+  background-color: #c1c8cd;
+  padding: 2px;
+  margin: 5px;
+  border-radius: 4px;
+  font-size: larger;
 }

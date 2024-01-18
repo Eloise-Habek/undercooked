@@ -11,6 +11,7 @@
 
 .register_form {
   width: 400px;
+  height: fit-content;
   padding: 20px;
   margin-top: 5vh;
   margin-bottom: 5vh;
@@ -56,6 +57,3 @@
 .registerButton:hover {
   background-color: #9615db;
 }
-
-
-

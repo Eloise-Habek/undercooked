@@ -1,12 +1,13 @@
 .profileWrapper {
   margin: auto;
   padding: 20px;
-  background-color: #e9e9e9;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  height: 100vh;
 }
 
 .profileSection {
@@ -113,6 +114,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  text-decoration: none;
 }
 
 .recipeSection {
@@ -145,6 +147,7 @@
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.9);
   gap: 10px;
+  border-radius: 3em;
 }
 
 .profileStats {
@@ -164,6 +167,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: #2196f3;
+  text-decoration: none !important;
 }
 
 .statLabel {
@@ -171,8 +175,23 @@
   color: #555;
   font-size: 0.9rem;
   margin-top: 5px;
+  font-weight: bold;
 }
 
 .no_bullets {
-    list-style-type: none;
+  list-style-type: none;
+  background-color: #e9e9e9;
+  margin: 0;
+}
+
+.value {
+  text-decoration: none;
+}
+
+.user_stats_numbers {
+  text-decoration: none;
+}
+
+.user_stats_numbers:hover {
+  color: #000000;
 }

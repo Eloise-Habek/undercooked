@@ -130,3 +130,47 @@ button:active {
   box-shadow: 0 0 10px rgba(150, 21, 219, 0.7);
   transform: scale(0.95);
 }
+
+.ul_main_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ul_array_of_recipe {
+  list-style: none;
+}
+
+.search_category_wrapper_modified {
+  height: 50%;
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  width: 200px;
+  appearance: none;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%233498db" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-position: right 10px top 50%;
+  background-repeat: no-repeat;
+}
+
+select:hover {
+  border-color: #2980b9;
+}
+
+/* Focus effect */
+select:focus {
+  outline: none;
+  border-color: #2980b9;
+}

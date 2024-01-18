@@ -60,7 +60,7 @@
 .top_buttons {
   padding: 10px 20px;
   margin: 0 10px;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
@@ -70,6 +70,9 @@
   background-color: #9615db;
   transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .top_buttons:hover {
@@ -88,10 +91,15 @@
 
 .chef_button {
   width: 30%;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 20px;
+}
+
+.chef_username p {
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .nav_btn {
@@ -128,4 +136,31 @@
 .buttonImage:active {
   transform: scale(0.9);
   filter: brightness(0.8);
+}
+
+.messages_number {
+  display: inline;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.top_left_message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.admin_logout_wrapper {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1023px) {
+  .buttonImage {
+    display: none;
+  }
 }

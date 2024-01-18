@@ -25,6 +25,7 @@
   text-decoration: none;
   font-weight: bold;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .post_recipe_button:hover {
@@ -35,4 +36,8 @@
 .post_recipe_button:active {
   transform: scale(0.4);
   box-shadow: none;
+}
+
+h3 {
+  text-decoration: none;
 }

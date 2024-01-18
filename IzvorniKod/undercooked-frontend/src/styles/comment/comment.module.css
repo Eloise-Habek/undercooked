@@ -1,16 +1,19 @@
 .wrapper {
   display: flex;
   margin: 2em;
-  border: 1px solid black;
+  border: 3px solid black;
   border-radius: 1em;
 }
 
 .img_and_username {
-  margin: 2em;
+  margin: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-weight: bold;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: rgba(43, 159, 205, 0.511);
 }
 
 .img_and_username img {
@@ -21,4 +24,30 @@
 .comment_text {
   margin: 1em;
   flex: 1;
+}
+
+.edit_comment_btn {
+  height: 55px;
+  width: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 1em;
+}
+
+.username_line {
+  margin-bottom: 10px;
+}
+
+.timestamp_line {
+  font-weight: lighter;
+}
+
+.button_edit_wrapper {
+  height: 30%;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-right: 1em;
 }

@@ -24,3 +24,10 @@
   margin: 0.6em;
   font-weight: bold;
 }
+
+/* Add these styles to your existing stylesheet or create a new one */
+
+/* Optional: Add some additional styling for a cleaner look */
+.prep_time {
+  background-color: aquamarine;
+}

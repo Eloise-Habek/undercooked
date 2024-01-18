@@ -1,3 +1,8 @@
+.inbox_wrapper {
+  height: 100vh;
+  background-color: rgb(196, 218, 226);
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
