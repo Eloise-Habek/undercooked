@@ -83,3 +83,12 @@ Content-Type: application/json
     client.assert(response.body.available == true);
     client.assert(response.body.name == "Orep"); // name still the same from the last PATCH
 %}
+
+
+### delete pero
+DELETE {{api}}/profile
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}

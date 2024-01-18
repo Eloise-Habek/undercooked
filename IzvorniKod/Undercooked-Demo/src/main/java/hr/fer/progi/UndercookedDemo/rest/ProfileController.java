@@ -34,6 +34,13 @@ public class ProfileController {
 		return personService.patchPerson(person, requestPerson);
 	}
 
+	@DeleteMapping
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public void deleteOwnProfile(Principal principal) {
+		var person = personService.fromPrincipal(principal);
+		personService.deletePerson(person.getId());
+	}
+
 //	@GetMapping("/{username}")
 //	public IPersonPublic profile(@PathVariable("username") String username) {
 //		var person = personService.findByUsername(username);
