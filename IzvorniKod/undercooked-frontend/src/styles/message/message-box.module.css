@@ -2,16 +2,22 @@
   border-radius: 1em;
   margin: 2em;
   padding: 0.2em;
-  background-color: rgba(33, 150, 243, 0.3);
+  background-color: #EDEDED;
   margin-left: auto 2em;
   margin-right: auto 2em;
   height: min-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .to_input {
   display: flex;
   justify-content: left;
+  
 }
+.username_input {
+  background-color: white;
+}
+
 
 .text_input {
   max-width: 100px;
@@ -28,4 +34,7 @@
 .text_fields {
   border-radius: 10px;
   padding: 10px;
+  width: 80%;
+  outline: none;
+  resize: none;
 }

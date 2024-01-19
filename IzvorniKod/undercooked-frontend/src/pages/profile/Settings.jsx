@@ -147,7 +147,10 @@ export function Settings() {
             secureLocalStorage.removeItem("isAdmin");
             redirect("/")
           }, () => {
-            alert("Delete failed!")
+            secureLocalStorage.removeItem("logInToken");
+            secureLocalStorage.removeItem("username");
+            secureLocalStorage.removeItem("isAdmin");
+            redirect("/")
           })
         }}>
           Delete account

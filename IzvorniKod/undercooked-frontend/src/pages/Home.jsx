@@ -20,20 +20,19 @@ export function Home() {
           })
         );
       },
-      () => {}
+      () => { }
     );
   }, [feedService]);
   return (
-    <>
-      <ul className={classes.wrapper}>
-        {recipes.length > 0 ? (
-          recipes
-        ) : (
-          <h1>Follow people to see their posts</h1>
-        )}
-      </ul>
-      {/* <PageNav /> */}
-      <Footer sticky={1} />
-    </>
+    <div className={classes.wrapper}>
+      {recipes.length > 0 ?
+        <div>
+          {recipes}
+        </div>
+        :
+        <div className={classes.postedRecipes}>Follow people to see their posts</div>
+      }
+      <Footer sticky={0} />
+    </div>
   );
 }

@@ -6,6 +6,9 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.main_login_div input {
+  background-color: white;
+}
 
 .form_wrap {
   width: 400px;
@@ -14,7 +17,8 @@
   margin-top: 10vh;
   border-radius: 8px;
   background-color: #7d7f80;
-  box-shadow: 0 0 40px #9615db;
+  box-shadow: 0 0 40px #ededed;
+  border: 3px solid #ededed;
   position: fixed;
   backdrop-filter: blur(13px);
   background-color: rgb(225, 225, 225, 0);

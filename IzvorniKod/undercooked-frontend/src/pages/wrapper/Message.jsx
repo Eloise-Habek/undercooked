@@ -1,12 +1,13 @@
-import "../../styles/home.css";
+//import "../../styles/home.css";
+import classes from "../../styles/header/alert.module.css"
 
 export function Message({ message, hide, setHideMessage }) {
   return (
-    <div className="message-box-wrapper">
-      <div className={"message-box " + (hide ? "message-box-hide" : null)}>
+    <div className={classes.message_box_wrapper}>
+      <div className={classes.message_box + " " + (hide ? classes.message_box_hide : null)}>
         {message}
         <button
-          className="message-box-button"
+          className={classes.message_box_button}
           onClick={() => {
             setHideMessage(1);
           }}

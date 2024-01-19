@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { RecipeMini } from "../components/RecipeMini";
 import AdminService from "../services/AdminService";
 import { NavLink } from "react-router-dom";
-import "../styles/adminpage.css";
+import classes from "../styles/admin/stats.module.css";
+import classes2 from "../styles/admin/adminpage.module.css";
 export function Stats() {
   const [bestRated, setBestRated] = useState(null);
   const [user, setUser] = useState("");
@@ -30,15 +31,15 @@ export function Stats() {
     );
   });
   return (
-    <div className="admin_stats_wrapper">
-      <header className="admin_header">
+    <div className={classes.admin_stats_wrapper}>
+      <header className={classes2.admin_header}>
         <div>
-          <NavLink className="users_stats_btn" to={"/admin"}>
+          <NavLink className={classes2.users_stats_btn} to={"/admin"}>
             Users
           </NavLink>
         </div>
         <div>
-          <NavLink className="users_stats_btn" to={"/admin/stats"}>
+          <NavLink className={classes2.users_stats_btn} to={"/admin/stats"}>
             Stats
           </NavLink>
         </div>

@@ -127,9 +127,9 @@ export function Recipe() {
         setCategory(res.category);
         setCuisine(res.cuisine);
       },
-      () => {}
+      () => { }
     );
-  }, [id, refresh, recipeService]);
+  }, [id, refresh, recipeService, isLoggedIn]);
   return (
     <>
       <div className={classes.wrapper}>
@@ -145,8 +145,8 @@ export function Recipe() {
           </div>
           <div className={classes.edit_button_wrapper}>
             {username !== null &&
-            (username === secureLocalStorage.getItem("username") ||
-              secureLocalStorage.getItem("isAdmin")) ? (
+              (username === secureLocalStorage.getItem("username") ||
+                secureLocalStorage.getItem("isAdmin")) ? (
               <NavLink
                 className={classes.edit_button}
                 to={"/recipe/edit/" + id}
@@ -156,48 +156,56 @@ export function Recipe() {
             ) : null}
           </div>
         </div>
-        <div className={classes.image_container}>
-          {image === null ? (
-            <img
-              className={classes.images}
-              src={require("../../pages/images/6978255.png")}
-              alt=""
-            />
-          ) : (
-            <img className={classes.images} src={image} alt="" />
-          )}
-        </div>
+
 
         <div className={classes.descriptions_wrapper}>
-          <div className={classes.mini_description}>{desc}</div>
+          <div className={classes.prep_time}>
+            {image === null ? (
+              <img
+                className={classes.images}
+                src={require("../../pages/images/6978255.png")}
+                alt=""
+              />
+            ) : (
+              <img className={classes.images} src={image} alt="" />
+            )}
+          </div>
+          <div className={classes.prep_time}>
+            {embedId !== "" && embedId !== null && embedId !== undefined ? (
+              <>
+                <h2>Video:</h2>
+                <YoutubeEmbed embedId={embedId} />
+              </>
+            ) : null}
+          </div>
+          <div className={classes.prep_time}>
+            <h2>Description:</h2>
+            <div>{desc}</div>
+          </div>
           <div className={classes.prep_time}>
             <h2>Preparation time:</h2>
             <h4>{prepTime}</h4>
           </div>
+
           <div className={classes.ingredients}>
             <h2>Ingredients:</h2>
             <ul>{ingredients}</ul>
           </div>
-        </div>
-        <div className={classes.description}>
-          <h1>Preparation:</h1>
-          {prepDesc}
+          <div className={classes.prep_time}>
+            <h2>Preparation:</h2>
+            <div>{prepDesc}</div>
 
-          {embedId !== "" && embedId !== null && embedId !== undefined ? (
-            <>
-              <h1>Video:</h1>
-              <YoutubeEmbed embedId={embedId} />
-            </>
-          ) : null}
+          </div>
+          <div className={classes.ingredients}>
+            <h2>Category:</h2>
+            <h4>{category}</h4>
+            <h2>Type of cuisine:</h2>
+            <h4>{cuisine}</h4>
+            {tagArray.length > 0 ? <h2>Tags:</h2> : null}
+            <ul>{tagArray}</ul>
+          </div>
         </div>
-        <div className={classes.ingredients}>
-          <h2>Category:</h2>
-          <h4>{category}</h4>
-          <h2>Type of cuisine:</h2>
-          <h4>{cuisine}</h4>
-          {tagArray.length > 0 ? <h2>Tags:</h2> : null}
-          <ul>{tagArray}</ul>
-        </div>
+
         {isLoggedIn ? (
           <button
             onClick={() => {
@@ -205,11 +213,11 @@ export function Recipe() {
               recipeService.isSaved(id).then(
                 (saved) => {
                   recipeService.setSaved(id, !saved).then(
-                    () => {},
-                    () => {}
+                    () => { },
+                    () => { }
                   );
                 },
-                () => {}
+                () => { }
               );
             }}
             className={classes.save_recipe}
@@ -240,8 +248,8 @@ export function Recipe() {
                           .value
                       )
                       .then(
-                        () => {},
-                        () => {}
+                        () => { },
+                        () => { }
                       )
                       .then(() => {
                         setRefresh(refresh + 1);

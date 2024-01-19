@@ -1,7 +1,7 @@
 //import { PageNav } from "../components/PageNav";
 import { RecipeMini } from "../../components/RecipeMini";
 import { Footer } from "../wrapper/Footer";
-import classes from "../../styles/home/home.module.css";
+import classes from "../../styles/profile/userlist.module.css";
 import { useEffect, useMemo, useState } from "react";
 import RecipeService from "../../services/RecipeService";
 import { useParams } from "react-router-dom";
@@ -16,21 +16,12 @@ export function SavedRecipes() {
             setRecipeArray(res.map((e) => <RecipeMini details={e} />))
         }, () => { });
     }, [recipeService, user])
-    return (
-        <>
-            {/* <div className="main_div">
-        <h1 className="naslov">Dobrodošli na CookBooked!</h1>
 
-        <div className="search-container">
-            <input type="text" className="search-input" placeholder="Pretraži recepte..."/>
-            <button className="search-button">Pretraži</button>
-        </div>
-    </div> */}
-            <div className={classes.wrapper}>
-                {recipeArray.length > 0 ? recipeArray : "loading..."}
-            </div>
-            {/* <PageNav /> */}
-            <Footer sticky={1} />
-        </>
-    );
+    return <div className={classes.wrapper}>
+        <div className={classes.title}><h3>Saved recipes:</h3></div>
+        <ul className={classes.no_bullets}>
+            {recipeArray.length > 0 ? recipeArray : "loading..."}
+        </ul>
+        <Footer sticky={0} />
+    </div>
 }

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import classes from "../../styles/recipe/recipe.module.css";
-import { NavLink, redirect, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 //import { Footer } from "./wrapper/Footer";
 import { Form } from "react-router-dom";
 import CategoryService from "../../services/CategoryService";
@@ -10,7 +10,7 @@ import CuisineService from "../../services/CuisineService";
 function Option({ id, set }) {
   var index = id;
   return (
-    <div>
+    <div >
       <input
         required
         placeholder="ingredient"
@@ -208,28 +208,37 @@ export function PostRecipePage() {
             </NavLink>
           </div>
         </div>
-        <div className={classes.image_container}>
-          {image === null ? (
-            <img
-              className={classes.images}
-              src={require("../../pages/images/6978255.png")}
-              alt=""
-            />
-          ) : (
-            <img className={classes.images} src={image} alt="" />
-          )}
-          <input
-            id="recipe_image_input"
-            type="file"
-            name="image"
-            onChange={(e) => {
-              console.log(e.target.files);
-              setImage(URL.createObjectURL(e.target.files[0]));
-            }}
-          />
-        </div>
+
 
         <div className={classes.descriptions_wrapper}>
+          <div className={classes.prep_time}>
+            {image === null ? (
+              <img
+                className={classes.images}
+                src={require("../../pages/images/6978255.png")}
+                alt=""
+              />
+            ) : (
+              <img className={classes.images} src={image} alt="" />
+            )}
+            <input
+              id="recipe_image_input"
+              type="file"
+              name="image"
+              onChange={(e) => {
+                console.log(e.target.files);
+                setImage(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+          </div>
+          <div className={classes.prep_time}>
+            <h2>Video:</h2>
+            <input
+              className={classes.yt_link}
+              name="youtube_id"
+              placeholder="Paste youtube video id"
+            ></input>
+          </div>
           <div className={classes.mini_description}>
             <textarea
               id="description"
@@ -242,7 +251,7 @@ export function PostRecipePage() {
           <div className={classes.prep_time}>
             <h2>Preparation time:</h2>
             <div className={classes.time_inputs}>
-              <input
+              <input min={0}
                 className={classes.hours}
                 id="hour_input"
                 required
@@ -252,6 +261,7 @@ export function PostRecipePage() {
               />
               h
               <input
+                min={0}
                 className={classes.minutes}
                 required
                 id="mins_input"
@@ -262,6 +272,7 @@ export function PostRecipePage() {
               min
             </div>
           </div>
+
           <div className={classes.ingredients}>
             <h2>Ingredients:</h2>
             <ul id="ing_options">{inputs}</ul>
@@ -276,48 +287,45 @@ export function PostRecipePage() {
               Add ingredient
             </button>
           </div>
+          <div className={classes.prep_time}>
+            <h2>Preparation:</h2>
+            <textarea
+              className={classes.prep_text_area}
+              id="prep_desc"
+              name="prep_desc"
+              rows="4"
+              cols="50"
+              placeholder="Preparation discription..."
+            ></textarea>
+
+          </div>
+          <div className={classes.ingredients}>
+            <h2>Category:</h2>
+            <select name="category">{catList}</select>
+            <h2>Type of cuisine:</h2>
+            <select name="cuisine">{cuisineList}</select>
+            <h2>Tags:</h2>
+            <ul id="tags">{tagArray}</ul>
+            <button
+              type="button"
+              onClick={() => {
+                setTagArray(
+                  tagArray.concat([
+                    <Tag
+                      tag_id={tagArray.length}
+                      set={setTagArray}
+                      tagList={tagList}
+                    />,
+                  ])
+                );
+              }}
+            >
+              Add tag
+            </button>
+          </div>
         </div>
-        <div className={classes.description}>
-          <h1>Preparation:</h1>
-          <textarea
-            className={classes.prep_text_area}
-            id="prep_desc"
-            name="prep_desc"
-            rows="4"
-            cols="50"
-            placeholder="Preparation discription..."
-          ></textarea>
-          <h1>Video:</h1>
-          <input
-            className={classes.yt_link}
-            name="youtube_id"
-            placeholder="Paste youtube video id"
-          ></input>
-        </div>
-        <div className={classes.ingredients}>
-          <h2>Category:</h2>
-          <select name="category">{catList}</select>
-          <h2>Type of cuisine:</h2>
-          <select name="cuisine">{cuisineList}</select>
-          <h2>Tags:</h2>
-          <ul id="tags">{tagArray}</ul>
-          <button
-            type="button"
-            onClick={() => {
-              setTagArray(
-                tagArray.concat([
-                  <Tag
-                    tag_id={tagArray.length}
-                    set={setTagArray}
-                    tagList={tagList}
-                  />,
-                ])
-              );
-            }}
-          >
-            Add tag
-          </button>
-        </div>
+
+
         <button className={classes.save_recipe} type="submit">
           {"Post recipe"}
         </button>

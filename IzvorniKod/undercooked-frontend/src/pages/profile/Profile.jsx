@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import ProfileService from "../../services/ProfileService";
 import secureLocalStorage from "react-secure-storage";
 import { useNavigate, useParams } from "react-router-dom";
-import "../../styles/profile.css";
+//import "../../styles/profile.css";
 
 import { RecipeMini } from "../../components/RecipeMini";
 import { SendMessageBox } from "../../components/SendMessageBox";

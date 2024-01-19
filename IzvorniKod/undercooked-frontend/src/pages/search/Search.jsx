@@ -107,35 +107,55 @@ export function Search({ setMessage }) {
             className={classes.search_category_wrapper_modified}
             action="/search"
           >
-            <div className={classes.search_container}>
-              <input className={classes.search_input} type="search" name="q" />
-              <button type="submit" className={classes.search_button} placeholder="Search...">
-                Search
+            <div className={classes.x_button_left}>
+              <button
+                onClick={() => {
+                  setRecipeArray([]);
+                  navigate("/search");
+                }}
+                type="button"
+              >
+                {" X "}
               </button>
             </div>
-            <div className={classes.category_select}>
-              <div>Search by category:</div>
-              <select multiple="" name="category">
-                {catList.length > 0 ? catList : ""}
-              </select>
+
+            <div>
+              <div className={classes.search_container}>
+                <input className={classes.search_input} type="search" name="q" placeholder="Search..." />
+                <button type="submit" className={classes.search_button} >
+                  Search
+                </button>
+              </div>
+              <div className={classes.cat_cui_wrapper}>
+                <div className={classes.category_select}>
+                  <div>Search by category:</div>
+                  <select multiple="" name="category">
+                    {catList.length > 0 ? catList : ""}
+                  </select>
+                </div>
+                <div className={classes.category_select}>
+                  <div>Search by cuisine:</div>
+                  <select multiple="" name="cuisine">
+                    {cuiList.length > 0 ? cuiList : ""}
+                  </select>
+                </div>
+              </div>
+
             </div>
-            <div className={classes.category_select}>
-              <div>Search by cuisine:</div>
-              <select multiple="" name="cuisine">
-                {cuiList.length > 0 ? cuiList : ""}
-              </select>
+
+            <div className={classes.x_button}>
+              <button
+                onClick={() => {
+                  setRecipeArray([]);
+                  navigate("/search");
+                }}
+                type="button"
+              >
+                {" X "}
+              </button>
             </div>
           </Form>
-          <button
-            onClick={() => {
-              setRecipeArray([]);
-              navigate("/search");
-            }}
-            type="button"
-          >
-            {" "}
-            X{" "}
-          </button>
+
           <ul className={classes.ul_array_of_recipe}>{recipeArray}</ul>
         </div>
       </>
@@ -159,17 +179,19 @@ export function Search({ setMessage }) {
             </button>
           </div>
 
-          <div className={classes.category_select}>
-            <div>Search by category:</div>
-            <select multiple="" name="category">
-              {catList.length > 0 ? catList : ""}
-            </select>
-          </div>
-          <div className={classes.category_select}>
-            <div>Search by cuisine:</div>
-            <select multiple="" name="cuisine">
-              {cuiList.length > 0 ? cuiList : ""}
-            </select>
+          <div className={classes.cat_cui_wrapper}>
+            <div className={classes.category_select}>
+              <div>Search by category:</div>
+              <select multiple="" name="category">
+                {catList.length > 0 ? catList : ""}
+              </select>
+            </div>
+            <div className={classes.category_select}>
+              <div>Search by cuisine:</div>
+              <select multiple="" name="cuisine">
+                {cuiList.length > 0 ? cuiList : ""}
+              </select>
+            </div>
           </div>
         </div>
       </Form>

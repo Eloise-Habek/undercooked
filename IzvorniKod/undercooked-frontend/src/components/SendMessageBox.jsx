@@ -27,7 +27,7 @@ export function SendMessageBox({ username, setReply }) {
 
                     {username !== null ?
                         <input id="input1" required type="text" name="receiver" placeholder="username" readOnly hidden /> :
-                        <input required type="text" name="receiver" placeholder="username" />}
+                        <input className={classes.username_input} required type="text" name="receiver" placeholder="username" />}
                 </div>
                 <div className={classes.reply_column}>
                     <textarea className={classes.text_fields} id="freeform" name="text" rows="4" cols="50" placeholder="Enter message here...">

@@ -37,15 +37,23 @@ export function Header({
     <>
       <header className={classes.two_headers_wrapper}>
         <div className={classes.header}>
-          <div className={classes.empty_div}></div>
-          <Message
-            className={classes.top_left_message}
-            message={message}
-            hide={hide}
-            setHideMessage={setHideMessage}
-          />
+          {/* <div className={classes.empty_div}></div> */}
+
+          <div className={classes.profile_btns_wrapper_2}>
+            <Message
+              className={classes.top_left_message}
+              message={message}
+              hide={hide}
+              setHideMessage={setHideMessage}
+            />
+
+            <div className={classes.webpage_title_2}>
+              Undercooked
+            </div>
+          </div>
+
           <div className={classes.webpage_title}>
-            <h3>Undercooked</h3>
+            Undercooked
           </div>
           <div className={classes.profile_btns_wrapper}>
             <div className={classes.admin_logout_wrapper}>
@@ -76,7 +84,7 @@ export function Header({
                 className={classes.chef_button}
               >
                 <div className={classes.chef_username}>
-                  <p>{secureLocalStorage.getItem("username")}</p>
+                  {secureLocalStorage.getItem("username")}
                 </div>
                 <img
                   src={require("../images/chef.png")}

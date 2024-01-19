@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+.wrapper input {
+  background-color: white;
+}
+
 .users_stats_btn {
   background-color: #9615db;
   border: none;
@@ -14,17 +18,17 @@
   text-decoration: none;
 }
 
-.btn-info {
+.btn_info {
   background-color: #9615db;
   border: none;
   margin: 10px;
 }
 
-.btn-info:hover {
+.btn_info:hover {
   background-color: rgb(6, 117, 12);
 }
 
-.btn-danger {
+.btn_danger {
   margin: 10px;
 }
 

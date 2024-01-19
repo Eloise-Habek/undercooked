@@ -9,14 +9,6 @@
   align-items: center;
 }
 
-h1 {
-  margin-top: 3em;
-  border-style: solid;
-  border-radius: 10px;
-  background-color: rgba(191, 81, 218, 0.144);
-  padding: 20px;
-}
-
 .postedRecipes {
   width: 80%;
   font-size: 1.5em;

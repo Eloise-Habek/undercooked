@@ -7,7 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
-import "../styles/adminpage.css";
+import classes from "../styles/admin/adminpage.module.css"
 import AdminService from "../services/AdminService";
 
 export function AdminPage() {
@@ -45,30 +45,30 @@ export function AdminPage() {
   }, [id, navigate, adminService, refresh]); // variable o kojima funkcija ovisi (bitno da react zna kada ponovno učitati komponentu)
 
   return (
-    <div className="wrapper">
-      <header className="admin_header">
+    <div className={classes.wrapper}>
+      <header className={classes.admin_header}>
         <div>
-          <NavLink className="users_stats_btn" to={"/admin"}>
+          <NavLink className={classes.users_stats_btn} to={"/admin"}>
             Users
           </NavLink>
         </div>
         <div>
-          <NavLink className="users_stats_btn" to={"/admin/stats"}>
+          <NavLink className={classes.users_stats_btn} to={"/admin/stats"}>
             Stats
           </NavLink>
         </div>
       </header>
 
-      <div className="form_container">
+      <div className={classes.form_container}>
         {/*Form šalje post request na /admin s podatkom o id*/}
-        <Form method="post" action="/admin" className="container">
+        <Form method="post" action="/admin">
           <div>
-            <label htmlFor="" className="input_label">
+            <label htmlFor="">
               Get by ID:
             </label>
-            <input required type="text" name="userId" className="input_field" />
+            <input required type="text" name="userId" />
           </div>
-          <button type="submit" className="btn btn-info">
+          <button type="submit" className={classes.btn_info}>
             Submit
           </button>
           <button
@@ -76,15 +76,15 @@ export function AdminPage() {
             onClick={() => {
               navigate("/admin");
             }}
-            className="btn btn-danger"
+            className={classes.btn_danger}
           >
             X
           </button>
         </Form>
       </div>
-      <div className="list_container">
-        <div className="row">
-          <table className="table table-striped table-bordered">
+      <div>
+        <div>
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
@@ -107,7 +107,7 @@ export function AdminPage() {
                   <td>{user.surname}</td>
                   <td>
                     <button
-                      className="btn btn-info"
+                      className={classes.btn_info}
                       onClick={() => {
                         adminService.removeUser(user.id).then(
                           () => {
@@ -125,7 +125,7 @@ export function AdminPage() {
                   <td>{user.admin.toString()}</td>
                   <td>
                     <button
-                      className="btn btn-info"
+                      className={classes.btn_info}
                       onClick={() => {
                         adminService.setAdmin(user.id, !user.admin).then(
                           () => {

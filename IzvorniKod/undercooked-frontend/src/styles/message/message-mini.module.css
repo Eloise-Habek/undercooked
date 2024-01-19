@@ -1,9 +1,10 @@
 .wrapper {
   margin: 2em;
-  border: 2px solid black;
+  border: 2px solid #EDEDED;
   border-radius: 1em;
   width: 80%;
   background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .message_wrapper {
   padding: 1em;
@@ -26,7 +27,7 @@
   padding: 1em;
   font-weight: bolder;
   border-radius: 10px;
-  background-color: rgba(53, 133, 207, 0.212);
+  background-color: #EDEDED;
 }
 
 .img_and_username img {
@@ -36,6 +37,7 @@
 .message_text {
   display: flex;
   justify-content: left;
+  align-items: center;
   flex: 1;
   margin: 1em;
 }

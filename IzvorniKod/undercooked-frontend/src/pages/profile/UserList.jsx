@@ -18,11 +18,11 @@ export function UserList({ followers, following }) {
             followService.getFollowing(user).then(res => setUserArray(res), () => { });
         }
     }, [followService, followers, following, user])
-    return <div>
-        <div><h3>{followers ? "Followers:" : "Following:"}</h3></div>
+    return <div className={classes.wrapper}>
+        <div className={classes.title}><h3>{followers ? "Followers:" : "Following:"}</h3></div>
         <ul className={classes.no_bullets}>
             {arrayDataItems}
         </ul>
-        <Footer sticky={1} />
+        <Footer sticky={0} />
     </div>
 }

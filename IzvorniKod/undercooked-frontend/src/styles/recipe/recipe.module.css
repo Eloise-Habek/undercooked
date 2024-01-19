@@ -1,7 +1,12 @@
 .wrapper {
   padding: 2em;
-  background-color: #e9e9e9;
 }
+
+.wrapper input {
+  background-color: white;
+}
+
+
 
 .mini_wrapper {
   display: flex;
@@ -9,10 +14,14 @@
   justify-content: space-between;
   margin-bottom: 20px;
   gap: 2em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.526);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 1em;
   background-color: rgba(33, 150, 243, 0.9);
+  height: 10vw;
+}
+.mini_wrapper input {
+  width: 100%;
 }
 
 .mini_wrapper img {
@@ -49,6 +58,10 @@
   background-color: #9615db;
   transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  
+}
+.edit_button i {
+  color: white;
 }
 
 .edit_button:hover {
@@ -109,11 +122,43 @@
   flex-direction: column;
 }
 
+.mini_description textarea {
+  height: 100%;
+  width: 100%;
+  resize: none;
+}
+
+.prep_time textarea {
+  height: 100%;
+  width: 100%;
+  resize: none;
+}
+
 .mini_description:hover,
 .prep_time:hover,
 .ingredients:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.ingredients h2 {
+  font-size: 2vw;
+}
+
+.ingredients select {
+  width: 80%;
+}
+
+.option input {
+  width: 80%;
+}
+
+.prep_time h2 {
+  font-size: 2vw;
+}
+
+.prep_time input {
+  width: 80%;
 }
 
 .prep_time h4 {
@@ -144,8 +189,7 @@
 }
 
 .description h2 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  font-size: 2vw;
 }
 
 .ingredients {

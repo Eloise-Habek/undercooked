@@ -1,11 +1,11 @@
-import "../styles/pleaseLogin.css";
+import classes from "../styles/login/pleaseLogin.module.css";
 
 export function PleaseLogin() {
   return (
-    <>
-      <div className="please_login_wrapper">
-        <h1>Please login to see this content</h1>
+    <div className={classes.wrapper}>
+      <div className={classes.postedRecipes}>
+        Please login to see this content
       </div>
-    </>
+    </div>
   );
 }

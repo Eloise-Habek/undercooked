@@ -226,26 +226,31 @@ export function EditRecipePage({ setMessage }) {
                     </div>
 
                 </div>
-                <div className={classes.image_container}>
-                    {image === null ?
-                        <img
-                            className={classes.images}
-                            src={require("../../pages/images/6978255.png")}
-                            alt=""
-                        />
-                        :
-                        <img
-                            className={classes.images}
-                            src={image}
-                            alt=""
-                        />
-                    }
-                    <input id="recipe_image_input" type="file" name="image" onChange={(e) => {
-                        setImage(URL.createObjectURL(e.target.files[0]));
-                    }} />
-                </div>
+
 
                 <div className={classes.descriptions_wrapper}>
+                    <div className={classes.prep_time}>
+                        {image === null ?
+                            <img
+                                className={classes.images}
+                                src={require("../../pages/images/6978255.png")}
+                                alt=""
+                            />
+                            :
+                            <img
+                                className={classes.images}
+                                src={image}
+                                alt=""
+                            />
+                        }
+                        <input id="recipe_image_input" type="file" name="image" onChange={(e) => {
+                            setImage(URL.createObjectURL(e.target.files[0]));
+                        }} />
+                    </div>
+                    <div className={classes.prep_time}>
+                        <h2>Video:</h2>
+                        <input name="youtube_id" id="youtube_id" placeholder="Paste youtube video id"></input>
+                    </div>
                     <div className={classes.mini_description}>
                         <textarea id="description" name="description" rows="4" cols="50" placeholder='Discription...'>
 
@@ -271,32 +276,33 @@ export function EditRecipePage({ setMessage }) {
                             setInputs(inputs2);
                         }}>Add ingredient</button>
                     </div>
-                </div>
-                <div className={classes.description}>
-                    <h1>Preparation:</h1>
-                    <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
+                    <div className={classes.prep_time}>
+                        <h2>Preparation:</h2>
+                        <textarea id="prep_desc" name="prep_desc" rows="4" cols="50" placeholder='Preparation discription...'>
 
-                    </textarea>
-                    <h1>Video:</h1>
-                    <input name="youtube_id" id="youtube_id" placeholder="Paste youtube video id"></input>
+                        </textarea>
+
+                    </div>
+                    <div className={classes.ingredients}>
+                        <h2>Category:</h2>
+                        <select id="category" name="category">
+                            {catList}
+                        </select>
+                        <h2>Type of cuisine:</h2>
+                        <select id="cuisine" name="cuisine">
+                            {cuisineList}
+                        </select>
+                        <h2>Tags:</h2>
+                        <ul id="tags">
+                            {tagArray}
+                        </ul>
+                        <button type='button' onClick={() => {
+                            setTagArray(tagArray.concat([<Tag tag_id={tagArray.length} set={setTagArray} tagList={tagList} />]))
+                        }}>Add tag</button>
+                    </div>
                 </div>
-                <div className={classes.ingredients}>
-                    <h2>Category:</h2>
-                    <select id="category" name="category">
-                        {catList}
-                    </select>
-                    <h2>Type of cuisine:</h2>
-                    <select id="cuisine" name="cuisine">
-                        {cuisineList}
-                    </select>
-                    <h2>Tags:</h2>
-                    <ul id="tags">
-                        {tagArray}
-                    </ul>
-                    <button type='button' onClick={() => {
-                        setTagArray(tagArray.concat([<Tag tag_id={tagArray.length} set={setTagArray} tagList={tagList} />]))
-                    }}>Add tag</button>
-                </div>
+
+
                 <button className={classes.save_recipe} type="submit" >{"Save changes"}</button>
                 <button className={classes.save_recipe} type="button" onClick={() => {
                     recipeService.deleteRecipe(id).then(() => { setMessage("Deleted!") }, () => { setMessage("Not deleted!") })

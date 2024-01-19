@@ -1,24 +1,8 @@
 .two_headers_wrapper {
+  width: 100%;
   position: fixed;
   top: 0;
   z-index: 1000;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  background-color: #d2d3d3;
-  text-align: center;
-  height: 100px;
-  border-bottom: 1px solid #999;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-}
-
-.navigation {
-  display: flex;
-  justify-content: space-between;
-  background-color: #7d7f80;
-  height: 50px;
 }
 
 .placeholder {
@@ -30,64 +14,30 @@
   width: 30vw;
 }
 
-.webpage_title {
-  display: flex;
-  width: 40vw;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-  align-items: center;
+.header {
+  display: grid;
+  grid-template-columns: 33.3333% 33.3333% 33.3333%;
+  width: 100%;
+  background-color: white;
 }
 
-.webpage_title h3 {
-  margin: 0;
-  font-size: 3em;
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ededed;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 .profile_btns_wrapper {
-  width: 30vw;
-  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: row;
 }
-
-.top_buttons {
-  width: 15%;
-}
-
-.top_buttons {
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 13px;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  background-color: #9615db;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  align-items: center;
-  justify-content: center;
+.profile_btns_wrapper {
   display: flex;
+  justify-content: right;
 }
 
-.top_buttons:hover {
-  background-color: #2d3032;
-  color: #fff;
-  box-shadow: 0 0 20px rgba(150, 21, 219, 0.7);
-  transform: scale(1.05);
-}
-
-.top_buttons:active {
-  background-color: #2d3032;
-  color: #fff;
-  box-shadow: 0 0 10px rgba(150, 21, 219, 0.7);
-  transform: scale(0.95);
-}
 
 .chef_button {
   width: 30%;
@@ -97,9 +47,26 @@
   margin-right: 20px;
 }
 
-.chef_username p {
+.chef_username {
   text-decoration: none;
   font-weight: bold;
+}
+
+.webpage_title {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.webpage_title_2 {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  font-weight: bold;
+  visibility: hidden;
 }
 
 .nav_btn {
@@ -151,16 +118,66 @@
   text-align: center;
 }
 
+.top_buttons {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #9615db;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.top_buttons:hover {
+  background-color: #2d3032;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(150, 21, 219, 0.7);
+  transform: scale(1.05);
+}
+
+.top_buttons:active {
+  background-color: #2d3032;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(150, 21, 219, 0.7);
+  transform: scale(0.95);
+}
+
 .admin_logout_wrapper {
   height: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
 }
 
 @media (max-width: 1023px) {
   .buttonImage {
     display: none;
+  }
+  .webpage_title {
+    visibility: hidden;
+  }
+  .webpage_title_2 {
+    visibility: visible;
+
+  }
+  .header {
+    display: grid;
+    grid-template-columns: 49% 2% 49%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  
+  .webpage_title_2 {
+    font-size: 1em;
   }
 }

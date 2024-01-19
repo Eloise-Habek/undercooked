@@ -83,11 +83,11 @@ export function MessageMini({ details, isReceiver }) {
         </div>
       </div>
       <div className={classes.message_text}>
-        {details.time.split("T")[0].split("-").reverse().join(".") +
+        <h4>{details.time.split("T")[0].split("-").reverse().join(".") +
           ", " +
           details.time.split("T")[1].split(":")[0] +
           ":" +
-          details.time.split("T")[1].split(":")[1]}
+          details.time.split("T")[1].split(":")[1]}</h4>
       </div>
       <div className={classes.message_text}>{details.text}</div>
       <div className={classes.message_text}>
