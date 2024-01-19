@@ -75,7 +75,7 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "neobičan bijeli kruh",
   "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
-  "category": "GlavnoJelo",
+  "category": "MainCourse",
   "youtubeId": "wZ1gEDquuyQ",
   "ingredients": [
     {
@@ -114,9 +114,9 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "neobičan bijeli kruh",
   "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
-  "category": "Desert",
+  "category": "Dessert",
   "tags": [
-    "Vegansko"
+    "Vegan"
   ],
   "ingredients": [
     {
@@ -143,7 +143,7 @@ Content-Type: application/json
 
 > {%
     client.assert(response.body.id == 3);
-    client.assert(response.body.category == "Desert");
+    client.assert(response.body.category == "Dessert");
 %}
 
 ###
@@ -265,7 +265,7 @@ Content-Type: application/json
   "preparationTime": "PT3H14M",
   "description": "klasičnu krug sa r=1",
   "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
-  "category": "Predjelo",
+  "category": "Appetizer",
   "ingredients": []
 }
 
@@ -283,7 +283,7 @@ Content-Type: application/json
   "preparationTime": "PT3H14M",
   "description": "klasičnu krug sa r=1",
   "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
-  "category" : "Desert",
+  "category" : "Dessert",
   "ingredients": [
     {
       "amount": 1,
@@ -297,7 +297,7 @@ Content-Type: application/json
 > {%
     client.assert(response.body.id == client.global.get("recipe_id"));
     client.assert(response.body.ingredients[0].amount == 1);
-    client.assert(response.body.category == "Desert");
+    client.assert(response.body.category == "Dessert");
 %}
 
 ### Provjeri je li se recept zaista updateao

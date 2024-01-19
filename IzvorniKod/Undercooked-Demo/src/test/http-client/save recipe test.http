@@ -93,7 +93,7 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "neobičan bijeli kruh",
   "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
-  "category": "GlavnoJelo",
+  "category": "MainCourse",
   "tags": [],
   "ingredients": []
 }

@@ -26,7 +26,7 @@ GET {{api}}/recipes/search?q=slatki%20kruh
 
 
 ### Ime, opis, kategorija i vrsta kuhinje
-GET {{api}}/recipes/search?q=slatki+kruh&category=GlavnoJelo&cuisine=Italian
+GET {{api}}/recipes/search?q=slatki+kruh&category=MainCourse&cuisine=Italian
 
 > {%
     client.assert(response.status == 200);
@@ -34,7 +34,7 @@ GET {{api}}/recipes/search?q=slatki+kruh&category=GlavnoJelo&cuisine=Italian
 %}
 
 ### Kriva kategorija
-GET {{api}}/recipes/search?q=slatki+kruh&category=Desert
+GET {{api}}/recipes/search?q=slatki+kruh&category=Dessert
 
 > {%
     client.assert(response.status == 200);
@@ -42,7 +42,7 @@ GET {{api}}/recipes/search?q=slatki+kruh&category=Desert
 %}
 
 ### Tagovi
-GET {{api}}/recipes/search?q=kruh&tags=BezGlutena,Vegansko
+GET {{api}}/recipes/search?q=kruh&tags=GlutenFree,Vegan
 
 > {%
     client.assert(response.status == 200);
@@ -50,7 +50,7 @@ GET {{api}}/recipes/search?q=kruh&tags=BezGlutena,Vegansko
 %}
 
 ### Tagovi, drukčija sintaksa
-GET {{api}}/recipes/search?q=kruh&tags=BezGlutena&tags=Vegansko
+GET {{api}}/recipes/search?q=kruh&tags=GlutenFree&tags=Vegan
 
 > {%
     client.assert(response.status == 200);
@@ -66,7 +66,7 @@ GET {{api}}/recipes/search?q=nePostoji
 %}
 
 ### Prazni rezultati - nekorišteni tagovi
-GET {{api}}/recipes/search?tags=Posno
+GET {{api}}/recipes/search?tags=Lent
 
 > {%
     client.assert(response.status == 200);
@@ -74,7 +74,7 @@ GET {{api}}/recipes/search?tags=Posno
 %}
 
 ### Samo kategorija
-GET {{api}}/recipes/search?category=GlavnoJelo
+GET {{api}}/recipes/search?category=MainCourse
 
 > {%
     client.assert(response.status == 200);
