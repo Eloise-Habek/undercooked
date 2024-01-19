@@ -34,9 +34,4 @@ password: pass
 React frontend se pokreće na portu 3000, a spring backend na portu 8080
 
 ### Implementirane funkcionalnosti:
-1. Registracija korisnika
-2. Login kao registrirani korisnik
-3. Login kao admin
-4. Admin ima pregled registriranih korisnika
-5. Admin može obrisati korisnika
-6. Pregled vlastitog profila
+- implementirani su svi obrasci uporabe navedeni u dokumentaciji
