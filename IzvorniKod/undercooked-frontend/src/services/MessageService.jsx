@@ -19,6 +19,42 @@ class MessageService {
         }, true)
     }
     sendMessage(message) {
+        console.log(message.receiver);
+        return myFetch("/api/profile/" + message.receiver + "/available", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": secureLocalStorage.getItem("logInToken")
+            },
+        }, true).then((d) => {
+            if (d.available) {
+                return myFetch(URL, {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": secureLocalStorage.getItem("logInToken")
+                    },
+                    body: JSON.stringify(message)
+                }, true);
+            } else {
+                alert("User not available!");
+                return Promise.reject("User not available!");
+            }
+        }, () => {
+            return myFetch(URL, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": secureLocalStorage.getItem("logInToken")
+                },
+                body: JSON.stringify(message)
+            }, true);
+        })
+
+    }
+    notify(message) {
         return myFetch(URL, {
             method: "POST",
             mode: "cors",

@@ -132,7 +132,7 @@ class PostRecipeService {
                         "sender": secureLocalStorage.getItem("username"),
                         "receiver": element.username
                     };
-                    messageService.sendMessage(m).then(() => { }, () => { });
+                    messageService.notify(m).then(() => { }, () => { });
                 });
                 if (res_1 === -1) {
                     this.setMessage("Recipe not posted!");

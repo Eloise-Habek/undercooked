@@ -6,12 +6,15 @@ import { useEffect, useMemo, useState } from "react";
 import CategoryService from "../../services/CategoryService";
 import SearchService from "../../services/SearchService";
 import { RecipeMini } from "../../components/RecipeMini";
+import CuisineService from "../../services/CuisineService";
 
 export function Search({ setMessage }) {
   let [searchParams] = useSearchParams();
   const categoryService = useMemo(() => new CategoryService(), []);
+  const cuisineService = useMemo(() => new CuisineService(), []);
   const searchService = useMemo(() => new SearchService(), []);
   const [catList, setCatList] = useState([]);
+  const [cuiList, setCuiList] = useState([]);
   const [recipeArray, setRecipeArray] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -35,16 +38,43 @@ export function Search({ setMessage }) {
           )
         );
       },
-      () => {}
+      () => { }
+    );
+    i = 1;
+    cuisineService.get().then(
+      (data) => {
+        let cui = [
+          <option key={0} value={"All"}>
+            {"All"}
+          </option>,
+        ];
+        setCuiList(
+          cui.concat(
+            data.map((e) => {
+              return (
+                <option key={i++} value={e}>
+                  {e}
+                </option>
+              );
+            })
+          )
+        );
+      },
+      () => { }
     );
     if (searchParams.size > 0) {
-      var params = searchParams.toString();
-      if (params.startsWith("q=&")) {
-        params = params.slice(3);
+      var params = searchParams;
+      if (params.get("q") === "") {
+        params.delete("q");
       }
-      if (params.endsWith("&category=All")) {
-        params = params.slice(0, params.lastIndexOf("&"));
+      if (params.get("category") === "All") {
+        params.delete("category");
       }
+      if (params.get("cuisine") === "All") {
+        params.delete("cuisine");
+      }
+      params = params.toString();
+
       searchService.getResults(params).then(
         (data) => {
           var count = 0;
@@ -67,7 +97,7 @@ export function Search({ setMessage }) {
         }
       );
     }
-  }, [searchParams, categoryService, searchService, setMessage]);
+  }, [searchParams, categoryService, searchService, setMessage, cuisineService]);
 
   if (recipeArray.length > 0) {
     return (
@@ -79,7 +109,7 @@ export function Search({ setMessage }) {
           >
             <div className={classes.search_container}>
               <input className={classes.search_input} type="search" name="q" />
-              <button type="submit" className={classes.search_button}>
+              <button type="submit" className={classes.search_button} placeholder="Search...">
                 Search
               </button>
             </div>
@@ -87,6 +117,12 @@ export function Search({ setMessage }) {
               <div>Search by category:</div>
               <select multiple="" name="category">
                 {catList.length > 0 ? catList : ""}
+              </select>
+            </div>
+            <div className={classes.category_select}>
+              <div>Search by cuisine:</div>
+              <select multiple="" name="cuisine">
+                {cuiList.length > 0 ? cuiList : ""}
               </select>
             </div>
           </Form>
@@ -128,21 +164,12 @@ export function Search({ setMessage }) {
             <select multiple="" name="category">
               {catList.length > 0 ? catList : ""}
             </select>
-
-            {/* <div className={classes.category_btns}>
-                                <div>
-                                    <button>kategorija 1</button>
-                                </div>
-                                <div>
-                                    <button>kategorija 2</button>
-                                </div>
-                                <div>
-                                    <button>kategorija 3</button>
-                                </div>
-                                <div>
-                                    <button>kategorija 4</button>
-                                </div>
-                            </div> */}
+          </div>
+          <div className={classes.category_select}>
+            <div>Search by cuisine:</div>
+            <select multiple="" name="cuisine">
+              {cuiList.length > 0 ? cuiList : ""}
+            </select>
           </div>
         </div>
       </Form>

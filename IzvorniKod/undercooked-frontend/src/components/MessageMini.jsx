@@ -22,8 +22,12 @@ export function MessageMini({ details, isReceiver }) {
             </NavLink>
 
             <div className={classes.fromToContainer}>
-              <span className={classes.fromLabel}>From:</span> {details.sender}
-              <span className={classes.toLabel}>To:</span> {details.receiver}
+              <span className={classes.fromLabel}>From:</span> <NavLink to={"/profile/" + details.sender}>
+                {details.sender}
+              </NavLink>
+              <span className={classes.toLabel}>To:</span> <NavLink to={"/profile/" + details.receiver}>
+                {details.receiver}
+              </NavLink>
               <div>
                 {!isReceiver && details.read ? (
                   <i className="fa-solid fa-check"></i>
@@ -44,8 +48,8 @@ export function MessageMini({ details, isReceiver }) {
               setExpand(1);
               if (isReceiver) {
                 messageService.setRead(details.id).then(
-                  () => {},
-                  () => {}
+                  () => { },
+                  () => { }
                 );
               }
             }}
@@ -63,7 +67,19 @@ export function MessageMini({ details, isReceiver }) {
           <NavLink to={"/profile/" + details.sender}>
             <img src={require("../pages/images/chef.png")} alt="profile_icon" />
           </NavLink>
-          <div>{details.sender}</div>
+          <div className={classes.fromToContainer}>
+            <span className={classes.fromLabel}>From:</span> <NavLink to={"/profile/" + details.sender}>
+              {details.sender}
+            </NavLink>
+            <span className={classes.toLabel}>To:</span> <NavLink to={"/profile/" + details.receiver}>
+              {details.receiver}
+            </NavLink>
+            <div>
+              {!isReceiver && details.read ? (
+                <i className="fa-solid fa-check"></i>
+              ) : null}
+            </div>
+          </div>
         </div>
       </div>
       <div className={classes.message_text}>

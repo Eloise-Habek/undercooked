@@ -14,12 +14,15 @@ import RecipeService from "../../services/RecipeService";
 import MessageService from "../../services/MessageService";
 
 export function Profile() {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const [followers, setFollowers] = useState("");
   const [following, setFollowing] = useState("");
   const [isFollowing, setIsFollowing] = useState("");
   const [savedCount, setSavedCount] = useState(0);
+  const [isAvailable, setIsAvailable] = useState(false);
 
   let { user } = useParams();
   let [recipeArray, setRecipeArray] = useState([]);
@@ -44,15 +47,20 @@ export function Profile() {
           setFollowers(data.followers);
           setFollowing(data.following);
           setIsFollowing(data.isFollowed);
+          setName(data.name)
+          setSurname(data.surname)
           recipeService.getSavedCount(data.username).then(
             (res) => setSavedCount(res),
-            () => {}
+            () => { }
           );
         },
         () => {
           navigate("/login");
         }
       );
+      profileService.getAvailable(user).then((data) => {
+        setIsAvailable(data.available)
+      }, () => { setIsAvailable(true) })
     } else {
       navigate("/login");
     }
@@ -77,9 +85,9 @@ export function Profile() {
               ></NavLink>
             ) : null}
 
-            <h3 className={classes.username}>{username}</h3>
+            <h3 className={classes.username}>{name + " " + surname}</h3>
+            <h3 className={classes.username}>@{username}</h3>
           </div>
-
           {username === secureLocalStorage.getItem("username") ? null : (
             <div className={classes.profileActions}>
               <button
@@ -89,47 +97,53 @@ export function Profile() {
                   setIsFollowing(!isFollowing);
                   if (isFollowing) {
                     followService.unfollow(username).then(
-                      () => {},
-                      () => {}
+                      () => { },
+                      () => { }
                     );
                   } else {
                     followService.follow(username).then(
-                      () => {},
-                      () => {}
+                      () => { },
+                      () => { }
                     );
                   }
                 }}
               >
                 {isFollowing ? "Following" : "Follow"}
               </button>
-              <button
-                onClick={() => {
-                  showMessageBox ? setShowMessageBox(0) : setShowMessageBox(1);
-                }}
-              >
-                {showMessageBox ? "Close message box" : "Message"}
-              </button>
-              <button
-                type="button"
-                className="fa-solid fa-video"
-                onClick={() => {
-                  window.open(
-                    "https://undercooked.daily.co/VideoRoom",
-                    "_blank" // <- This is what makes it open in a new window.
-                  );
-                  let message = {
-                    sender: secureLocalStorage.getItem("username"),
-                    receiver: username,
-                    text:
-                      secureLocalStorage.getItem("username") +
-                      " is calling you on video chat! Join link: https://undercooked.daily.co/VideoRoom",
-                  };
-                  messageService.sendMessage(message).then(
-                    () => {},
-                    () => {}
-                  );
-                }}
-              ></button>
+              {isAvailable ?
+                <>
+                  <button
+                    onClick={() => {
+                      showMessageBox ? setShowMessageBox(0) : setShowMessageBox(1);
+                    }}
+                  >
+                    {showMessageBox ? "Close message box" : "Message"}
+                  </button>
+                  <button
+                    type="button"
+                    className="fa-solid fa-video"
+                    onClick={() => {
+                      window.open(
+                        "https://undercooked.daily.co/VideoRoom",
+                        "_blank" // <- This is what makes it open in a new window.
+                      );
+                      let message = {
+                        sender: secureLocalStorage.getItem("username"),
+                        receiver: username,
+                        text:
+                          secureLocalStorage.getItem("username") +
+                          " is calling you on video chat! Join link: https://undercooked.daily.co/VideoRoom",
+                      };
+                      messageService.sendMessage(message).then(
+                        () => { },
+                        () => { }
+                      );
+                    }}
+                  ></button>
+                </>
+                :
+                <button>Unavailable for communication</button>}
+
             </div>
           )}
 

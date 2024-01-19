@@ -10,7 +10,7 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { AdminPage, getById } from "./pages/AdminPage";
 import {Header} from "./pages/wrapper/Header";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import RegisterService from "./services/RegisterService";
 import LoginService from "./services/LoginService";
@@ -30,6 +30,7 @@ import { Settings } from "./pages/profile/Settings";
 import { UserList } from "./pages/profile/UserList";
 import { Stats } from "./pages/Stats";
 import PostRecipeService from "./services/PostRecipeService";
+import ProfileService from "./services/ProfileService";
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(secureLocalStorage.getItem("logInToken") === null ? false : true);
@@ -52,6 +53,7 @@ function App() {
   let messageService = new MessageService();
   let postRecipeService = new PostRecipeService({ "setMessage": messageHandler });
   let commentService = new CommentService();
+  const profileService = useMemo(() =>new ProfileService(), []);
 
 
   useEffect(() => {
@@ -72,7 +74,7 @@ function App() {
         <Route path="search" element={<Search setMessage={messageHandler}/>} />
         <Route path="feed" element={isLoggedIn ? <Home /> : <PleaseLogin />} />
         <Route path="profile/:user" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
+        <Route path="settings" element={<Settings />} action={profileService.editAction}/>
         <Route path="followers/:user" element={<UserList followers={1} following={0}/>} />
         <Route path="following/:user" element={<UserList followers={0} following={1}/>} />
         <Route path="login" element={<Login />} action={ loginService.loginAction } />

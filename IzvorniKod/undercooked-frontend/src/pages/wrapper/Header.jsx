@@ -25,7 +25,7 @@ export function Header({
           (data) => {
             setUnread(data);
           },
-          () => {}
+          () => { }
         );
       }
     }, 1000);
