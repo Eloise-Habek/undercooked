@@ -19,6 +19,7 @@ function Option({ id, set }) {
         id={"ingredient " + index.toString()}
       />
       <input
+        min={0}
         placeholder="amount"
         type="number"
         name={"ingredient " + index.toString() + " amount"}
@@ -141,7 +142,7 @@ export function PostRecipePage() {
           })
         );
       },
-      () => {}
+      () => { }
     );
 
     i = 1;
@@ -157,7 +158,7 @@ export function PostRecipePage() {
           })
         );
       },
-      () => {}
+      () => { }
     );
 
     i = 1;
@@ -173,7 +174,7 @@ export function PostRecipePage() {
           })
         );
       },
-      () => {}
+      () => { }
     );
 
     let hour_input = document.getElementById("hour_input");

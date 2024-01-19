@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { RecipeMini } from "../components/RecipeMini";
 import AdminService from "../services/AdminService";
 import { NavLink } from "react-router-dom";
-
+import "../styles/adminpage.css";
 export function Stats() {
   const [bestRated, setBestRated] = useState(null);
   const [user, setUser] = useState("");
@@ -14,43 +14,47 @@ export function Stats() {
       (data) => {
         setBestRated(data);
       },
-      () => {}
+      () => { }
     );
     adminService.getMostActiveUser().then(
       (data) => {
         setUser(data);
       },
-      () => {}
+      () => { }
     );
     adminService.getMostSavedRecipe().then(
       (data) => {
         setPopularRecipe(data);
       },
-      () => {}
+      () => { }
     );
   });
   return (
     <div className="admin_stats_wrapper">
-      <header>
+      <header className="admin_header">
         <div>
-          <NavLink to={"/admin"}>Users</NavLink>
+          <NavLink className="users_stats_btn" to={"/admin"}>
+            Users
+          </NavLink>
         </div>
         <div>
-          <NavLink to={"/admin/stats"}>Stats</NavLink>
+          <NavLink className="users_stats_btn" to={"/admin/stats"}>
+            Stats
+          </NavLink>
         </div>
       </header>
       <div>
-        <h2>Best rated recipe: </h2>
+        <h3>Best rated recipe: </h3>
         {bestRated !== null ? <RecipeMini details={bestRated} /> : null}
       </div>
       <div>
-        <h2>Most active user: </h2>
+        <h3>Most active user: </h3>
         {user !== "" ? (
           <NavLink to={"/profile/" + user.username}> {user.username}</NavLink>
         ) : null}
       </div>
       <div>
-        <h2>Most popular recipe: </h2>
+        <h3>Most popular recipe: </h3>
         {popularRecipe !== null ? <RecipeMini details={popularRecipe} /> : null}
       </div>
     </div>

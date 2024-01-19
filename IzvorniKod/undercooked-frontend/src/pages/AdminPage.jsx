@@ -101,7 +101,7 @@ export function AdminPage() {
               {users.map((user) => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
-                  <td>{user.username}</td>
+                  <td><NavLink to={"/profile/" + user.username}> {user.username}</NavLink></td>
                   <td>{user.email}</td>
                   <td>{user.name}</td>
                   <td>{user.surname}</td>
