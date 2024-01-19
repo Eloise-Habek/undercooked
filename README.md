@@ -1,16 +1,3 @@
-# undercooked
-
-## JWT authentication u Postmanu - kako se ulogirati i koristiti JWT pri zahtjevima koji trebaju auth
-### traženje tokena
-POST na /api/token s Basic Auth (username, password)
-username password može biti "admin" "pass" ili bilo koji drugi već registrirani korisnik
-Backend vraća token -> njega spremiti negdje
-
-### zahtjevi koji trebaju auth
-authentication -> Bearer Token -> zalijepiti unutra dobiveni JWT
-
-
-
 ### Link na stranicu:
 https://undercooked-frontend.onrender.com/
 
