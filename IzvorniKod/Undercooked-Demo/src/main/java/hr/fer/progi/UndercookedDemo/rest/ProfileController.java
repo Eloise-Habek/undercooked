@@ -1,6 +1,7 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
 import hr.fer.progi.UndercookedDemo.domain.Person;
+import hr.fer.progi.UndercookedDemo.domain.WeekdayAvailability;
 import hr.fer.progi.UndercookedDemo.model.FollowersResponse;
 import hr.fer.progi.UndercookedDemo.service.FollowersService;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
@@ -46,11 +47,17 @@ public class ProfileController {
 //		var person = personService.findByUsername(username);
 //		return person.orElseThrow(() -> new RequestDeniedException("Profile not found"));
 //	}
+	
+	@GetMapping("/{username}/available")
+	public WeekdayAvailability available(@PathVariable("username") String username, Principal principal) {
+		var person = personService.findByUsername(username);
+		return person.getAvailability();
+	}
 
 	@GetMapping("/{username}")
 	public FollowersResponse profile(@PathVariable("username") String username, Principal principal) {
 		var person = personService.findByUsername(username);
-		return new FollowersResponse(person.getId(), person.getUsername(), followersService.numberOfFollowers(username),
+		return new FollowersResponse(person.getId(),person.getName(), person.getSurname(), person.getUsername(), followersService.numberOfFollowers(username),
 				followersService.numberOfFollowing(username), person.getRecipes(), person.getRatings(),
 				principal != null && followersService.isFollowing(principal.getName(), username));
 	}
