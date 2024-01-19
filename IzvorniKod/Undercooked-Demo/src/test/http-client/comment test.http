@@ -1,0 +1,119 @@
+@api = http://localhost:8080/api
+@recipe_id = 1
+
+### login user
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
+### Get recipe
+GET {{api}}/recipes/{{recipe_id}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(Array.isArray(response.body.comments));
+%}
+
+### Post comment
+POST {{api}}/recipes/{{recipe_id}}/comments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "text": "dobar dan"
+}
+
+> {%
+    client.assert(response.body.text == "dobar dan");
+    client.global.set("comment_id", response.body.id);
+    client.assert(response.body.author.username == "pero");
+%}
+
+### Comment posted under recipe
+GET {{api}}/recipes/{{recipe_id}}
+
+> {%
+    client.assert(response.body.comments.some(c => c.id == client.global.get("comment_id")));
+%}
+
+### Comment available in comments api
+GET {{api}}/recipes/{{recipe_id}}/comments
+
+> {%
+    client.assert(response.body.some(c => c.id == client.global.get("comment_id")));
+%}
+
+### Get only that comment
+GET {{api}}/recipes/{{recipe_id}}/comments/{{comment_id}}
+
+> {%
+    client.assert(response.body.id == client.global.get("comment_id"));
+    client.assert(response.body.text == "dobar dan");
+    client.assert(response.body.postedAt.startsWith("2024")); // trenutna godina
+    client.global.set("comment_date", response.body.postedAt);
+%}
+
+### Update comment as user
+PUT {{api}}/recipes/{{recipe_id}}/comments/{{comment_id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "text": "laku noc"
+}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Text updated
+GET {{api}}/recipes/{{recipe_id}}/comments/{{comment_id}}
+
+> {%
+    client.assert(response.body.id == client.global.get("comment_id"));
+    client.assert(response.body.author.username == "pero");
+    client.assert(response.body.text == "laku noc");
+    client.assert(response.body.postedAt === client.global.get("comment_date")); // posted-at date unchanged
+%}
+
+### Update comment as admin
+PUT {{api}}/recipes/{{recipe_id}}/comments/{{comment_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "text": "dobro jutro"
+}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Text updated
+GET {{api}}/recipes/{{recipe_id}}/comments/{{comment_id}}
+
+> {%
+    client.assert(response.body.id == client.global.get("comment_id"));
+    client.assert(response.body.author.username == "pero");
+    client.assert(response.body.text == "dobro jutro");
+    client.assert(response.body.postedAt === client.global.get("comment_date")); // posted-at date unchanged
+%}
+
+### Delete comment as user
+DELETE {{api}}/recipes/{{recipe_id}}/comments/{{comment_id}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}

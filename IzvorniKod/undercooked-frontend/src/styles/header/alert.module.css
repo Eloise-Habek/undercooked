@@ -1,0 +1,44 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.message_box_wrapper {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.message_box_button {
+  border-radius: 8px;
+  border-width: 0;
+  background: black;
+  color: white;
+  padding: 5px;
+}
+
+.message_box {
+  border-radius: .25rem;
+  transition: opacity 0.5s ease-in;
+  background: black;
+  color: white;
+  opacity: 1;
+  padding: 5px 10px;
+  display: inline-block;
+  font-family: Arial;
+}
+
+.message_box_hide {
+  opacity: 0;
+}
+
+.message_box_inner {
+  display: inline-block;
+  padding: 8px 16px;
+  z-index: 1;
+  background-color: #ffffff;
+  box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+  -webkit-box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+  -moz-box-shadow: 1px 2px 10px -3px rgb(0 0 0 / 70%);
+}

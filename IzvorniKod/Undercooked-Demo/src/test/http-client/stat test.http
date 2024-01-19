@@ -1,0 +1,37 @@
+@api = http://localhost:8080/api
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+    client.global.set("id", "1"); // potrebno za ponovno pokretanje testova
+%}
+
+###
+GET {{api}}/admin/stats/bestRatedRecipe
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == null); // mozda treba biti 404 not found ako ni jedan recept nije ocjenjen.
+%}
+
+###
+GET {{api}}/admin/stats/mostSavedRecipe
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body != null);
+%}
+
+###
+GET {{api}}/admin/stats/mostActiveUser
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body != null);
+%}

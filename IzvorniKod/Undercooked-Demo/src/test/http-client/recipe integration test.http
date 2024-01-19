@@ -1,0 +1,310 @@
+@api = http://localhost:8080/api
+
+###
+GET {{api}}/ingredients
+
+> {%
+    client.assert(response.status == 401);
+%}
+
+### register user
+// TODO: should this return back the login token? maybe best to require logging in explicity to test password hashing
+#POST {{api}}/register
+#Content-Type: application/json
+#
+#{
+#  "username": "pero",
+#  "email": "pero@ zdero.hr",
+#  "password": "amogus",
+#  "name": "Pero",
+#  "surname": "Perić"
+#}
+#
+#> {%
+#    client.assert(response.status == 200);
+#%}
+
+### login user
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
+
+###
+GET {{api}}/profile
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body.username == "admin");
+%}
+
+###
+GET {{api}}/profile
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.body.username == "pero");
+%}
+
+###
+GET {{api}}/ingredients
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.body.length == 0);
+%}
+
+### recept 1
+POST {{api}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "kruh",
+  "preparationTime": "PT90M",
+  "description": "neobičan bijeli kruh",
+  "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "MainCourse",
+  "youtubeId": "wZ1gEDquuyQ",
+  "ingredients": [
+    {
+      "amount": 250,
+      "unitOfMeasure": "g",
+      "ingredient": {
+        "name": "glatkog brašna"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "name": "jaja"
+      }
+    },
+    {
+      "unitOfMeasure": "žlica",
+      "ingredient": {
+        "name": "vode"
+      }
+    }
+  ]
+}
+
+> {%
+    client.assert(response.body.id == 2); // id 1 je već tu zbog seedanja
+%}
+
+### recept 2
+POST {{api}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "kruh",
+  "preparationTime": "PT90M",
+  "description": "neobičan bijeli kruh",
+  "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "Dessert",
+  "tags": [
+    "Vegan"
+  ],
+  "ingredients": [
+    {
+      "amount": 250,
+      "unitOfMeasure": "g",
+      "ingredient": {
+        "name": "glatkog brasna"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "name": "jAJa"
+      }
+    },
+    {
+      "unitOfMeasure": "žlica",
+      "ingredient": {
+        "name": "VOde"
+      }
+    }
+  ]
+}
+
+> {%
+    client.assert(response.body.id == 3);
+    client.assert(response.body.category == "Dessert");
+%}
+
+###
+GET {{api}}/ingredients
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.body.length == 4);
+%}
+
+###
+GET {{api}}/recipes
+
+### delete recipe 4 (fails)
+DELETE {{api}}/recipes/4
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status != 200);
+%}
+
+### delete recipe 2 (success)
+DELETE {{api}}/recipes/2
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+###
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 2);
+    client.assert(response.body[1].id == 3);
+    client.assert(response.body[1].author.username == "pero");
+%}
+
+### Neuspječno brisanje recepta kada trenutno logirana osoba nije autor recepta
+
+### Prvo stvori nekog drugog korisnika
+POST {{api}}/register
+Content-Type: application/json
+
+{
+  "username": "mallory",
+  "email": "malicious@hacker.com",
+  "password": "hunter2",
+  "name": "Mallory",
+  "surname": "Darth"
+}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### login Mallory
+POST {{api}}/token
+Authorization: Basic mallory hunter2
+
+> {%
+    client.global.set("mallory_token", response.body.token);
+%}
+
+###
+GET {{api}}/profile
+Authorization: Bearer {{mallory_token}}
+
+> {%
+    client.assert(response.body.username == "mallory");
+%}
+
+### Trenutni recepti, autor je pero
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 2);
+    client.assert(response.body[1].id == 3);
+    client.assert(response.body[1].author.username == "pero");
+%}
+
+### Mallory pukušava izbrisati Perin recept, neuspješno
+DELETE {{api}}/recipes/3
+Authorization: Bearer {{mallory_token}}
+
+> {%
+    client.assert(response.status == 400);
+%}
+
+### Stanje prije
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 2);
+%}
+
+### Pero briše svoj recept
+DELETE {{api}}/recipes/3
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Recept je zaista izbrisan
+GET {{api}}/recipes
+
+> {%
+    client.assert(response.body.length == 1);
+%}
+
+### Admin postavlja recept
+POST {{api}}/recipes
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "krug",
+  "preparationTime": "PT3H14M",
+  "description": "klasičnu krug sa r=1",
+  "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
+  "category": "Appetizer",
+  "ingredients": []
+}
+
+> {%
+    client.global.set("recipe_id", response.body.id);
+%}
+
+### Admin update-a svoj recept
+PUT {{api}}/recipes/{{recipe_id}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "krug",
+  "preparationTime": "PT3H14M",
+  "description": "klasičnu krug sa r=1",
+  "preparationDescription": "1. Uzmi šestar\n2. Napravi krug",
+  "category" : "Dessert",
+  "ingredients": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "name": "jqshudhjawiudajwiw awdw adad "
+      }
+    }
+  ]
+}
+
+> {%
+    client.assert(response.body.id == client.global.get("recipe_id"));
+    client.assert(response.body.ingredients[0].amount == 1);
+    client.assert(response.body.category == "Dessert");
+%}
+
+### Provjeri je li se recept zaista updateao
+GET {{api}}/recipes/{{recipe_id}}
+Content-Type: application/json
+
+> {%
+    client.assert(response.body.id == client.global.get("recipe_id"));
+    client.assert(response.body.ingredients[0].amount == 1);
+%}

@@ -1,0 +1,94 @@
+@api = http://localhost:8080/api
+
+### login user
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### get current profile
+GET {{api}}/profile
+Authorization: Bearer {{token}}
+
+### edit my details
+PATCH {{api}}/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "email": "novi@pero.hr",
+  "name": "Orep",
+  "surname": "Oredž",
+  "availability": {
+    "monday": {
+      "start": 9,
+      "end": 17
+    },
+    "tuesday": {
+      "start": 10,
+      "end": 4
+    }
+  },
+  "admin": true
+}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.admin == false);
+    client.assert(response.body.surname == "Oredž");
+%}
+
+### set always available
+PATCH {{api}}/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "availability": {
+    "monday": {
+      "start": 0,
+      "end": 24
+    },
+    "tuesday": {
+      "start": 0,
+      "end": 24
+    },
+    "wednesday": {
+      "start": 0,
+      "end": 24
+    },
+    "thursday": {
+      "start": 0,
+      "end": 24
+    },
+    "friday": {
+      "start": 0,
+      "end": 24
+    },
+    "saturday": {
+      "start": 0,
+      "end": 24
+    },
+    "sunday": {
+      "start": 0,
+      "end": 24
+    }
+  }
+}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.available == true);
+    client.assert(response.body.name == "Orep"); // name still the same from the last PATCH
+%}
+
+
+### delete pero
+DELETE {{api}}/profile
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}

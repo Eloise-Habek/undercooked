@@ -1,0 +1,76 @@
+.wrapper {
+  margin: 2em;
+  border: 2px solid #EDEDED;
+  border-radius: 1em;
+  width: 80%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.message_wrapper {
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  height: fit-content;
+  padding: 1em;
+  padding-left: 0;
+}
+
+.img_and_username {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  margin: 1em;
+  padding: 1em;
+  font-weight: bolder;
+  border-radius: 10px;
+  background-color: #EDEDED;
+}
+
+.img_and_username img {
+  width: 70%;
+}
+
+.message_text {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex: 1;
+  margin: 1em;
+}
+
+.expand_btn {
+  width: 100px;
+  height: 50px;
+}
+
+.collapse_btn {
+  margin: 1em;
+}
+
+.btns_wrapper {
+  margin: 1em;
+}
+
+.fromToContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.fromLabel {
+  color: red;
+}
+
+.toLabel {
+  color: blue;
+  margin-top: 10px;
+}
+
+i {
+  color: green;
+  font-size: x-large;
+  margin-top: 5px;
+}
