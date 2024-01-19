@@ -1,0 +1,194 @@
+@api = http://localhost:8080/api
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+    client.global.set("id", "1"); // potrebno za ponovno pokretanje testova
+%}
+
+### Recipe not saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false);
+%}
+
+### Save recipe
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+true
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true);
+%}
+
+### Recipe saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true);
+%}
+
+### Un-save recipe
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+false
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true); // saved state changed
+%}
+
+### Recipe not saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false);
+%}
+
+
+### Try to un-save recipe again
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+false
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false); // saved state didn't change
+%}
+
+### Recipe still not saved
+GET {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == false);
+%}
+
+
+### Create new recipe
+POST {{api}}/recipes
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "a",
+  "preparationTime": "PT90M",
+  "description": "neobičan bijeli kruh",
+  "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "MainCourse",
+  "tags": [],
+  "ingredients": []
+}
+
+> {%
+    client.global.set("id", response.body.id);
+%}
+
+### Save recipe
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+true
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body == true);
+%}
+
+### Recipe save visible on profile
+GET  {{api}}/recipes/admin/allSaved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.some(r => r.id == client.global.get("id")));
+%}
+
+### Delete recipe
+DELETE {{api}}/recipes/{{id}}
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Recipe save also deleted from profile
+GET  {{api}}/recipes/admin/allSaved
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(!response.body.some(r => r.id == client.global.get("id")));
+%}
+
+
+### register user
+POST {{api}}/register
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "email": "nemam@pojma.hr",
+  "password": "testy",
+  "name": "Test",
+  "surname": "Er."
+}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### login user
+POST {{api}}/token
+Authorization: Basic tester testy
+
+> {%
+    client.global.set("token", response.body.token);
+    client.global.set("id", "1"); // za daljnje testove
+%}
+
+### Save recipe
+PUT {{api}}/recipes/{{id}}/saved
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+true
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Get tester user id
+GET {{api}}/profile/tester
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.global.set("user_id", response.body.id);
+%}
+
+### Delete tester
+DELETE {{api}}/persons/{{user_id}}
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
+%}

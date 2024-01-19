@@ -1,0 +1,33 @@
+.register_wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* background: url("../../pages/images/pozadina.jpg"); */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.form_wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10vh;
+  background-color: rgba(255, 255, 255, 0.914);
+  padding: 4em;
+  border-radius: 1em;
+  height: max-content;
+}
+
+.columns {
+  margin: 0.6em;
+  font-weight: bold;
+}
+
+/* Add these styles to your existing stylesheet or create a new one */
+
+/* Optional: Add some additional styling for a cleaner look */
+.prep_time {
+  background-color: aquamarine;
+}

@@ -1,0 +1,82 @@
+.main_login_div {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  /* background-image: url("../pages/images/pozadina.jpg"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.main_login_div input {
+  background-color: white;
+}
+
+.form_wrap {
+  width: 400px;
+  height: fit-content;
+  padding: 20px;
+  margin-top: 10vh;
+  border-radius: 8px;
+  background-color: #7d7f80;
+  box-shadow: 0 0 40px #ededed;
+  border: 3px solid #ededed;
+  position: fixed;
+  backdrop-filter: blur(13px);
+  background-color: rgb(225, 225, 225, 0);
+  padding: 2em;
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.wrap {
+  margin-bottom: 15px;
+}
+
+.input_label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input_field {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login_button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2d3032;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login_button:hover {
+  background-color: #9615db;
+}
+
+.columns {
+  margin-top: 20px;
+}
+
+.dontHaveAccount {
+  padding: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.main_login_div h1 {
+  margin-top: 0;
+}
+
+h2 {
+  font-size: xx-large;
+  margin-top: 0;
+}

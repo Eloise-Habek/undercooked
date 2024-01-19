@@ -1,0 +1,102 @@
+@api = http://localhost:8080/api
+@username = pero
+
+### login user
+POST {{api}}/token
+Authorization: Basic {{username}} zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### Recept postoji
+GET {{api}}/recipes/1
+
+> {%
+    client.assert(response.status == 200);
+    client.global.set("id", response.body.id);
+%}
+
+### Ocjeni recept
+PUT {{api}}/recipes/{{id}}/rating
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 3
+}
+
+### Ocjena zabilježena u receptu
+GET {{api}}/recipes/1
+
+> {%
+    client.assert(response.body.ratings.some(r =>
+        r.person.username == "pero"
+        && r.recipe.id == client.global.get("id")
+        && r.rating == 3));
+%}
+
+### Ocjena zabilježena u korisničkom profilu
+GET {{api}}/profile/{{username}}
+
+> {%
+    client.assert(response.body.ratings.some(r =>
+        r.person.username == "pero"
+        && r.recipe.id == client.global.get("id")
+        && r.rating == 3));
+%}
+
+### Promijeni ocjenu
+PUT {{api}}/recipes/{{id}}/rating
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 5
+}
+
+### Nova ocjena zabilježena u receptu
+GET {{api}}/recipes/1
+
+> {%
+    client.assert(response.body.ratings.some(r =>
+        r.person.username == "pero"
+        && r.recipe.id == client.global.get("id")
+        && r.rating == 5));
+%}
+
+### Izbriši ocjenu
+DELETE {{api}}/recipes/{{id}}/rating
+Authorization: Bearer {{token}}
+
+### Brisanje ocjene zabilježeno u receptu
+GET {{api}}/recipes/1
+
+> {%
+    client.assert(!response.body.ratings.some(r =>
+        r.person.username == "pero"
+        && r.recipe.id == client.global.get("id")));
+%}
+
+### Nevažeća ocjena se ne prihvaća
+PUT {{api}}/recipes/{{id}}/rating
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 17
+}
+
+> {%
+    client.assert(response.status == 400);
+    client.assert(response.body.error == "Bad Request");
+%}
+
+### Nevažeća ocjena nije zabilježena u receptu
+GET {{api}}/recipes/1
+
+> {%
+    client.assert(!response.body.ratings.some(r =>
+        r.person.username == "pero"
+        && r.recipe.id == client.global.get("id")));
+%}

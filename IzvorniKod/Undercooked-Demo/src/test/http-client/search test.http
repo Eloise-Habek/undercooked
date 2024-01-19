@@ -1,0 +1,137 @@
+@api = http://localhost:8080/api
+
+### Samo ime
+GET {{api}}/recipes/search?q=kruh
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Ime i opis, "+"
+GET {{api}}/recipes/search?q=slatki+kruh
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Ime i opis, url-encoded razmak
+GET {{api}}/recipes/search?q=slatki%20kruh
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+
+### Ime, opis, kategorija i vrsta kuhinje
+GET {{api}}/recipes/search?q=slatki+kruh&category=MainCourse&cuisine=Italian
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Kriva kategorija
+GET {{api}}/recipes/search?q=slatki+kruh&category=Dessert
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length == 0);
+%}
+
+### Tagovi
+GET {{api}}/recipes/search?q=kruh&tags=GlutenFree,Vegan
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Tagovi, drukčija sintaksa
+GET {{api}}/recipes/search?q=kruh&tags=GlutenFree&tags=Vegan
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### Prazni rezultati
+GET {{api}}/recipes/search?q=nePostoji
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length == 0);
+%}
+
+### Prazni rezultati - nekorišteni tagovi
+GET {{api}}/recipes/search?tags=Lent
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length == 0);
+%}
+
+### Samo kategorija
+GET {{api}}/recipes/search?category=MainCourse
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
+
+### login user
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### Dodaj recept sa sastojcima
+POST {{api}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "kruh",
+  "preparationTime": "PT90M",
+  "description": "neobičan bijeli kruh",
+  "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "MainCourse",
+  "youtubeId": "wZ1gEDquuyQ",
+  "ingredients": [
+    {
+      "amount": 250,
+      "unitOfMeasure": "g",
+      "ingredient": {
+        "name": "brašno"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "name": "jaja"
+      }
+    },
+    {
+      "unitOfMeasure": "žlica",
+      "ingredient": {
+        "name": "voda"
+      }
+    }
+  ]
+}
+
+> {%
+    client.assert(response.body.id == 2); // id 1 je već tu zbog seedanja
+%}
+
+### Sastojci
+GET {{api}}/recipes/search?q=brašno
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}

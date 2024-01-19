@@ -1,0 +1,9 @@
+.wrapper {
+  margin: 1em;
+}
+
+.text_box {
+  border-radius: 0.3em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+}

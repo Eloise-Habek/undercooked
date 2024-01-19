@@ -1,46 +1,66 @@
 package hr.fer.progi.UndercookedDemo.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import hr.fer.progi.UndercookedDemo.dto.IPersonMinimal;
+import hr.fer.progi.UndercookedDemo.dto.IPersonPublic;
+import jakarta.persistence.*;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-public class Person{
-	
+@JsonSerialize(as = IPersonPublic.class)
+public final class Person implements IPersonPublic, IPersonMinimal {
+
+	public static final String saved_recipes_field_name = "savedRecipes";
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(unique=true, nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String username;
-	
-	@Column(unique=true, nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String email;
-	
+
 	private String password;
-	
+
 	private String name;
-	
+
 	private String surname;
-	
-	
 
-	public Person() {
-		super();
-	}
+	private boolean isAdmin;
 
-	public Person(Long id, String username, String email, String password, String name, String surname) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-	}
+	/**
+	 * Recipes that this person authored.
+	 */
+	@OneToMany(mappedBy = Recipe.author_field_name, cascade = CascadeType.REMOVE)
+	private List<Recipe> recipes;
+
+	@OneToMany(mappedBy = StarRating.person_field_name, cascade = CascadeType.REMOVE)
+	private Collection<StarRating> ratings;
+
+	// added so removing the person will also remove all their comments.
+	@OneToMany(mappedBy = Comment.author_field_name, cascade = CascadeType.REMOVE)
+	private Collection<Comment> comments;
+
+	/**
+	 * Recipes that this person has saved for later.
+	 */
+	@ManyToMany
+	@OrderColumn
+	private List<Recipe> savedRecipes;
+
+	@Embedded
+	private WeekdayAvailability availability = new WeekdayAvailability();
+
+	@OneToMany(mappedBy = Followers.from_field_name, cascade = CascadeType.REMOVE)
+	private Set<Followers> following;
+
+	@OneToMany(mappedBy = Followers.to_field_name, cascade = CascadeType.REMOVE)
+	private Set<Followers> followers;
 
 	public Long getId() {
 		return id;
@@ -88,6 +108,62 @@ public class Person{
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public Boolean getAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		isAdmin = admin;
+	}
+
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public Collection<StarRating> getRatings() {
+		return ratings;
+	}
+
+	public List<Recipe> getSavedRecipes() {
+		return savedRecipes;
+	}
+
+	public WeekdayAvailability getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(WeekdayAvailability availability) {
+		this.availability = availability;
+	}
+
+	public boolean isAvailable() {
+		if (getAvailability() != null)
+			return getAvailability().isAvailable();
+
+		return false;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Person person = (Person) o;
+
+		return id.equals(person.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", name="
+				+ name + ", surname=" + surname + ", isAdmin=" + isAdmin + ", recipes=" + recipes + "]";
 	}
 
 }

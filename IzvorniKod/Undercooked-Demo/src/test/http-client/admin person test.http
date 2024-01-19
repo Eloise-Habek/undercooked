@@ -1,0 +1,106 @@
+@api = http://localhost:8080/api
+
+### login admin
+POST {{api}}/token
+Authorization: Basic admin pass
+
+> {%
+    client.global.set("admin_token", response.body.token);
+%}
+
+### dohvati sve korisnike
+GET {{api}}/persons
+Authorization: Bearer {{admin_token}}
+
+### dohvati korisnika "pero"
+GET {{api}}/profile/pero
+
+> {%
+    client.global.set("user_id", response.body.id);
+%}
+
+### Pero nije admin
+GET {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body === false);
+%}
+
+### Postavi Peru kao admina
+POST {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+true
+
+> {%
+    client.assert(response.status === 204); // 204 No Content
+%}
+
+### Pero je admin
+GET {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body === true);
+%}
+
+### login pero
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### Pero ima prostup admin sučelju
+GET {{api}}/persons
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Postavi da Pero nije admin
+POST {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+false
+
+> {%
+    client.assert(response.status === 204); // 204 No Content
+%}
+
+### Pero nije admin
+GET {{api}}/persons/{{user_id}}/admin
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.body === false);
+%}
+
+### Pero nema pristup admin sučelju
+GET {{api}}/persons
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 403); // 403 Forbidden
+%}
+
+### ponovno login pero
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### Pero i dalje nema pristup admin sučelju
+GET {{api}}/persons
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 403); // 403 Forbidden
+%}

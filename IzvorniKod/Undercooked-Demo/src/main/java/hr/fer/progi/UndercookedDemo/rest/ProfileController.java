@@ -1,31 +1,64 @@
 package hr.fer.progi.UndercookedDemo.rest;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import hr.fer.progi.UndercookedDemo.domain.Person;
+import hr.fer.progi.UndercookedDemo.domain.WeekdayAvailability;
+import hr.fer.progi.UndercookedDemo.model.FollowersResponse;
+import hr.fer.progi.UndercookedDemo.service.FollowersService;
 import hr.fer.progi.UndercookedDemo.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
 
 	@Autowired
-	PersonService personService;
-	
-	//treba popraviti
+	private PersonService personService;
+
+	@Autowired
+	private FollowersService followersService;
+
+	// treba popraviti
 	@GetMapping("")
-	public Person myProfile(@AuthenticationPrincipal User user) {
-		if(user.getUsername().equals("admin")) return new Person(Long.valueOf(0), "admin", "undercooked@fer.hr", "pass", "admin", "admin");
-		Optional<Person> person = personService.findByUsername(user.getUsername());
-		return person.get();
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public Person myProfile(Principal principal) {
+		return personService.fromPrincipal(principal);
 	}
 
+	@PatchMapping
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public Person editMyProfile(Principal principal, @RequestBody Person requestPerson) {
+		var person = personService.fromPrincipal(principal);
+		return personService.patchPerson(person, requestPerson);
+	}
+
+	@DeleteMapping
+	@PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+	public void deleteOwnProfile(Principal principal) {
+		var person = personService.fromPrincipal(principal);
+		personService.deletePerson(person.getId());
+	}
+
+//	@GetMapping("/{username}")
+//	public IPersonPublic profile(@PathVariable("username") String username) {
+//		var person = personService.findByUsername(username);
+//		return person.orElseThrow(() -> new RequestDeniedException("Profile not found"));
+//	}
+	
+	@GetMapping("/{username}/available")
+	public WeekdayAvailability available(@PathVariable("username") String username, Principal principal) {
+		var person = personService.findByUsername(username);
+		return person.getAvailability();
+	}
+
+	@GetMapping("/{username}")
+	public FollowersResponse profile(@PathVariable("username") String username, Principal principal) {
+		var person = personService.findByUsername(username);
+		return new FollowersResponse(person.getId(),person.getName(), person.getSurname(), person.getUsername(), followersService.numberOfFollowers(username),
+				followersService.numberOfFollowing(username), person.getRecipes(), person.getRatings(),
+				principal != null && followersService.isFollowing(principal.getName(), username));
+	}
 }

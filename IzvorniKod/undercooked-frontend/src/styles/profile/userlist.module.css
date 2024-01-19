@@ -1,0 +1,12 @@
+.no_bullets {
+    list-style-type: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin: auto;
+}
