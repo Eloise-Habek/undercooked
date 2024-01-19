@@ -42,7 +42,7 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "za obrisati",
   "preparationDescription": "1. Stvori\n2. Obriši",
-  "category": "Desert",
+  "category": "Dessert",
   "ingredients": [
     {
       "ingredient": {
@@ -96,7 +96,7 @@ Content-Type: application/json
   "preparationTime": "PT90M",
   "description": "za obrisati",
   "preparationDescription": "1. Stvori\n2. Obriši",
-  "category": "Desert",
+  "category": "Dessert",
   "ingredients": [
     {
       "ingredient": {
@@ -122,6 +122,22 @@ Content-Type: application/json
 
 > {%
     client.global.set("comment_id", response.body.id);
+%}
+
+### Follow pero as tester
+POST {{api}}/follow/pero
+Authorization: Bearer {{token}}
+
+> {%
+    client.assert(response.status == 200);
+%}
+
+### Follow tester as admin
+POST {{api}}/follow/tester
+Authorization: Bearer {{admin_token}}
+
+> {%
+    client.assert(response.status == 200);
 %}
 
 ### Get tester user id
