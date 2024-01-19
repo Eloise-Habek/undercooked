@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @JsonSerialize(as = IPersonPublic.class)
@@ -54,6 +55,12 @@ public final class Person implements IPersonPublic, IPersonMinimal {
 
 	@Embedded
 	private WeekdayAvailability availability = new WeekdayAvailability();
+
+	@OneToMany(mappedBy = Followers.from_field_name, cascade = CascadeType.REMOVE)
+	private Set<Followers> following;
+
+	@OneToMany(mappedBy = Followers.to_field_name, cascade = CascadeType.REMOVE)
+	private Set<Followers> followers;
 
 	public Long getId() {
 		return id;

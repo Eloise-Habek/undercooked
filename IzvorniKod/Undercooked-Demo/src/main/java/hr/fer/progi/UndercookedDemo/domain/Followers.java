@@ -9,7 +9,10 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Followers {
-	
+
+	public static final String from_field_name = "from";
+	public static final String to_field_name = "to";
+
 	@Id
 	@GeneratedValue
 	private long id;
