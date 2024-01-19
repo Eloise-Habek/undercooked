@@ -53,11 +53,15 @@ public class SearchService {
 
 			var name = r.getName().toLowerCase();
 			var description = r.getDescription().toLowerCase();
+			var ingredients = r.getIngredients().stream().map(i -> i.getIngredient().getName().toLowerCase()).toList();
+			var stringifiedIngredients = String.join(" ", ingredients);
 
 			for (var keyword : keywords) {
 				if (name.contains(keyword)) c.increaseNameMatches();
 
 				if (description.contains(keyword)) c.increaseDescriptionMatches();
+
+				if (stringifiedIngredients.contains(keyword)) c.increaseIngredientMatches();
 			}
 		}
 
@@ -72,9 +76,11 @@ public class SearchService {
 	public static class MatchWeightCalculator {
 		private static final double name_weight = 4;
 		private static final double description_weight = 1;
+		private static final double ingredient_weight = 2;
 
 		private int nameMatches = 0;
 		private int descriptionMatches = 0;
+		private int ingredientMatches = 0;
 
 		public void increaseNameMatches() {
 			nameMatches++;
@@ -84,12 +90,16 @@ public class SearchService {
 			descriptionMatches++;
 		}
 
+		public void increaseIngredientMatches() {
+			ingredientMatches++;
+		}
+
 		public static double pow(double d) {
 			return 2 - Math.pow(2, 1 - d);
 		}
 
 		public void calculateSimilarity() {
-			similarity = pow(nameMatches) * name_weight + pow(descriptionMatches) * description_weight;
+			similarity = pow(nameMatches) * name_weight + pow(descriptionMatches) * description_weight + pow(ingredientMatches) * ingredient_weight;
 		}
 
 		private double similarity;

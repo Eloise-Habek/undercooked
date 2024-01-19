@@ -80,3 +80,58 @@ GET {{api}}/recipes/search?category=MainCourse
     client.assert(response.status == 200);
     client.assert(response.body.length >= 1);
 %}
+
+### login user
+POST {{api}}/token
+Authorization: Basic pero zdero123
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### Dodaj recept sa sastojcima
+POST {{api}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "kruh",
+  "preparationTime": "PT90M",
+  "description": "neobičan bijeli kruh",
+  "preparationDescription": "1. Pomješaj sastojke\n2. Stavi u pećnicu na 180°C i 90 minuta\n3. Uživaj!",
+  "category": "MainCourse",
+  "youtubeId": "wZ1gEDquuyQ",
+  "ingredients": [
+    {
+      "amount": 250,
+      "unitOfMeasure": "g",
+      "ingredient": {
+        "name": "brašno"
+      }
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "name": "jaja"
+      }
+    },
+    {
+      "unitOfMeasure": "žlica",
+      "ingredient": {
+        "name": "voda"
+      }
+    }
+  ]
+}
+
+> {%
+    client.assert(response.body.id == 2); // id 1 je već tu zbog seedanja
+%}
+
+### Sastojci
+GET {{api}}/recipes/search?q=brašno
+
+> {%
+    client.assert(response.status == 200);
+    client.assert(response.body.length >= 1);
+%}
